@@ -3,4 +3,4 @@
 Various computer science learning resources and reference materials.
 
 #### License
-Educational Use of Files Only
+<span style="font-size: 80%;">Educational Use of Files Only</span>
