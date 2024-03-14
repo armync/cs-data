@@ -1,0 +1,781 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>75 Curated Leetcode Problems &amp; Solutions Bank</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="c1e5dc80-74b1-4d28-a338-da3f4e700fdf" class="page sans"><header><h1 class="page-title">75 Curated Leetcode Problems &amp; Solutions Bank</h1><p class="page-description"></p></header><div class="page-body"><p id="57295daf-bc02-42bd-ae5d-93bc9ddf0239" class="">The problems on this page are widely accepted to be sufficient to pass any junior-level coding interview:</p><h3 id="ea3758c9-fc4b-4191-b9b1-ddb9a34a981a" class="block-color-teal_background">You can find all solutions here: </h3><figure id="b05c05b6-c406-458c-b887-0f065d73337e"><a href="https://github.com/tuomaskivioja/Leetcode75" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">GitHub - tuomaskivioja/Leetcode75</div><div class="bookmark-description">Contribute to tuomaskivioja/Leetcode75 development by creating an account on GitHub.</div></div><div class="bookmark-href"><img src="https://github.com/fluidicon.png" class="icon bookmark-icon"/>https://github.com/tuomaskivioja/Leetcode75</div></div><img src="https://opengraph.githubassets.com/829e830d1caa62bbc9dc0a4eae36b8badafd358c2b03b8bec68ab74ebbf02435/tuomaskivioja/Leetcode75" class="bookmark-image"/></a></figure><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><strong>Array</strong></summary><div class="indented"><ul id="f4d85495-8ac6-4bac-9cc3-09f2c79bd0c0" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/two-sum/">Two Sum</a> </span><div class="indented"></div></li></ul><ul id="c6adf8cf-07b8-40de-855c-cc6f479fe7e8" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock/">Best Time to Buy and Sell Stock</a></span><div class="indented"></div></li></ul><ul id="8144ee28-3273-4220-8a79-59dfa7e807be" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/contains-duplicate/">Contains Duplicate</a></span><div class="indented"></div></li></ul><ul id="a9d669ee-17ec-4eda-9430-da78cf43492f" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/product-of-array-except-self/">Product of Array Except Self</a></span><div class="indented"></div></li></ul><ul id="6de71fac-2a8f-453b-b91c-ea2f1bb58115" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/maximum-subarray/">Maximum Subarray</a></span><div class="indented"></div></li></ul><ul id="4b9a709f-a7a4-406f-89a8-0c2e4b4b0b8b" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/maximum-product-subarray/">Maximum Product Subarray</a></span><div class="indented"></div></li></ul><ul id="7eb7b739-c9b6-4076-b556-6f979b85e8dd" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/">Find Minimum in Rotated Sorted Array</a></span><div class="indented"></div></li></ul><ul id="6fb6e2b8-1d0a-4b52-9f4d-76fb68a17c09" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/search-in-rotated-sorted-array/">Search in Rotated Sorted Array</a></span><div class="indented"></div></li></ul><ul id="cdd38daa-b10f-4961-9899-c1ea23b7e423" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/3sum/">3 Sum</a></span><div class="indented"></div></li></ul><ul id="de4c8ba9-deb9-4219-8788-39c1679824ff" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/container-with-most-water/">Container With Most Water</a></span><div class="indented"></div></li></ul></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><strong>Binary</strong></summary><div class="indented"><ul id="f73a0424-d270-451c-ac69-d4f31f3422b2" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/sum-of-two-integers/">Sum of Two Integers</a></span><div class="indented"></div></li></ul><ul id="3e4a8bb6-24b2-4457-a320-369770bed894" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/number-of-1-bits/">Number of 1 Bits</a></span><div class="indented"></div></li></ul><ul id="3bd4b777-e85f-4491-bf17-d24012ffc554" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/counting-bits/">Counting Bits</a></span><div class="indented"></div></li></ul><ul id="6068f71e-6534-4a70-8950-1c0404b1c05d" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/missing-number/">Missing Number</a></span><div class="indented"></div></li></ul><ul id="e1ab5283-da45-4a70-a5d4-83e1d10aa00f" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/reverse-bits/">Reverse Bits</a></span><div class="indented"></div></li></ul></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><strong><strong>Dynamic Programming</strong></strong></summary><div class="indented"><ul id="c66e62d3-e078-4b25-b3f6-c5895dfdcbf7" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/climbing-stairs/">Climbing Stairs</a></span><div class="indented"></div></li></ul><ul id="c08bcc60-0ecf-4a1f-bb6a-de0cc2cb5c3c" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/coin-change/">Coin Change</a></span><div class="indented"></div></li></ul><ul id="5bbc6537-cdde-494c-8af3-593313ff4783" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/longest-increasing-subsequence/">Longest Increasing Subsequence</a></span><div class="indented"></div></li></ul><ul id="3eb0c69c-b3b3-480a-9d49-ad0258718164" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/word-break/">Word Break Problem</a></span><div class="indented"></div></li></ul><ul id="041b5d81-ad46-4ac4-b0d0-88fd42956807" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/combination-sum-iv/">Combination Sum</a></span><div class="indented"></div></li></ul><ul id="072882a4-8605-446f-acc8-67a0cfbe921b" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/house-robber/">House Robber</a></span><div class="indented"></div></li></ul></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">Graphs</summary><div class="indented"><ul id="945422b1-c4f7-4e1b-9034-2a78a5a39123" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/clone-graph/">Clone Graph</a></span><div class="indented"></div></li></ul><ul id="3380d052-baa7-4a1b-8016-d36f1a99341e" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/course-schedule/">Course Schedule</a></span><div class="indented"></div></li></ul><ul id="8dd38a33-44ae-4d66-a106-0c906acf09f9" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/pacific-atlantic-water-flow/">Pacific Atlantic Water Flow</a></span><div class="indented"></div></li></ul><ul id="4216be41-29bc-4747-ad5d-1f7405c55527" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/number-of-islands/">Number of Islands</a></span><div class="indented"></div></li></ul><ul id="9fa250fb-9305-423a-b31b-ba96b38a1283" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/longest-consecutive-sequence/">Longest Consecutive Sequence</a></span><div class="indented"></div></li></ul><ul id="ad8e9dc0-ed32-4bed-84a0-5856e7629f1d" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/alien-dictionary/">Alien Dictionary (Leetcode Premium)</a></span><div class="indented"></div></li></ul><ul id="d07902d6-b471-4ec5-936e-4a2b96fb7735" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/graph-valid-tree/">Graph Valid Tree (Leetcode Premium)</a></span><div class="indented"></div></li></ul><ul id="b78df37a-54b7-488e-8e8c-0e910870de56" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/">Number of Connected Components in an Undirected Graph (Leetcode Premium)</a></span><div class="indented"></div></li></ul></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">Interval</summary><div class="indented"><ul id="b0699bb8-11b3-495b-97f4-bdf158b25e2a" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/insert-interval/">Insert Interval</a></span><div class="indented"></div></li></ul><ul id="56a99b7d-21cb-4dde-a22b-eb6ae017169b" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/merge-intervals/">Merge Intervals</a></span><div class="indented"></div></li></ul><ul id="f99fda28-2b97-4bb1-a764-a4389c4bb746" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/non-overlapping-intervals/">Non-overlapping Intervals</a></span><div class="indented"></div></li></ul><ul id="b188954c-c5d3-4883-8922-e33d831132bc" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/merge-intervals/">Merge Intervals</a></span><div class="indented"></div></li></ul><ul id="a4361a06-a7c9-4015-9c58-e808dd86023d" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/non-overlapping-intervals/">Non-overlapping Intervals</a></span><div class="indented"></div></li></ul><ul id="0dc978b4-e22e-4906-879f-7708a7ad77d3" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/meeting-rooms/">Meeting Rooms (Leetcode Premium)</a></span><div class="indented"></div></li></ul><ul id="f04cd1e3-c0a5-4b1b-a5eb-87c0daa634d8" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/meeting-rooms-ii/">Meeting Rooms II (Leetcode Premium)</a></span><div class="indented"></div></li></ul></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">Linked List</summary><div class="indented"><ul id="ca2b1395-9c57-4382-8e25-a1a5641edcb6" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/reverse-linked-list/">Reverse a Linked List (Leetcode)</a></span><div class="indented"></div></li></ul><ul id="da173822-ac07-40b3-8b88-94b7d422ea69" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/linked-list-cycle/">Detect Cycle in a Linked List (Leetcode)</a></span><div class="indented"></div></li></ul><ul id="df1ded58-d0ce-4fa8-abe7-0cb087c0c73b" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/merge-two-sorted-lists/">Merge Two Sorted Lists (Leetcode)</a></span><div class="indented"></div></li></ul><ul id="c9e403b2-909d-44b8-893b-48c29ff15bc1" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/merge-k-sorted-lists/">Merge K Sorted Lists (Leetcode)</a></span><div class="indented"></div></li></ul><ul id="237dfa64-4530-4246-8993-dadbf94848d3" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/linked-list-cycle/">Detect Cycle in a Linked List (Leetcode)</a></span><div class="indented"></div></li></ul><ul id="9c0677e2-a01a-4b39-8ee0-3fa1a6924415" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/remove-nth-node-from-end-of-list/">Remove Nth Node From End of List (Leetcode)</a></span><div class="indented"></div></li></ul><ul id="24ae09f8-9415-4815-a952-eb1cc20dd707" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/reorder-list/">Reorder List (Leetcode)</a></span><div class="indented"></div></li></ul></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><strong>Matrix</strong></summary><div class="indented"><ul id="a19ac9ba-cd94-44ef-a78e-41086071860d" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/set-matrix-zeroes/">Set Matrix Zeroes</a></span><div class="indented"></div></li></ul><ul id="29a53654-0e09-4c26-b08c-338866520049" class="toggle"><li><details open=""><summary>Solution</summary><h3 id="43d7228d-e63f-4220-ae45-d58203851bdc" class="">Set Matrix Zeroes</h3><p id="d409d533-f196-42c2-ac13-acc760d9982e" class="">Given an <code>m x n</code> matrix. If an element is <code>0</code>, set its entire row and column to <code>0</code>. Do it in-place.</p><p id="eccdc627-a6d2-40e7-93d7-9db463c6e9b2" class="">Example 1:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="bd356fb9-a718-4267-87d9-3ae0260d9441" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Input: matrix = [[1,1,1],[1,0,1],[1,1,1]]
+Output: [[1,0,1],[0,0,0],[1,0,1]]
+</code></pre><p id="0d6a5833-6fe5-4904-b7f6-9ce3fcea21c3" class="">Example 2:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="56623ed1-4802-4889-8d9d-11b1aec3016c" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Input: matrix = [[0,1,2,0],[3,4,5,2],[1,3,1,5]]
+Output: [[0,0,0,0],[0,4,5,0],[0,3,1,0]]
+</code></pre><p id="94a56a32-8cc1-4ac7-9c39-7fa97ed274b2" class=""><strong>Solution</strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="28f205a2-3e36-4394-89c6-973fbedf8875" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">class Solution:
+    def setZeroes(self, matrix: List[List[int]]) -&gt; None:
+        &quot;&quot;&quot;
+        Do not return anything, modify matrix in-place instead.
+        &quot;&quot;&quot;
+        m, n = len(matrix), len(matrix[0])
+        rows, cols = set(), set()
+        for i in range(m):
+            for j in range(n):
+                if matrix[i][j] == 0:
+                    rows.add(i)
+                    cols.add(j)
+        for i in range(m):
+            for j in range(n):
+                if i in rows or j in cols:
+                    matrix[i][j] = 0
+
+</code></pre><p id="5c812a0a-4b31-46a3-98cb-125ea8a7edcb" class=""><strong>Time Complexity</strong>: <code>O(m*n)</code>, where <code>m</code> is the number of rows and <code>n</code> is the number of columns.</p><p id="25e4154d-79af-4b7c-ab0e-33c8141bb256" class=""><strong>Space Complexity</strong>: <code>O(m + n)</code>.</p></details></li></ul><ul id="b8c067b6-e1ac-4ed9-b4e4-b609780df38b" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/spiral-matrix/">Spiral Matrix</a></span><div class="indented"></div></li></ul><ul id="319b563e-c44a-4509-91f3-8d94d58b099c" class="toggle"><li><details open=""><summary>Solution</summary><h3 id="8f6ed7b6-1c7c-493c-b6af-c93bc6a87496" class="">Spiral Matrix</h3><p id="a90f2037-858c-427c-9890-c5c1eb76d9ed" class="">Given an <code>m x n</code> matrix, return all elements of the matrix in spiral order.</p><p id="189bf45b-1796-4d37-aa9c-173e0347fac1" class="">Example 1:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="dca75e45-8c59-49d9-99a6-27531bfe8362" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Input: matrix = [[1,2,3],[4,5,6],[7,8,9]]
+Output: [1,2,3,6,9,8,7,4,5]
+</code></pre><p id="4cbaff7c-1954-4183-8e00-fe6a057d11bf" class="">Example 2:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="8b7c75ad-d760-4608-8028-43b729baa317" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Input: matrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12]]
+Output: [1,2,3,4,8,12,11,10,9,5,6,7]
+</code></pre><p id="4644b78e-60e3-402b-8273-628e114133ac" class=""><strong>Solution</strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="4b1e51fa-4a93-40db-8b9f-95bb0f378a2d" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">class Solution:
+    def spiralOrder(self, matrix: List[List[int]]) -&gt; List[int]:
+        if not matrix:
+            return []
+        m, n = len(matrix), len(matrix[0])
+        top, bottom, left, right = 0, m-1, 0, n-1
+        res = []
+        while top &lt;= bottom and left &lt;= right:
+            for j in range(left, right+1):
+                res.append(matrix[top][j])
+            for i in range(top+1, bottom+1):
+                res.append(matrix[i][right])
+            if top &lt; bottom and left &lt; right:
+                for j in range(right-1, left, -1):
+                    res.append(matrix[bottom][j])
+                for i in range(bottom, top, -1):
+                    res.append(matrix[i][left])
+            top += 1
+            bottom -= 1
+            left += 1
+            right -= 1
+        return res
+
+</code></pre><p id="20e1abe9-e7b9-4e51-9e83-f24678983040" class=""><strong>Time Complexity</strong>: <code>O(m*n)</code>, where <code>m</code> is the number of rows and <code>n</code> is the number of columns.</p><p id="635187c9-c3bd-4dc9-a528-056a2aba0e75" class=""><strong>Space Complexity</strong>: <code>O(1)</code>.</p></details></li></ul><ul id="716ef218-901d-45d5-8166-99309e593f5c" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/rotate-image/">Rotate Image</a></span><div class="indented"></div></li></ul><ul id="85ba3144-a145-4c37-8259-88ed7342f631" class="toggle"><li><details open=""><summary>Solution</summary><h3 id="d75ca8af-ef87-4c69-a25d-83072179fb60" class="">Rotate Image</h3><p id="2f176143-16b5-4cb5-967e-94b8c61b8ac6" class="">You are given an <code>n x n</code> 2D <code>matrix</code> representing an image, rotate the image by 90 degrees (clockwise).</p><p id="6596f9fa-120b-4779-b9bb-1f229f522cf5" class="">You have to rotate the image in-place, which means you have to modify the input <code>2D matrix</code> directly. DO NOT allocate another 2D matrix and do the rotation.</p><p id="741df2cf-5bb7-4d0f-a572-da1d7949da09" class="">Example 1:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="8ad2ae00-301a-4ea5-aeec-4b8e050acbd5" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Input: matrix = [[1,2,3],[4,5,6],[7,8,9]]
+Output: [[7,4,1],[8,5,2],[9,6
+
+Continuing from the previous message...
+
+Example 1:
+
+```python
+Input: matrix = [[1,2,3],[4,5,6],[7,8,9]]
+Output: [[7,4,1],[8,5,2],[9,6,3]]
+</code></pre><p id="485a9d97-2be3-4b24-be3a-c3dc291c5e33" class="">Example 2:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="e5a04e98-562b-4535-90b8-472d8a6618e9" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Input: matrix = [[5,1,9,11],[2,4,8,10],[13,3,6,7],[15,14,12,16]]
+Output: [[15,13,2,5],[14,3,4,1],[12,6,8,9],[16,7,10,11]]
+</code></pre><p id="64dc413a-4525-48e2-a9e5-6486ea4f6476" class=""><strong>Solution</strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="016399e7-f16c-4fcd-a5dd-7504e353839e" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">class Solution:
+    def rotate(self, matrix: List[List[int]]) -&gt; None:
+        &quot;&quot;&quot;
+        Do not return anything, modify matrix in-place instead.
+        &quot;&quot;&quot;
+        n = len(matrix)
+        # Transpose the matrix
+        for i in range(n):
+            for j in range(i, n):
+                matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+        # Reverse each row
+        for i in range(n):
+            matrix[i] = matrix[i][::-1]
+</code></pre><p id="a9ce3e70-5a51-4472-8c71-339335dc9f4d" class=""><strong>Time Complexity</strong>: <code>O(n^2)</code>, where <code>n</code> is the length of the matrix.</p><p id="b87cbcc6-b2a0-4994-8490-22e06db67f03" class=""><strong>Space Complexity</strong>: <code>O(1)</code>.</p></details></li></ul><ul id="91716b91-928f-4770-9a9e-1c6a8f999f95" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/word-search/">Word Search</a></span><div class="indented"></div></li></ul><ul id="e74562f5-be4e-469b-a7b6-f919eed10b5e" class="toggle"><li><details open=""><summary>Solution</summary><h3 id="a1397b61-9586-423c-9835-e7080bab427a" class="">Word Search</h3><p id="8b94339b-67b4-406a-ae44-1d055859817e" class="">Given an <code>m x n</code> grid of characters <code>board</code> and a string <code>word</code>, return <code>true</code> if <code>word</code> exists in the grid.</p><p id="61197a0a-523c-4757-9d8e-551317473489" class="">The word can be constructed from letters of sequentially adjacent cells, where adjacent cells are horizontally or vertically neighboring. The same letter cell may not be used more than once.</p><p id="9a55e150-0365-48c5-b68f-94ea8224bd76" class="">Example 1:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="696a8d5e-05e0-45f6-bb47-a2869e38a131" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Input: board = [[&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;E&quot;],[&quot;S&quot;,&quot;F&quot;,&quot;C&quot;,&quot;S&quot;],[&quot;A&quot;,&quot;D&quot;,&quot;E&quot;,&quot;E&quot;]], word = &quot;ABCCED&quot;
+Output: true
+</code></pre><p id="02d2dfb7-ad9f-4d98-94ab-3593beb8fe5c" class="">Example 2:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="fad16162-c3a0-471a-9c11-dc235a08f57e" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Input: board = [[&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;E&quot;],[&quot;S&quot;,&quot;F&quot;,&quot;C&quot;,&quot;S&quot;],[&quot;A&quot;,&quot;D&quot;,&quot;E&quot;,&quot;E&quot;]], word = &quot;SEE&quot;
+Output: true
+</code></pre><p id="58d2c898-3f2f-46ca-9b5e-120f195fafeb" class=""><strong>Solution</strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="498414a7-9746-4ea4-bf4f-42c9dbd9e8d4" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">class Solution:
+    def exist(self, board: List[List[str]], word: str) -&gt; bool:
+        def dfs(i, j, k):
+            if not 0 &lt;= i &lt; len(board) or not 0 &lt;= j &lt; len(board[0]) or board[i][j] != word[k]:
+                return False
+            if k == len(word) - 1:
+                return True
+            temp, board[i][j] = board[i][j], &#x27;/&#x27;
+            res = dfs(i+1, j, k+1) or dfs(i-1, j, k+1) or dfs(i, j+1, k+1) or dfs(i, j-1, k+1)
+            board[i][j] = temp
+            return res
+
+        for i in range(len(board)):
+            for j in range(len(board[0])):
+                if dfs(i, j, 0):
+                    return True
+        return False
+</code></pre><p id="fd298e7b-4983-4d60-856c-e46c34066288" class=""><strong>Time Complexity</strong>: <code>O(m*n*4^k)</code>, where <code>m</code> is the number of rows, <code>n</code> is the number of columns, and <code>k</code> is the length of the word.</p><p id="492ff772-6a54-43a8-82ec-315b0df77977" class=""><strong>Space Complexity</strong>: <code>O(k)</code>, where <code>k</code> is the length of the word.</p></details></li></ul></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">String</summary><div class="indented"><ul id="7a047a3f-485e-49c8-82cd-2f6b16677df7" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/longest-substring-without-repeating-characters/">Longest Substring Without Repeating Characters</a></span><div class="indented"></div></li></ul><ul id="1e64a1da-edb3-4492-bc3d-b705390305f0" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/longest-repeating-character-replacement/">Longest Repeating Character Replacement</a></span><div class="indented"></div></li></ul><ul id="92267d17-cbef-4856-9249-49952e8025b1" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/minimum-window-substring/">Minimum Window Substring</a></span><div class="indented"></div></li></ul><ul id="7a606577-4160-4344-81b4-ad4a89f7edf3" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/longest-repeating-character-replacement/">Longest Repeating Character Replacement</a></span><div class="indented"></div></li></ul><ul id="34b07654-6571-426d-9fce-1c6a5c81b172" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/minimum-window-substring/">Minimum Window Substring</a></span><div class="indented"></div></li></ul><ul id="75a50c14-5ec9-40ed-8a0d-93ecab301c90" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/valid-anagram/">Valid Anagram</a></span><div class="indented"></div></li></ul><ul id="d199b654-0d27-4719-98a3-2f20d82a2048" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/group-anagrams/">Group Anagrams</a></span><div class="indented"></div></li></ul><ul id="648a03ff-1360-4c6f-97e9-dd78fa4ffb24" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/valid-parentheses/">Valid Parentheses</a></span><div class="indented"></div></li></ul><ul id="729301bb-aeea-4f19-a6a1-c353a2ecd651" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/valid-palindrome/">Valid Palindrome</a></span><div class="indented"></div></li></ul><ul id="3f90204c-5582-4bf7-91f3-d4f7b5e91622" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/longest-palindromic-substring/">Longest Palindromic Substring</a></span><div class="indented"></div></li></ul><ul id="79274008-6638-4d54-af01-adf7a2f112e4" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/palindromic-substrings/">Palindromic Substrings</a></span><div class="indented"></div></li></ul><ul id="295b5c42-99ab-4f7b-83cd-0ac88da8dc30" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/encode-and-decode-strings/">Encode and Decode Strings (Leetcode Premium)</a></span><div class="indented"></div></li></ul></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">Tree</summary><div class="indented"><ul id="672b32aa-f4cd-4a81-bfe3-187bde0274cf" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/maximum-depth-of-binary-tree/">Maximum Depth of Binary Tree</a></span><div class="indented"></div></li></ul><ul id="6d9fa26c-5eb4-45ca-9aa7-9320d7ce6923" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/same-tree/">Same Tree</a></span><div class="indented"></div></li></ul><ul id="251ccde3-043b-467d-aad8-431bc5dbcd76" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/invert-binary-tree/">Invert/Flip Binary Tree</a></span><div class="indented"></div></li></ul><ul id="f41b9f39-d753-45b5-b24c-da788381b583" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/same-tree/">Same Tree</a></span><div class="indented"></div></li></ul><ul id="dfd003d9-2786-47a5-9c99-1891e4398d71" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/invert-binary-tree/">Invert/Flip Binary Tree</a></span><div class="indented"></div></li></ul><ul id="b1c85f4c-cfba-4816-9ab9-ee729970b1ce" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/binary-tree-maximum-path-sum/">Binary Tree Maximum Path Sum</a></span><div class="indented"></div></li></ul><ul id="8bcbbef0-d628-42d2-ae79-34cba880fa15" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/binary-tree-level-order-traversal/">Binary Tree Level Order Traversal</a></span><div class="indented"></div></li></ul><ul id="0f904b68-cfd4-420d-a0e0-60522e2db25c" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/serialize-and-deserialize-binary-tree/">Serialize and Deserialize Binary Tree</a></span><div class="indented"></div></li></ul><ul id="c1abab74-47af-403a-a691-c929b45f7194" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/subtree-of-another-tree/">Subtree of Another Tree</a></span><div class="indented"></div></li></ul><ul id="a7ff71fd-e9c7-435b-8167-e39772f3986d" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/">Construct Binary Tree from Preorder and Inorder Traversal</a></span><div class="indented"></div></li></ul><ul id="95d541b9-ff4b-4970-afeb-ef8c187afe84" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/validate-binary-search-tree/">Validate Binary Search Tree</a></span><div class="indented"></div></li></ul><ul id="021e8a52-280d-4729-9dbe-f4e42b7dfe60" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/kth-smallest-element-in-a-bst/">Kth Smallest Element in a BST</a></span><div class="indented"></div></li></ul><ul id="d823a584-5631-4ae7-a616-79d03f1ab2a7" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/">Lowest Common Ancestor of a Binary Search Tree</a></span><div class="indented"></div></li></ul><ul id="d224c4e9-bca1-4cbf-a5e3-f434bed2d0dd" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/add-and-search-word-data-structure-design/">Add and Search Word - Data structure design</a></span><div class="indented"></div></li></ul><ul id="7134310b-ddf2-46be-abbd-a51414810901" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/word-search-ii/">Word Search II</a></span><div class="indented"></div></li></ul></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><strong>Heap</strong></summary><div class="indented"><ul id="b0f8183e-7711-4705-9242-97a9d5b56b7e" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/merge-k-sorted-lists/">Merge K-Sorted Lists</a></span><div class="indented"></div></li></ul><ul id="2e45cd9e-25ee-4128-be2f-dad24cd530f6" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/top-k-frequent-elements/">Top K Frequent Elements</a></span><div class="indented"></div></li></ul><ul id="1ddb16fe-4625-4474-bae8-33e8e8a68965" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked"><a href="https://leetcode.com/problems/find-median-from-data-stream/">Find Median from Data Stream</a></span><div class="indented"></div></li></ul></div></details><p id="195fc717-97cc-49f7-b78d-dc37a389dabb" class="">
+</p><h3 id="5ffe7efd-efa2-49a5-ba80-f7d9de832723" class="">1. Conceptual Understanding:</h3><p id="9f4f47a4-4f25-4d12-b03a-5cc46e1201f1" class="">
+</p><p id="95a70d87-cc24-40cd-b06c-27bf82dcd0f6" class="">Before diving into coding, thoroughly read and understand the problem.</p><p id="2f0261cb-d18b-4079-b0db-bf571416c584" class="">Make sure you grasp what the problem is asking.</p><p id="208237d3-1447-49ae-ba45-0ec2bc77d0be" class="">The easiest way to do this is to look at the test cases.</p><p id="7971bc85-f9aa-4b26-9528-7ff133376a72" class="">On Leetcode, these will be given to you, and in an interview, you should ask for them - make sure it makes sense why certain inputs should return certain outputs.</p><p id="dfcbd914-9ee0-4355-bf48-0d75453171b1" class="">Also, list out any potential edge cases.</p><p id="df4e6718-864d-43ab-8edd-dac2995aad18" class="">Edge cases are what we call situations where for example the list is empty or of length one.</p><p id="9b0767db-03e4-4160-a01a-e6a47ca03d74" class="">Think about what should happen in these situations.</p><h3 id="bcae7f98-090c-425e-8abe-9249a7d6aa89" class="">2. Conceptual Solution:</h3><p id="c11d0e3b-5293-4ed2-a5de-a713b92ce170" class="">
+</p><p id="e0108e17-b949-4247-a0a6-7fb72dcdcf80" class="">Once you understand the problem, think about how you would solve it in theory.</p><p id="b1b6aa6f-f986-4c9f-af4f-2b9f80ebfa3c" class="">This doesn’t involve any code yet. Instead, it’s about coming up with a strategy or an algorithm.</p><p id="de453d9a-9628-49b3-bbdc-98fdc5400d35" class="">Sketch out your ideas, use examples, and think about different cases (including edge cases).</p><p id="c18042a5-dc66-41df-9541-298a96a6172c" class="">Usually I do this by drawing it on paper or on my iPad using the Apple pen.</p><p id="af49450a-f423-45b0-bce2-55c73bbf9f6e" class="">This also often makes it much more clear how to codify it later, and in an interview, it&#x27;s a neat trick to buy yourself time too :)</p><p id="3c843b70-a377-4606-98b3-bc71ef525901" class="">
+</p><h3 id="dafac9be-2f70-4558-a61e-c0c47b10ef7e" class="">3. Code Attempt 1 (20-30 mins):</h3><p id="2a38b50a-bff4-4de4-a84e-23598aa8bf5f" class="">
+</p><p id="842615d9-9f64-4468-a6ec-ff406a0f5939" class="">Now, try to implement your conceptual solution in code.</p><p id="f6821ee0-a365-4b64-b156-008f256ad9d9" class="">Don’t worry about getting it perfect on the first try.</p><p id="3c65daff-960d-493d-b65a-4ae675f26792" class="">The goal here is to start translating your ideas into a working program.</p><p id="adc489c7-bfb2-4bde-8fda-bb40b5112fba" class="">Stick to the time limit to ensure you don’t get bogged down in details.</p><p id="da2e660f-82ab-48d5-9d44-704460415920" class="">
+</p><h3 id="ce59c003-cc7f-4f88-937e-b238c26cefbf" class="">4. Documentation/Look Up Hints:</h3><p id="f1b5350d-856c-42c5-847c-62fe7e17a8c6" class="">
+</p><p id="45e74ec0-924f-47c5-8543-0b8aafecaf6d" class="">If you’re stuck or your solution didn’t work, it’s time to consult documentation or look up hints.</p><p id="d7c112c3-4f5f-4499-881e-4cbabd37aca9" class="">This doesn’t mean looking up the full solution, but rather finding guidance on the part you’re stuck with.</p><p id="b559f7f9-6479-4eb6-af7b-7ffe262c1151" class="">This could be a specific function, algorithm, or concept you’re not clear about.</p><p id="ebef9b1f-f7cb-4a29-9f9d-ebc3777eb403" class="">Remember - the best of us look up stuff all the time. As a beginner, there is no point in getting stuck if you just don&#x27;t know something.</p><p id="f4e75b6d-dadf-4e94-aa44-c6720cff6094" class="">In this process, you also develop your toolkit in Python or whatever language you use.</p><h3 id="9570c8e5-5a28-4892-a2fc-d6e0f5d09e5f" class="">5. Code Attempt 2 (20-30 mins):</h3><p id="62610064-f59b-4c8f-afea-2047324adcb5" class="">
+</p><p id="95cbd94e-05d9-4d20-9634-d4cae23260ea" class="">With the new insights or hints, give your problem another go.</p><p id="db077f62-b242-4f6f-b5d4-9fb0df5be885" class="">Try to refine your solution or approach the problem from a different angle if needed.</p><p id="938e16b5-7a92-4b97-a40c-e675613ab6ff" class="">After that, if you are still stuck, you can move on to the next step. Otherwise, you are done!</p><p id="1d0818d8-8689-41f4-9f95-66010653e64b" class="">
+</p><h3 id="cd18a3b1-0e6d-466e-a9f9-9dc107d8f4c1" class="">6. Look Up Solution &amp; Understand:</h3><p id="32be4b95-0d06-4980-bdfa-607ce8c9ca2b" class="">
+</p><p id="de1ad73a-5c54-4b62-8481-693927e88138" class="">If you’re still stuck, it’s okay to look up the solution.</p><p id="5f76bcf3-1b91-43e9-8ab1-4e68af16f35a" class="">However, the key here is not just to copy it but to understand it.</p><p id="40b823d0-76ed-4a84-a294-84c1c01a0c58" class="">Study the solution, see how it differs from your approach, and learn the concepts or techniques used.</p><p id="757d2d88-e689-43af-897d-8cfebeca2482" class="">This step is crucial for improving your problem-solving skills.</p><p id="9ff629e4-efa4-4c95-8a83-1e648d56b8e8" class="">Even if you got it right yourself, it is still useful to look up how others might have solved it - you might find there is a more efficient way to solve it.</p><p id="e6586b8f-4b50-4b90-afbe-8d6da58eb5ad" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
