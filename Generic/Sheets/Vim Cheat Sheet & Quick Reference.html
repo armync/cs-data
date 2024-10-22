@@ -1,0 +1,1897 @@
+<!DOCTYPE html> <html class="scrollbar dark" translate=no style><!--
+ Page saved with SingleFile 
+ url: https://quickref.me/vim 
+ saved date: Fri Oct 04 2024 18:56:22 GMT+0300 (Eastern European Summer Time)
+--><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=Edge,chrome=1"><meta http-equiv=content-language content=en-gb><meta name=renderer content=webkit><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta name=app:pageurl content=/><title>Vim Cheat Sheet &amp; Quick Reference</title><meta name=keywords content="reference,cheatsheet,code table,snippets,linux,text,editor,shortcut,terminal,vi"><meta name=description content="A useful collection of Vim 8.2 quick reference cheat sheets to help you learn vim editor faster. "><meta property=og:url content=https://quickref.me/vim.html><meta property=og:title content="Vim Cheat Sheet &amp; Quick Reference"><meta property=og:site_name content=QuickRef.ME><meta property=og:description content="A useful collection of Vim 8.2 quick reference cheat sheets to help you learn vim editor faster. "><meta property=og:image content="https://quickref.me/assets/image/vim-preview.png?v=7f2o1"><meta property=og:image:width content=2276><meta property=og:image:height content=1240><meta property=og:type content=website><meta name=twitter:card content=summary_large_image><meta name=twitter:title content="Vim Cheat Sheet &amp; Quick Reference"><meta name=twitter:site content=@QuickRef.ME><meta name=twitter:creator content=@QuickRef.ME><meta name=twitter:description content="A useful collection of Vim 8.2 quick reference cheat sheets to help you learn vim editor faster. "><meta name=twitter:image content="https://quickref.me/assets/image/vim-preview.png?v=700ve"><link rel=canonical href=https://quickref.me/vim.html><link rel=alternate href=https://quickref.me/atom.xml title=QuickRef.ME type=application/atom+xml><style>/*! tailwindcss v3.3.2 | MIT License | https://tailwindcss.com
+*/*,::before,::after{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::before,::after{--tw-content:""}html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;-o-tab-size:4;tab-size:4;font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}h1,h3,h4{font-size:inherit;font-weight:inherit}code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;font-size:1em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button{font-family:inherit;font-size:100%;font-weight:inherit;line-height:inherit;margin:0}button{text-transform:none}button{-webkit-appearance:button;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}h1,h3,hr,p,pre{margin:0}ul{list-style:none;margin:0;padding:0}button{cursor:pointer}:disabled{cursor:default}svg{display:block;vertical-align:middle}*,::before,::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x:;--tw-pan-y:;--tw-pinch-zoom:;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position:;--tw-gradient-via-position:;--tw-gradient-to-position:;--tw-ordinal:;--tw-slashed-zero:;--tw-numeric-figure:;--tw-numeric-spacing:;--tw-numeric-fraction:;--tw-ring-inset:;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246/0.5);--tw-ring-offset-shadow:0 0#0000;--tw-ring-shadow:0 0#0000;--tw-shadow:0 0#0000;--tw-shadow-colored:0 0#0000;--tw-blur:;--tw-brightness:;--tw-contrast:;--tw-grayscale:;--tw-hue-rotate:;--tw-invert:;--tw-saturate:;--tw-sepia:;--tw-drop-shadow:;--tw-backdrop-blur:;--tw-backdrop-brightness:;--tw-backdrop-contrast:;--tw-backdrop-grayscale:;--tw-backdrop-hue-rotate:;--tw-backdrop-invert:;--tw-backdrop-opacity:;--tw-backdrop-saturate:;--tw-backdrop-sepia:}@media (min-width:640px){}@media (min-width:768px){}@media (min-width:1024px){}@media (min-width:1280px){}@media (min-width:1536px){}.fadeIn{transition-duration:100ms;animation-name:enter;--tw-enter-scale:initial;--tw-enter-rotate:initial;--tw-enter-translate-x:initial;--tw-enter-translate-y:initial;--tw-enter-opacity:0;animation-duration:100ms}.absolute{position:absolute}.right-2{right:0.5rem}.top-2{top:0.5rem}.col-span-2{grid-column:span 2/span 2}.row-span-2{grid-row:span 2/span 2}.row-span-4{grid-row:span 4/span 4}.mx-auto{margin-left:auto;margin-right:auto}.my-8{margin-top:2rem;margin-bottom:2rem}.mb-4{margin-bottom:1rem}.flex{display:flex}.hidden{display:none}.w-full{width:100%}@keyframes bounce{0%,100%{transform:translateY(-25%);animation-timing-function:cubic-bezier(0.8,0,1,1)}50%{transform:none;animation-timing-function:cubic-bezier(0,0,0.2,1)}}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.rounded{border-radius:0.25rem}.bg-emerald-500{--tw-bg-opacity:1;background-color:rgb(16 185 129/var(--tw-bg-opacity))}.bg-slate-100{--tw-bg-opacity:1;background-color:rgb(241 245 249/var(--tw-bg-opacity))}.p-2{padding:0.5rem}.text-center{text-align:center}.text-5xl{font-size:3rem;line-height:1}.font-extralight{font-weight:200}.font-light{font-weight:300}.leading-relaxed{line-height:1.625}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184/var(--tw-text-opacity))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105/var(--tw-text-opacity))}.text-slate-700{--tw-text-opacity:1;color:rgb(51 65 85/var(--tw-text-opacity))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity))}.underline{text-decoration-line:underline}.shadow-xl{--tw-shadow:0 20px 25px -5px rgba(0,0,0,0.1),0 10px 10px -5px rgba(0,0,0,0.04);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color),0 10px 10px -5px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0#0000),var(--tw-ring-shadow,0 0#0000),var(--tw-shadow)}@keyframes enter{from{opacity:var(--tw-enter-opacity,1);transform:translate3d(var(--tw-enter-translate-x,0),var(--tw-enter-translate-y,0),0) scale3d(var(--tw-enter-scale,1),var(--tw-enter-scale,1),var(--tw-enter-scale,1)) rotate(var(--tw-enter-rotate,0))}}@keyframes exit{to{opacity:var(--tw-exit-opacity,1);transform:translate3d(var(--tw-exit-translate-x,0),var(--tw-exit-translate-y,0),0) scale3d(var(--tw-exit-scale,1),var(--tw-exit-scale,1),var(--tw-exit-scale,1)) rotate(var(--tw-exit-rotate,0))}}@keyframes openAnimation{from{transform:scale(0.8);opacity:0}to{transform:scale(1);opacity:1}}@keyframes closeAnimation{from{transform:scale(1);opacity:1}to{transform:scale(0.8);opacity:0}}pre code.hljs{display:block;overflow-x:auto;padding:1em}/*!
+  Theme: StackOverflow Light
+  Description: Light theme as used on stackoverflow.com
+  Author: stackoverflow.com
+  Maintainer: @Hirse
+  Website: https://github.com/StackExchange/Stacks
+  License: MIT
+  Updated: 2021-05-15
+
+  Updated for @stackoverflow/stacks v0.64.0
+  Code Blocks: /blob/v0.64.0/lib/css/components/_stacks-code-blocks.less
+  Colors: /blob/v0.64.0/lib/css/exports/_stacks-constants-colors.less
+*/.hljs{color:#2f3337}.hljs-comment{color:#656e77}.hljs-keyword{color:#015692}.hljs-number{color:#b75501}.hljs-string,.hljs-symbol{color:#54790d}.hljs-meta{color:#015692}.hljs-built_in{color:#b75501}.mdLayout table{width:100%}.mdLayout .section>table:last-child::after{content:"";display:block;height:0.5rem}.mdLayout table tr+tr{border-top:solid 1px #ececec94}:is(.dark .mdLayout table tr+tr){border-color:rgb(51 65 85/0.5)}.mdLayout table tbody+tbody{border-top:solid 1px rgb(135 137 139/30%)}.mdLayout table td,.mdLayout table th{padding:9px 14px;text-align:left}.mdLayout table tr th:last-child,.mdLayout table tr td:last-child{text-align:right}.mdLayout table td:first-child{white-space:nowrap}.mdLayout table td:first-child>code{--tw-text-opacity:1;color:rgb(5 150 105/var(--tw-text-opacity))}.mdLayout table a,.mdLayout table a:visited{color:#35a;text-decoration:none}.mdLayout table td:first-child>code~em{font-size:11px;font-style:normal;color:#556677}.mdLayout table thead th{font-weight:normal}.mdLayout table.shortcuts td:not(:last-child)>code,.mdLayout ul.shortcuts>li>code,kbd{letter-spacing:0.075rem;padding:0.1em 0.54em;border:1px solid rgb(204,204,204);line-height:1.6;font-family:Arial,Helvetica,sans-serif;font-size:12px;display:inline-block;box-shadow:0px 1px 0px rgb(0 0 0/20%),inset 0px 0px 0px 2px #ffffff;background-color:rgb(247,247,247);-moz-box-shadow:0 1px 0px rgba(0,0,0,0.2),0 0 0 2px #ffffff inset;-webkit-box-shadow:0 1px 0px rgb(0 0 0/20%),0 0 0 2px #ffffff inset;-moz-border-radius:3px;-webkit-border-radius:3px;color:#303835}:is(.dark .mdLayout table.shortcuts td:not(:last-child)>code),:is(.dark .mdLayout ul.shortcuts>li>code),:is(.dark kbd){--tw-border-opacity:1;border-color:rgb(51 65 85/var(--tw-border-opacity));background-color:rgb(51 65 85/0.5);--tw-text-opacity:1;color:rgb(203 213 225/var(--tw-text-opacity));--tw-shadow:0 0#0000;--tw-shadow-colored:0 0#0000;box-shadow:var(--tw-ring-offset-shadow,0 0#0000),var(--tw-ring-shadow,0 0#0000),var(--tw-shadow);--tw-shadow-color:#64748b;--tw-shadow:var(--tw-shadow-colored)}.mdLayout table.show-header thead{display:table-header-group;border-bottom:solid 1px rgba(85,102,119,0.3)}.mdLayout table td em{opacity:0.6}:is(.dark .mdLayout table td em){opacity:0.9}:is(.dark .mdLayout .h3-wrap>.section ul>li){border-color:rgb(51 65 85/0.5)}:is(.dark .mdLayout .h3-wrap>.section>ul.marker-timeline>li){--tw-border-opacity:1;border-color:rgb(71 85 105/var(--tw-border-opacity));--tw-text-opacity:1;color:rgb(248 250 252/var(--tw-text-opacity))}:is(.dark .mdLayout .h3-wrap>.section>ul.marker-timeline>li)::before{--tw-border-opacity:1;border-color:rgb(71 85 105/var(--tw-border-opacity));--tw-bg-opacity:1;background-color:rgb(30 41 59/var(--tw-bg-opacity))}:is(.dark .mdLayout .h3-wrap>.section>ul.marker-timeline>li>h4){--tw-text-opacity:1;color:rgb(203 213 225/var(--tw-text-opacity))}@media (min-width:768px){}:is(.dark .node-item pre),:is(.dark .node-item pre>code),:is(.dark .note-content pre),:is(.dark .note-content pre>code){--tw-bg-opacity:1;background-color:rgb(30 41 59/var(--tw-bg-opacity))}yel{--tw-text-opacity:1;color:rgb(217 119 6/var(--tw-text-opacity))}pur{--tw-text-opacity:1;color:rgb(147 51 234/var(--tw-text-opacity))}code{--tw-text-opacity:1;color:rgb(5 150 105/var(--tw-text-opacity))}:is(.dark code){--tw-text-opacity:1;color:rgb(203 213 225/var(--tw-text-opacity))}pre{line-height:1.5;overflow:hidden;overflow-x:auto;--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity));padding:1rem}:is(.dark pre){--tw-bg-opacity:1;background-color:rgb(30 41 59/var(--tw-bg-opacity))}.mdLayout pre+p:not(:last-child){border-top-width:1px;--tw-border-opacity:1;border-color:rgb(226 232 240/var(--tw-border-opacity))}:is(.dark .mdLayout pre+p:not(:last-child)){border-color:rgb(51 65 85/0.5)}pre:only-child{height:100%}pre>code{padding:0!important;overflow:visible}pre>code.wrap{white-space:pre-wrap!important;overflow-wrap:break-word!important}.mdLayout code.hljs{background:transparent}@media (min-width:1200px){}:is(.dark .pagination .prev),:is(.dark .pagination .next),:is(.dark .pagination .page-number){--tw-bg-opacity:1;background-color:rgb(30 41 59/var(--tw-bg-opacity));--tw-text-opacity:1;color:rgb(203 213 225/var(--tw-text-opacity))}:is(.dark .pagination .space){--tw-text-opacity:1;color:rgb(203 213 225/var(--tw-text-opacity))}:is(.dark #carbonads){--tw-bg-opacity:1;background-color:rgb(30 41 59/var(--tw-bg-opacity));--tw-shadow:0 35px 60px -15px rgba(0,0,0,0.3);--tw-shadow-colored:0 35px 60px -15px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0#0000),var(--tw-ring-shadow,0 0#0000),var(--tw-shadow)}:is(.dark #carbonads>span){--tw-bg-opacity:1;background-color:rgb(30 41 59/var(--tw-bg-opacity))}:is(.dark #carbonads .carbon-text){--tw-text-opacity:1;color:rgb(203 213 225/var(--tw-text-opacity))}:is(.dark #carbonads .carbon-poweredby){--tw-text-opacity:1;color:rgb(71 85 105/var(--tw-text-opacity))}@keyframes scale-up-center{0%{opacity:0;transform:scale(0.9)}100%{opacity:1;transform:scale(1)}}:is(.dark #bsa_custom .native-fixed){--tw-bg-opacity:1;background-color:rgb(51 65 85/var(--tw-bg-opacity))}:is(.dark #bsa_custom .native-sponsor){--tw-bg-opacity:1;background-color:rgb(15 23 42/var(--tw-bg-opacity))}html{-webkit-tap-highlight-color:transparent}html.scrollbar{scroll-behavior:smooth;scroll-padding-top:20px}.max-container{max-width:1320px;margin-left:auto;margin-right:auto;padding:0.75rem}@media (min-width:1024px){}@media (min-width:1024px){}:is(.dark .home .card){--tw-bg-opacity:0.5;--tw-text-opacity:1;color:rgb(203 213 225/var(--tw-text-opacity))}.mdLayout{color:#345;display:flex;flex-direction:column}.mdLayout>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(3.5rem*calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(3.5rem*var(--tw-space-y-reverse))}.mdLayout .h2-wrap{border-radius:0.5rem}.mdLayout .h2-wrap:first-child:not(.show)>h2{}.mdLayout .h2-wrap>h2{padding-right:0.5rem;--tw-text-opacity:1;color:rgb(16 185 129/var(--tw-text-opacity))}:is(.dark .mdLayout .h2-wrap>h2){--tw-text-opacity:1;color:rgb(203 213 225/var(--tw-text-opacity))}.mdLayout .h2-wrap>h2>a.h-anchor{padding-right:0.5rem;--tw-text-opacity:1;color:rgb(16 185 129/var(--tw-text-opacity))}.mdLayout .h2-wrap>h2>a.h-anchor:hover{cursor:pointer;--tw-text-opacity:1;color:rgb(5 150 105/var(--tw-text-opacity));text-decoration-line:none}.mdLayout .h2-wrap>.h3-wrap-list{display:flex;flex-direction:column}@media (min-width:1024px){.mdLayout .h2-wrap>.h3-wrap-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.75rem}}.mdLayout .h3-wrap-list{font-size:0.925rem;line-height:1.325rem}.mdLayout .h3-wrap{position:relative;margin-bottom:1rem;display:flex;flex-direction:column;overflow:hidden;border-radius:0.5rem;--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity));padding-top:1.5rem;--tw-shadow:0 6px 8px rgba(102,119,136,0.03),0 1px 2px rgba(102,119,136,0.3);--tw-shadow-colored:0 6px 8px var(--tw-shadow-color),0 1px 2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0#0000),var(--tw-ring-shadow,0 0#0000),var(--tw-shadow)}@media (min-width:1024px){.mdLayout .h3-wrap{margin-bottom:0px}}:is(.dark .mdLayout .h3-wrap){--tw-bg-opacity:1;background-color:rgb(30 41 59/var(--tw-bg-opacity));--tw-text-opacity:1;color:rgb(203 213 225/var(--tw-text-opacity))}.mdLayout .h3-wrap{grid-auto-rows:auto}.mdLayout .h3-wrap hr{--tw-border-opacity:1!important;border-color:rgb(226 232 240/var(--tw-border-opacity))!important}:is(.dark .mdLayout .h3-wrap hr){border-color:rgb(71 85 105/0.5)!important}.mdLayout .h3-wrap>h3{position:absolute;right:0px;top:0px;z-index:10;border-bottom-left-radius:0.5rem;--tw-bg-opacity:1;background-color:rgb(16 185 129/var(--tw-bg-opacity));padding-left:0.75rem;padding-right:0.75rem;padding-top:0.25rem;padding-bottom:0.25rem;font-size:0.75rem;line-height:1rem;letter-spacing:0.05em;--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity));--tw-shadow:0 6px 8px rgba(102,119,136,0.03),0 1px 2px rgba(102,119,136,0.3);--tw-shadow-colored:0 6px 8px var(--tw-shadow-color),0 1px 2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0#0000),var(--tw-ring-shadow,0 0#0000),var(--tw-shadow)}:is(.dark .mdLayout .h3-wrap>h3){--tw-bg-opacity:0.7;--tw-text-opacity:1;color:rgb(226 232 240/var(--tw-text-opacity))}.mdLayout .h3-wrap.secondary{--tw-shadow:0 4px 6px -1px rgba(102,119,136,0.05),0 2px 4px -1px rgba(102,119,136,0.35);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color),0 2px 4px -1px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0#0000),var(--tw-ring-shadow,0 0#0000),var(--tw-shadow)}.mdLayout .h3-wrap.secondary>h3{--tw-bg-opacity:1;background-color:rgb(245 158 11/var(--tw-bg-opacity))}.mdLayout .h3-wrap>.section{z-index:0;display:flex;height:100%;width:100%;flex-direction:column}.mdLayout .h3-wrap>.section>p{background:#f8f9fa;color:#345;margin:0px;width:100%;padding-left:1rem;padding-right:1rem;padding-top:0.75rem;padding-bottom:0.75rem}:is(.dark .mdLayout .h3-wrap>.section>p){background-color:rgb(15 23 42/0.3);--tw-text-opacity:1;color:rgb(148 163 184/var(--tw-text-opacity))}.mdLayout .h3-wrap>.section>p:first-child:before,.h3-wrap>.section>h4:first-child:before{content:"-";color:#f8f9fa;background:#f8f9fa;line-height:1.75rem;top:-4px;position:absolute;left:0px;width:100%}:is(.dark .mdLayout .h3-wrap>.section>p:first-child):before,:is(.dark .h3-wrap>.section>h4:first-child):before{background-color:rgb(15 23 42/0.3);color:rgb(30 41 59/0)}.mdLayout .h3-wrap>.section>p:last-child{margin-top:auto}.mdLayout .h3-wrap>.section>h4{margin:0px;border-top-width:1px;--tw-border-opacity:1;border-color:rgb(226 232 240/var(--tw-border-opacity));--tw-bg-opacity:1;background-color:rgb(241 245 249/var(--tw-bg-opacity));padding-left:1rem;padding-right:1rem;padding-top:0.25rem;padding-bottom:0.25rem;text-align:center;--tw-text-opacity:1;color:rgb(100 116 139/var(--tw-text-opacity))}:is(.dark .mdLayout .h3-wrap>.section>h4){border-color:rgb(51 65 85/0.5);background-color:rgb(51 65 85/0.3);--tw-text-opacity:1;color:rgb(203 213 225/var(--tw-text-opacity))}.mdLayout .h3-wrap>.section p a,.mdLayout .h3-wrap>.section p a:visited,.intro p a,.intro p a:visited{color:#345;text-decoration:none;border-bottom:solid 1px rgba(85,102,119,0.18)}:is(.dark .mdLayout .h3-wrap>.section p a),:is(.dark .mdLayout .h3-wrap>.section p a:visited),:is(.dark .intro p a),:is(.dark .intro p a:visited){--tw-text-opacity:1;color:rgb(100 116 139/var(--tw-text-opacity))}.mdLayout .h3-wrap>.section p a:hover,.mdLayout .h3-wrap>.section p a:visited:hover,.intro p a:hover,.intro p a:visited:hover{text-decoration-line:underline;text-decoration-color:#10b981;text-decoration-thickness:1px;text-underline-offset:2px}.mdLayout .h3-wrap>.section p a:hover,.intro p a:hover{--tw-text-opacity:1;color:rgb(16 185 129/var(--tw-text-opacity))}.mdLayout.mdLayout a+em{opacity:0.5}:is(.dark .mdLayout.mdLayout a+em){opacity:0.8}.mdLayout h2{margin:0;padding:0;margin-bottom:24px;position:relative;font-size:30px;line-height:1.2;font-weight:200;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;margin-top:0}@media (max-width:768px){.mdLayout h2{margin-bottom:8px;margin-top:32px}}@media (max-width:480px){.mdLayout h2{margin-bottom:8px;margin-top:32px}}.mdLayout a,.mdLayout a:visited{color:#1959a2;text-decoration:none;background-image:linear-gradient(transparent,transparent 6px,#34495e 6px,#34495e);background-position:bottom;background-size:100% 6px;background-repeat:repeat-x}:is(.dark .mdLayout a),:is(.dark .mdLayout a:visited){--tw-text-opacity:1;color:rgb(2 132 199/var(--tw-text-opacity))}.mdLayout a:hover,.mdLayout a:visited:hover{text-decoration-line:underline;text-decoration-color:#10b981;text-decoration-thickness:2px;text-underline-offset:4px}.mdLayout em{font-style:normal;color:#556677}@media (prefers-reduced-motion:no-preference){@keyframes bounce{0%,100%{transform:translateY(-25%);animation-timing-function:cubic-bezier(0.8,0,1,1)}50%{transform:none;animation-timing-function:cubic-bezier(0,0,0.2,1)}}}:is(.dark .dark\:border-slate-700){--tw-border-opacity:1;border-color:rgb(51 65 85/var(--tw-border-opacity))}:is(.dark .dark\:bg-gray-900){--tw-bg-opacity:1;background-color:rgb(17 24 39/var(--tw-bg-opacity))}:is(.dark .dark\:bg-slate-400\/20){background-color:rgb(148 163 184/0.2)}:is(.dark .dark\:bg-slate-700){--tw-bg-opacity:1;background-color:rgb(51 65 85/var(--tw-bg-opacity))}:is(.dark .dark\:bg-slate-800){--tw-bg-opacity:1;background-color:rgb(30 41 59/var(--tw-bg-opacity))}:is(.dark .dark\:bg-slate-900){--tw-bg-opacity:1;background-color:rgb(15 23 42/var(--tw-bg-opacity))}:is(.dark .dark\:bg-slate-900\/90){background-color:rgb(15 23 42/0.9)}:is(.dark .dark\:text-gray-300){--tw-text-opacity:1;color:rgb(209 213 219/var(--tw-text-opacity))}:is(.dark .dark\:text-slate-200){--tw-text-opacity:1;color:rgb(226 232 240/var(--tw-text-opacity))}:is(.dark .dark\:text-slate-300){--tw-text-opacity:1;color:rgb(203 213 225/var(--tw-text-opacity))}:is(.dark .dark\:text-slate-500){--tw-text-opacity:1;color:rgb(100 116 139/var(--tw-text-opacity))}:is(.dark .dark\:text-slate-600){--tw-text-opacity:1;color:rgb(71 85 105/var(--tw-text-opacity))}:is(.dark .dark\:opacity-70){opacity:0.7}:is(.dark .dark\:shadow-3xl){--tw-shadow:0 35px 60px -15px rgba(0,0,0,0.3);--tw-shadow-colored:0 35px 60px -15px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0#0000),var(--tw-ring-shadow,0 0#0000),var(--tw-shadow)}:is(.dark .dark\:hover\:text-slate-100:hover){--tw-text-opacity:1;color:rgb(241 245 249/var(--tw-text-opacity))}:is(.dark .dark\:hover\:text-slate-300:hover){--tw-text-opacity:1;color:rgb(203 213 225/var(--tw-text-opacity))}:is(.dark .dark\:hover\:text-white:hover){--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity))}:is(.dark .group:hover .dark\:group-hover\:text-white){--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity))}@media (min-width:640px){}@media (min-width:768px){.md\:inline{display:inline}.md\:flex-row{flex-direction:row}.md\:py-5{padding-top:1.25rem;padding-bottom:1.25rem}:is(.dark .md\:dark\:bg-transparent){background-color:transparent}}@media (min-width:1024px){.lg\:w-3\/5{width:60%}}@media (min-width:1280px){}</style><meta name=referrer content=no-referrer><link rel=icon href=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAV4AAAFeCAMAAAD69YcoAAAAnFBMVEUAAAAjuIMit4EiuYMjuIMjuIMiuIMjuIMjuIMiuIMjuYMjuIMjuYMjuIMiuIMjuYMjuIMiuIMjuIMjuIMjuIMjuIMjuIMkuYMjuIMiuIMiuIMjuIMiuIQiuIMjuIMiuYMjuIMjuIMkuIMjuIMiuIMjuIMsuoUiuIMjuYIit4MjuIMjuIMjuIMiuYMhuIQjuIMjuIMjuYMkuYQjuIPAyRRWAAAAM3RSTlMAv4B+QGUZpLlqRpMgeWA8xHCvVu7XyxOfhfXkJqqZUU03Copb2wW0Mi7S6XRKD/mO4CoFzOogAAAMxklEQVR42uzbR1IDQRQDUHkonHEEJ5wDTmCMdf+7MbOAKooNCxZfXXqXGM2XGmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZ/Vvof1cI+18vNCpXcqDAvNHLX3CY3zmVZ9tCttbaLZb29Ot6a5eH6Bem5YxwLpKbMQHZITYWR3CEtdcZyQ1IGjGWGlHQZTR/puJwZzWmNZDQYzxipWDGiFRKxZ0Q9pKHFmFpIwokxnS5IQKRjw08Z9E0fGdXkCHlzxlWBumjHhsQuk1VG1oG2e8b2CmWXJ8Z2nkJYxujm0HWcMLw6ZI0YXwmq3qhAtneLHcq+DSEpeij7soWiYfRQpv1rMaaGAxQphLLCBpJizXJSa4yX1KD5XUOJEkT7zBo1tKGovKOEBiRtKOHchKLDOyWIHtNFQtlA85HFghpER6gdShCdUMfbSicVyj4o4QpJIqHsuQxFMbfSv9UgaUYJog1mnxpE+3eRUDaCJJVQ9sneuSinDcRQVFCDXYx5GghgAnGwISbkpf//t+JJp5Nps7YrVivWcP7AdwaxK13dtbPZ0F2iFVjqbXhDK1iClfSRSNik8eNEcOL5+XmY8zOndaKXsz0xPrE+sdlsjsdjJ8dxHLCSERJpwY1Stlc28TJLOkUaYc3SFXgIkMgQbpQSHZDGFG6U41/5bi8vzpU1V6ohnypg6cTLLD0ksoMbpcQZ0shuhzLGVIFdLTIVuPkIkcYRbpRzd7sNM3K8spGMYbzr8skYpoVELO27VkN8gc3+rJUC5BfY7DR5VeICvNKWDsMrIu6Vrk2I479cgFfa0rURwwyQxtJOJ0dFxG05lq6NVELeK23pmn815L3SayCysXPHmsSD+fTGx6Vvp6+cwMp89ug9YnIlpp6xQHLuCk+MruHCl065c5/VI9NHS/Ob/oNnCWdDAz+Z1N0e0T1IDIcHmHMFFcIXafNOMaf+FcKRaTZkmFP/CrGTaTYkmFP7CtETspu+Y07dK0ScCTUbDvg3kxreMn4gkQ2cR4j/sqtbhYhCqfHlAr/jsV59iHuxCdArfkPN+hAduUBMVLGrj2vCk8uoeEUlbzWpEC3BCdAC1SSWZmAobDkSwWEhFuHVoELMJdNcD1iM9bOM/ULSzbvEEt4trxCuqCEywVI8m23Da9nneSrVfd9ej8oAaYSRwYdNl7buKQ+RSNPsY/4DK18SJKflNIz/eFzNFaKNGAEzb0jEMV+bFj9AJy7//nOftzSkfb07Xtla86e3gJURb2ZDjJ6j902BUVfrp2cpMLJlziKaIeKqA0U8CGWWjfmTPeMpc+BIG3NGjtY5SUNnzZ/EwEbAHaTVxU/8CNSkOwF5h6qm3wVMgDyoSIS/OQRpUYEIueVV28STGXzlEiZADlTk40s92erqODf02sQD+BtrJkB7/KS8BLfvTMq7f+VPBfeQxmRGcLuXl+BjZk5eV32EF58A9Wi3lvISHJiS90i21vNPgFZUW2B5Cd6vzMjrKb0a4hOgxZ4ub7lJr5cYkLelWmu6gAnQHAjyVh+wt312eeOMfynPZf9fU8uL70NQ02lQ5aXb6QKAHPm0nJYeS/ZgA2qCkCYv/TJ1iADgAg5lnjbHu/sESrouTV76jsP9ZRzKOtrkxUXzBZSsJ1zyOuoANnGj/72Gb6nok54zybvjz22NyMNhmrwkF+SHxyFvz0BkdhNpBKBR3vJ78la/vHFmIO6jhySmMVXevocKiu7JbZq8xN69L30s2wJV3ifoLFHFdAwKEt3yRqGJkLt0QnPskeVtF88sVw//8zfUYOpw72SnQH26vIoTZ9mqSlOzvB1Db8XMEvpTn3R5oesVGdH55fWwkGQmd69Yds+XF4pK8GBMkFfvR8/lbsVD0CBvcQke7VnlfZlQm638g7YBnCNv+KWspT4q8V8Y5W1iKa7UmHh95gV/0Ic/RB6qWAzZ5H1aYDkbmSeB3PP7J3dfivdRXYIdLnnvzD4ZExAnQPRLcZBWcG13mOTdYCV+SuQ+zfX4W5Mx/CH2zcrboE1j6IwJEyCivM3vogSefrF3Z82JAkEAgFsRwQtUEFGCUYzGK3j0//9vmyosxKWzuuM0IuF7yENqX7bXHWf6mNEzDG+D85NE8xkqQHR41UCjhnzePUz5Eg2v+DmKqethtpdXAaLNLh/JUxcj4+QSvMsovKNn3FE+537sY5ZI6cB0S7SSDCd4bXozvDrzffBfIEl9wTweuMIIRHpUN9+q8mN4FVmZLU1CuZZpwbdP0sIL7RZVpbC8H84vHUmJ0fdnvbKs884yrFM5h6aOEVtZQkyhw7tDis89eDoIs0s9bAIJ4TXhorGIC8VUe691c2JUYx88rWaXejDgASc8c+uJUM7xrPIFMdNOh7eBFJf9Pnj7xDBfwVAhOdFrzMwnBln76YKeipQJ/+Cpm1XqoSatocJLBs7qpoog1XR4DRklXRMFWNmkHloy+1UqM7joHTHiqVfhNW42OhwyGDzdQBaTmds2PKSN19wwuQTvMeKYiYOVcTMrMsqip0PJIvWwAznh7QyoRp+Zhmf9EKCVDu/749/r4QbFDPkfq3BAUngNMPYYOVrJ+HUvH0ktvaefPv7BqqKgD5BlzrbA1zFiJv+ilTVcNI4YGevp8DaR0slixkEH4E49+CArvMF1U/RkSS3BkcbN8PYymHGw1wDcqQdTWnghUnOoT+BK+ym8q0frNRYK6oFMFaaWweHfOQd1i5HFFC6mFTp4yz0SVP53Tj75J1nsN4bwwnCEZ3obLnp78nPTRYLBfqHCfgZyuTw7vyG1HfOp0625ocJbQ8IH+4UKCkh2sllKpiFS27EPh1gJTja16gWbB/Yzbn6e9uuwFPxD+kS87MRLcO0SDPoksxNuGJqiIAukCxyOf8EAyTadZNnisw6RKh1eWB8Fa2GVPD0WbnBMMQd4RQkgZvbxbH4V3g6kjIQqq728fK8RnfY+SLHEa55KLcF7gw5v7N3GhBrv7Y1zYNFkeO59+c9h4uXOw8hgFodXIWPl48Wa9f2uRR14uAxDSJimzagl2A+I8NLfcG3Wi4IaIBHdADuogyQjJBwSATJ9PIvDS6vp/5Uq1NkvdhWPhQHSrDVMszsBxCznzi39zo5W6iXnTPoU2NSPHDsTw8O0jQoXPe++dOPax29bOe1HNBcY9eIytEwnHwn6F8TaByK8FPWIOGB8LHy8Bk5dnsW9ihT3BLGmc1/9qV71nKffSvxQ5mwC8lkOEsYjiIX+vZlWle9W4kEIvFqoB8AgGN2cxVycw5v/W4nFDY8m8DA/kdKtwVlV1r4z2Dy/vvYTA9g0tkjRQsnhVVDQKz/u8u3NRdIoGV718dNRHjdlmbA2SPEsieHV8rkpy0Q4R1L3jegxy/YJpBEUQbOCpImk8HZRzKAor093xozNR7vcZcoyt+qzhbe9zV+mLHsNj6mOOMlhpuwJ2hOW8DYxT+VLAQxpCIk1VB0FraBogpH0/6UqCjpAAdV0ueENB+JXjxZSz5Y5MF393ScKwkkj8ipZJxuOr/7S9D98DGSF10VBOyiw4UHOnOIUBW0CKLRmV8YWqVIeh+9IQ9SF50PyW6N4ujgNMV6K3un6S2sUd1KPUV4w4yeQsAW/Q3TNg571pux1H/f/XzNNOLfi5rb2nifT7iHbJ5D68Ls0QYSer0b/glFz2lNWDMJtOc4SSjcpZQWI0Ztdfq8xapXnNUa1snzJqY+CTCjx9UpPoHSbg2L2BWiI5Lcra+9ieAezt78nU/aAVnkcZtQso8tJL3cNjBooZl+8jj0G9WPZ9MTogGIWRRmjIOQg2VD8vhEZPssxirTnV4DKJPodhoMyD8lojoLK4vAdzLLpiVO/HKNgZGBerubNRrMqSPl2/lFN/KhGv0n8LvknFTuvt+UwcfAlvOiJwsCX8Ie9u0tpIAiiKNwRnShONBoRNMT4gxAcVOTuf2/6JgTyXqdzvkVM962qrqEmip8gQBPFSRCgiWK4CwG1zHsZBGiZ9yUI1DLvPAjQS9lnEKiXsvMgQC9lkESxaUivH0E4bUiLIEAHR8YpBNT9m5BE8daQroNAHTfdBAGaKFZBoO6VXoZggrYvL4IAXaQ1vIdg2ZggPQposWEIAvVcewoB9Vxr2xBAz7U/s9R337B2qe+qcdX/+qIXRI6pbtvIqtfS4dtyvtYpjb4tp3bVgZooIDUz/iuVyhXfHl6p3KaqR2ocZnTboAORkF7xuo+ffYxFL2eL1oebVER9YgW5nEF775DCL7XBBhlPX7V+7L5TDHSa94CHFMOPw3urQUrpbf/mWUrpI1FUfb/SS6L495w6ptaf+ayMo/rNkiRJkiRJkiRJkiRJkiRJkiRJkiTpd6NgFFAGAM0kBmxYkWz7AAAAAElFTkSuQmCC><style>.sf-hidden{display:none!important}</style><meta http-equiv=content-security-policy content="default-src 'none'; font-src 'self' data:; img-src 'self' data:; style-src 'unsafe-inline'; media-src 'self' data:; script-src 'unsafe-inline' data:; object-src 'self' data:; frame-src 'self' data:;"><style>img[src="data:,"],source[src="data:,"]{display:none!important}</style><body class="bg-slate-100 dark:bg-slate-900 vsc-initialized"><div class="mx-auto flex flex-wrap md:py-5 flex-col md:flex-row items-center"><div class="flex flex-col w-full mx-auto text-center my-8"><div class="max-container w-full"><h1 class="text-5xl mb-4"> <span class="text-slate-700 dark:text-slate-300 font-light">Vim</span> <span class="text-slate-400 dark:text-slate-500 font-extralight hidden md:inline">cheatsheet</span></h1><div class="lg:w-3/5 mx-auto intro leading-relaxed text-slate-600"><p>A useful collection of <a target=_blank rel="noopener external nofollow noreferrer" href=http://www.vim.org/>Vim</a> 8.2 quick reference cheat sheets to help you learn vim editor faster.</p></div></div></div><div id=mdLayout class="mdLayout w-full max-container"><div data-pw-desk=leaderboard_btf id=pwDeskLbBtf1></div> 
+ <div class=h2-wrap>
+<h2 id=getting-started><a class=h-anchor href=#getting-started>#</a>Getting Started</h2>
+<div class=h3-wrap-list>
+<div class="h3-wrap row-span-2">
+<h3 id=motion-diagrams><a class="h-anchor sf-hidden" href=#motion-diagrams>#</a>Motion Diagrams</h3>
+<div class=section>
+<pre style=position:relative><button class="bg-emerald-500 p-2 text-white fadeIn shadow-xl rounded flex items-center absolute top-2 right-2" style=opacity:0><svg height=1em fill=currentColor viewBox="0 0 16 16"><path fill-rule=evenodd d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule=evenodd d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path> </svg></button><code class="hljs language-bash">▼/▶ Cursor   ▽/▷ Target
+</code></pre>
+<h4 id=left-right-motions><a class="h-anchor sf-hidden" href=#left-right-motions>#</a>Left-right motions</h4>
+<pre style=position:relative><button class="bg-emerald-500 p-2 text-white fadeIn shadow-xl rounded flex items-center absolute top-2 right-2" style=opacity:0><svg height=1em fill=currentColor viewBox="0 0 16 16"><path fill-rule=evenodd d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule=evenodd d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path> </svg></button><code class="hljs language-bash">┌───────────── |      
+├───────────── 0      $ ──────────────┐ 
+│  ┌────────── ^      fe ────────┐    │
+│  │  ┌─────── Fo     te ───────┐│    │
+│  │  │┌────── To     30| ───┐  ││    │
+│  │  ││ ┌──── ge     w ───┐ │  ││    │
+│  │  ││ │ ┌── b      e ─┐ │ │  ││    │
+│  │  ││ │ │  ┌h      l┐ │ │ │  ││    │
+▽  ▽  ▽▽ ▽ ▽  ▽▼      ▼▽ ▽ ▽ ▽  ▽▽    ▽
+   <span class=hljs-built_in>echo</span> <span class=hljs-string>"A cheatsheet from quickref.me"</span>
+</code></pre>
+<h4 id=up-down-motions><a class="h-anchor sf-hidden" href=#up-down-motions>#</a>Up-down motions</h4>
+<pre style=position:relative><button class="bg-emerald-500 p-2 text-white fadeIn shadow-xl rounded flex items-center absolute top-2 right-2" style=opacity:0><svg height=1em fill=currentColor viewBox="0 0 16 16"><path fill-rule=evenodd d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule=evenodd d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path> </svg></button><code class="hljs language-bash">                 - SCREEN 1 START
+   ┌─┬─────────▷ <span class=hljs-comment>#!/usr/bin/python</span>
+   │ │     ┌───▷     
+   │ │     │     <span class=hljs-built_in>print</span>(<span class=hljs-string>"Hello"</span>)
+   │ │     { } ▶ <span class=hljs-built_in>print</span>(<span class=hljs-string>"Vim"</span>)
+   │ │       │   <span class=hljs-built_in>print</span>(<span class=hljs-string>"!"</span>)
+   │ │       └─▷    
+   │ │ ┌───┬───▷ <span class=hljs-built_in>print</span>(<span class=hljs-string>"Welcome"</span>)
+G gg H M L k j ▶ <span class=hljs-built_in>print</span>(<span class=hljs-string>"to"</span>)
+│        │   └─▷ <span class=hljs-built_in>print</span>(<span class=hljs-string>"quickref.me"</span>)
+│        │       <span class=hljs-built_in>print</span>(<span class=hljs-string>"/vim"</span>)
+│        │     
+│        └─────▷ 
+│                - SCREEN 1 END
+└──────────────▷ <span class=hljs-built_in>print</span>(<span class=hljs-string>"SCREEN 2"</span>)
+</code></pre>
+</div>
+</div>
+<div class="h3-wrap row-span-2">
+<h3 id=motions><a class="h-anchor sf-hidden" href=#motions>#</a>Motions</h3>
+<div class=section>
+<table class=shortcuts>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>h</code> <em>|</em> <code>j</code> <em>|</em> <code>k</code> <em>|</em> <code>l</code></td>
+<td>Arrow keys</td>
+</tr>
+<tr>
+<td><code>&lt;C-u&gt;</code> <em>/</em> <code>&lt;C-d&gt;</code></td>
+<td>Half-page up/down</td>
+</tr>
+<tr>
+<td><code>&lt;C-b&gt;</code> <em>/</em> <code>&lt;C-f&gt;</code></td>
+<td>Page up/down</td>
+</tr>
+</tbody>
+</table>
+<h4 class=left-text id=words><a class="h-anchor sf-hidden" href=#words>#</a>Words</h4>
+<table class=shortcuts>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>b</code> <em>/</em> <code>w</code></td>
+<td>Previous/Next word</td>
+</tr>
+<tr>
+<td><code>ge</code> <em>/</em> <code>e</code></td>
+<td>Previous/Next end of word</td>
+</tr>
+</tbody>
+</table>
+<h4 id=line><a class="h-anchor sf-hidden" href=#line>#</a>Line</h4>
+<table class=shortcuts>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>0</code> <em>(zero)</em> <em>/</em> <code>$</code></td>
+<td>Start/End of line</td>
+</tr>
+<tr>
+<td><code>^</code></td>
+<td>Start of line <em>(non-blank)</em></td>
+</tr>
+</tbody>
+</table>
+<h4 id=character><a class="h-anchor sf-hidden" href=#character>#</a>Character</h4>
+<table class=shortcuts>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>Fe</code> <em>/</em> <code>fe</code></td>
+<td>Move to previous/next <code>e</code></td>
+</tr>
+<tr>
+<td><code>To</code> <em>/</em> <code>to</code></td>
+<td>Move before/after previous/next <code>o</code></td>
+</tr>
+<tr>
+<td><code>|</code> <em>/</em> <code>n|</code></td>
+<td>Go to first/<code>n</code>th column</td>
+</tr>
+</tbody>
+</table>
+<h4 id=document><a class="h-anchor sf-hidden" href=#document>#</a>Document</h4>
+<table class=shortcuts>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>gg</code> <em>/</em> <code>G</code></td>
+<td>First/Last line</td>
+</tr>
+<tr>
+<td><code>:n</code> <em>|</em> <code>nG</code></td>
+<td>Go to line <code>n</code></td>
+</tr>
+<tr>
+<td><code>}</code> <em>/</em> <code>{</code></td>
+<td>Next/Previous empty line</td>
+</tr>
+</tbody>
+</table>
+<h4 id=window><a class="h-anchor sf-hidden" href=#window>#</a>Window</h4>
+<table class=shortcuts>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>H</code> <em>/</em> <code>M</code> <em>/</em> <code>L</code></td>
+<td>Top/Middle/Bottom screen</td>
+</tr>
+<tr>
+<td><code>zt</code> <em>/</em> <code>zz</code> <em>/</em> <code>zb</code></td>
+<td>Top/Center/Bottom this line</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class=h3-wrap>
+<h3 id=insert-mode><a class="h-anchor sf-hidden" href=#insert-mode>#</a>Insert Mode</h3>
+<div class=section>
+<table class=shortcuts>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>i</code> <em>/</em> <code>a</code></td>
+<td>Insert before/after cursor</td>
+</tr>
+<tr>
+<td><code>I</code> <em>/</em> <code>A</code></td>
+<td>Insert start/end of line</td>
+</tr>
+<tr>
+<td><code>o</code> <em>/</em> <code>O</code> <em>(letter)</em></td>
+<td>Insert new line below/above</td>
+</tr>
+<tr>
+<td><code>s</code> <em>/</em> <code>S</code></td>
+<td>Delete char/line and insert</td>
+</tr>
+<tr>
+<td><code>C</code> <em>/</em> <code>cc</code></td>
+<td>Change to end of/current line</td>
+</tr>
+<tr>
+<td><code>gi</code></td>
+<td>Insert at last insert point</td>
+</tr>
+<tr>
+<td><code>Esc</code> <em>|</em> <code>&lt;C-[&gt;</code></td>
+<td>Exit insert mode</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class=h3-wrap>
+<h3 id=saving-and-exiting><a class="h-anchor sf-hidden" href=#saving-and-exiting>#</a>Saving and Exiting</h3>
+<div class=section>
+<table class=shortcuts>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>:w</code></td>
+<td>Save</td>
+</tr>
+<tr>
+<td><code>:q</code></td>
+<td>Close file</td>
+</tr>
+<tr>
+<td><code>:wq</code> <em>|</em> <code>:x</code> <em>|</em> <code>ZZ</code></td>
+<td>Save and quit</td>
+</tr>
+<tr>
+<td><code>:wqa</code></td>
+<td>Save and quit all files</td>
+</tr>
+<tr>
+<td><code>:q!</code> <em>|</em> <code>ZQ</code></td>
+<td>Force quit</td>
+</tr>
+<tr>
+<td><code>:qa</code></td>
+<td>Close all files</td>
+</tr>
+<tr>
+<td><code>:qa!</code></td>
+<td>Force quit all files</td>
+</tr>
+<tr>
+<td><code>:w</code> now.txt</td>
+<td>Write to <code>now.txt</code></td>
+</tr>
+<tr>
+<td><code>:sav</code> new.txt</td>
+<td>Save and edit <code>new.txt</code></td>
+</tr>
+<tr>
+<td><code>:w</code> !sudo tee %</td>
+<td>Write to readonly file</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class=h3-wrap>
+<h3 id=normal-mode><a class="h-anchor sf-hidden" href=#normal-mode>#</a>Normal Mode</h3>
+<div class=section>
+<table class=shortcuts>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>r</code></td>
+<td>Replace one character</td>
+</tr>
+<tr>
+<td><code>R</code></td>
+<td>Enter Replace mode</td>
+</tr>
+<tr>
+<td><code>u</code> <em>/</em> <code>3u</code></td>
+<td>Undo changes <code>1</code> / <code>3</code> times</td>
+</tr>
+<tr>
+<td><code>U</code></td>
+<td>Undo changes on one line</td>
+</tr>
+<tr>
+<td><code>J</code></td>
+<td>Join with next line</td>
+</tr>
+<tr>
+<td><code>&lt;C-r&gt;</code> <em>/</em> 5 <code>&lt;C-r&gt;</code></td>
+<td>Redo changes <code>1</code> / <code>5</code> times</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="h3-wrap row-span-2">
+<h3 id=cut-and-paste><a class="h-anchor sf-hidden" href=#cut-and-paste>#</a>Cut and paste</h3>
+<div class=section>
+<table class=shortcuts>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>x</code></td>
+<td>Delete character <em>(Cut)</em></td>
+</tr>
+<tr>
+<td><code>p</code> <em>/</em> <code>P</code></td>
+<td>Paste after/before</td>
+</tr>
+<tr>
+<td><code>xp</code></td>
+<td>Swap two characters</td>
+</tr>
+<tr>
+<td><code>D</code></td>
+<td>Delete to end of line <em>(Cut)</em></td>
+</tr>
+<tr>
+<td><code>dw</code></td>
+<td>Delete word <em>(Cut)</em></td>
+</tr>
+<tr>
+<td><code>dd</code></td>
+<td>Delete line <em>(Cut)</em></td>
+</tr>
+<tr>
+<td><code>ddp</code></td>
+<td>Swap two lines</td>
+</tr>
+<tr>
+<td><code>yy</code></td>
+<td>Yank line <em>(Copy)</em></td>
+</tr>
+<tr>
+<td><code>"*p</code> <em>|</em> <code>"+p</code></td>
+<td>Paste from system clipboard</td>
+</tr>
+<tr>
+<td><code>"*y</code> <em>|</em> <code>"+y</code></td>
+<td>Paste to system clipboard</td>
+</tr>
+</tbody>
+</table>
+<h4 id=in-visual-mode><a class="h-anchor sf-hidden" href=#in-visual-mode>#</a>In visual mode</h4>
+<table class=shortcuts>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>d</code> <em>|</em> <code>x</code></td>
+<td>Delete selection <em>(Cut)</em></td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td>Replace selection</td>
+</tr>
+<tr>
+<td><code>y</code></td>
+<td>Yank selection <em>(Copy)</em></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class=h3-wrap>
+<h3 id=repeating><a class="h-anchor sf-hidden" href=#repeating>#</a>Repeating</h3>
+<div class=section>
+<table class=shortcuts>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>.</code></td>
+<td>Repeat last command</td>
+</tr>
+<tr>
+<td><code>;</code></td>
+<td>Repeat latest <code>f</code>, <code>t</code>, <code>F</code> or <code>T</code></td>
+</tr>
+<tr>
+<td><code>,</code></td>
+<td>Repeat latest <code>f</code>, <code>t</code>, <code>F</code> or <code>T</code> reversed</td>
+</tr>
+<tr>
+<td><code>&amp;</code></td>
+<td>Repeat last <code>:s</code></td>
+</tr>
+<tr>
+<td><code>@:</code></td>
+<td>Repeat a command-line command</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class=h3-wrap>
+<h3 id=visual-mode><a class="h-anchor sf-hidden" href=#visual-mode>#</a>Visual mode</h3>
+<div class=section>
+<table class=shortcuts>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>v</code></td>
+<td>Enter visual mode</td>
+</tr>
+<tr>
+<td><code>V</code></td>
+<td>Enter visual line mode</td>
+</tr>
+<tr>
+<td><code>&lt;C-v&gt;</code></td>
+<td>Enter visual block mode</td>
+</tr>
+<tr>
+<td><code>ggVG</code></td>
+<td>Select all text</td>
+</tr>
+<tr>
+<td><code>&gt;</code> <em>/</em> <code>&lt;</code></td>
+<td>Shift text right/left</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class=h3-wrap>
+<h3 id=macros><a class="h-anchor sf-hidden" href=#macros>#</a>Macros</h3>
+<div class=section>
+<table class=shortcuts>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>qi</code></td>
+<td>Record macro <code>i</code></td>
+</tr>
+<tr>
+<td><code>q</code></td>
+<td>Stop recording macro</td>
+</tr>
+<tr>
+<td><code>@i</code></td>
+<td>Run macro <code>i</code></td>
+</tr>
+<tr>
+<td><code>7@i</code></td>
+<td>Run macro <code>i</code> 7 times</td>
+</tr>
+<tr>
+<td><code>@@</code></td>
+<td>Repeat last macro</td>
+</tr>
+</tbody>
+</table>
+<p>You can save macro for any letters not just <code>i</code></p>
+</div>
+</div>
+</div>
+</div>
+<div class=h2-wrap>
+<h2 id=vim-operators><a class=h-anchor href=#vim-operators>#</a>Vim Operators</h2>
+<div class=h3-wrap-list>
+<div class="h3-wrap secondary">
+<h3 id=usage><a class="h-anchor sf-hidden" href=#usage>#</a>Usage</h3>
+<div class=section>
+<table>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>d</code></td>
+<td><yel>w</yel></td>
+</tr>
+<tr>
+<td>Operator</td>
+<td>Motion</td>
+</tr>
+</tbody>
+</table>
+<p>Combine <a href=#available-operators>operators</a> with <a href=#motions>motions</a> to use them</p>
+</div>
+</div>
+<div class="h3-wrap row-span-2">
+<h3 id=available-operators><a class="h-anchor sf-hidden" href=#available-operators>#</a>Available Operators</h3>
+<div class=section>
+<table>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>d</code></td>
+<td>Delete</td>
+</tr>
+<tr>
+<td><code>y</code></td>
+<td>Yank <em>(copy)</em></td>
+</tr>
+<tr>
+<td><code>c</code></td>
+<td>Change <em>(delete then insert)</em></td>
+</tr>
+<tr>
+<td><code>p</code></td>
+<td>Paste</td>
+</tr>
+<tr>
+<td><code>=</code></td>
+<td>Formats code</td>
+</tr>
+<tr>
+<td><code>g~</code></td>
+<td>Toggle case</td>
+</tr>
+<tr>
+<td><code>gU</code></td>
+<td>Uppercase</td>
+</tr>
+<tr>
+<td><code>gu</code></td>
+<td>Lowercase</td>
+</tr>
+<tr>
+<td><code>&gt;</code></td>
+<td>Indent right</td>
+</tr>
+<tr>
+<td><code>&lt;</code></td>
+<td>Indent left</td>
+</tr>
+<tr>
+<td><code>!</code></td>
+<td>Filter through external program</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="h3-wrap row-span-2">
+<h3 id=examples><a class="h-anchor sf-hidden" href=#examples>#</a>Examples</h3>
+<div class=section>
+<table class=show-header>
+<thead>
+<tr>
+<th>Combination</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>d</code><yel>d</yel></td>
+<td>Delete current line</td>
+</tr>
+<tr>
+<td><code>d</code><yel>j</yel></td>
+<td>Delete two lines</td>
+</tr>
+<tr>
+<td><code>d</code><yel>w</yel></td>
+<td>Delete to next word</td>
+</tr>
+<tr>
+<td><code>d</code><yel>b</yel></td>
+<td>Delete to beginning of word</td>
+</tr>
+<tr>
+<td><code>d</code><yel>fa</yel></td>
+<td>Delete until <code>a</code> char</td>
+</tr>
+<tr>
+<td><code>d</code><yel>/hello</yel></td>
+<td>Delete until <code>hello</code></td>
+</tr>
+<tr>
+<td><code>c</code><yel>c</yel></td>
+<td>Change current line, synonym with <code>S</code></td>
+</tr>
+<tr>
+<td><code>y</code><yel>y</yel></td>
+<td>Copy current line</td>
+</tr>
+<tr>
+<td><code>&gt;</code><yel>j</yel></td>
+<td>Indent 2 lines</td>
+</tr>
+<tr>
+<td>gg<code>d</code><yel>G</yel></td>
+<td>Delete a complete document</td>
+</tr>
+<tr>
+<td>gg<code>=</code><yel>G</yel></td>
+<td>Indent a complete document</td>
+</tr>
+<tr>
+<td>gg<code>y</code><yel>G</yel></td>
+<td>Copy a whole document</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class=h3-wrap>
+<h3 id=counts><a class="h-anchor sf-hidden" href=#counts>#</a>Counts</h3>
+<div class=section>
+<pre style=position:relative><button class="bg-emerald-500 p-2 text-white fadeIn shadow-xl rounded flex items-center absolute top-2 right-2" style=opacity:0><svg height=1em fill=currentColor viewBox="0 0 16 16"><path fill-rule=evenodd d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule=evenodd d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path> </svg></button><code class=hljs>[<span class=hljs-built_in>count</span>] <span class=hljs-symbol>&lt;operator&gt;</span> <span class=hljs-symbol>&lt;motion&gt;</span>
+<span class=hljs-symbol>&lt;operator&gt;</span> [<span class=hljs-built_in>count</span>] <span class=hljs-symbol>&lt;motion&gt;</span>
+</code></pre>
+<hr>
+<table>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td>2<code>d</code><yel>d</yel></td>
+<td>Delete <code>2</code> lines</td>
+</tr>
+<tr>
+<td>6<code>y</code><yel>y</yel></td>
+<td>Copy <code>6</code> lines</td>
+</tr>
+<tr>
+<td><code>d</code>3<yel>w</yel></td>
+<td>Delete <code>3</code> words</td>
+</tr>
+<tr>
+<td><code>d</code>5<yel>j</yel></td>
+<td>Delete <code>5</code> lines downwards</td>
+</tr>
+<tr>
+<td><code>&gt;</code>4<yel>k</yel></td>
+<td>Indent <code>4</code> lines upwards</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class=h2-wrap>
+<h2 id=vim-text-objects><a class=h-anchor href=#vim-text-objects>#</a>Vim Text objects</h2>
+<div class=h3-wrap-list>
+<div class="h3-wrap secondary">
+<h3 id=usage-2><a class="h-anchor sf-hidden" href=#usage-2>#</a>Usage</h3>
+<div class=section>
+<table>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>v</code></td>
+<td>&nbsp; &nbsp; &nbsp; &nbsp; <pur>i</pur> <em>/</em> <pur>a</pur></td>
+<td><yel>p</yel></td>
+</tr>
+<tr>
+<td>Operator</td>
+<td><pur>i</pur>nner <em>/</em> <pur>a</pur>round</td>
+<td>Text object</td>
+</tr>
+</tbody>
+</table>
+<p>Operate with an <a href=#available-operators>operator</a> inner or around text blocks</p>
+</div>
+</div>
+<div class="h3-wrap row-span-2">
+<h3 id=text-objects><a class="h-anchor sf-hidden" href=#text-objects>#</a>Text objects</h3>
+<div class=section>
+<table>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><yel>p</yel></td>
+<td>Paragraph</td>
+</tr>
+<tr>
+<td><yel>w</yel></td>
+<td>Word</td>
+</tr>
+<tr>
+<td><yel>W</yel></td>
+<td>WORD <br><em>(surrounded by whitespace)</em></td>
+</tr>
+<tr>
+<td><yel>s</yel></td>
+<td>Sentence</td>
+</tr>
+<tr>
+<td><yel>[</yel> <yel>(</yel> <yel>{</yel> <yel>&lt;</yel></td>
+<td>A [], (), or {} block</td>
+</tr>
+<tr>
+<td><yel>]</yel> <yel>)</yel> <yel>}</yel> <yel>&gt;</yel></td>
+<td>A [], (), or {} block</td>
+</tr>
+<tr>
+<td><yel>'</yel> <yel>"</yel> <yel>`</yel></td>
+<td>A quoted string</td>
+</tr>
+<tr>
+<td><yel>b</yel></td>
+<td>A block [(</td>
+</tr>
+<tr>
+<td><yel>B</yel></td>
+<td>A block in [{</td>
+</tr>
+<tr>
+<td><yel>t</yel></td>
+<td>A HTML tag block</td>
+</tr>
+</tbody>
+</table>
+<p>See <code>:help text-objects</code></p>
+</div>
+</div>
+<div class=h3-wrap>
+<h3 id=delete><a class="h-anchor sf-hidden" href=#delete>#</a>Delete</h3>
+<div class=section>
+<table>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>d</code><pur>i</pur><yel>w</yel></td>
+<td>Delete inner word</td>
+</tr>
+<tr>
+<td><code>d</code><pur>i</pur><yel>s</yel></td>
+<td>Delete inner sentence</td>
+</tr>
+<tr>
+<td><code>d</code><pur>i</pur><yel>"</yel></td>
+<td>Delete in quotes</td>
+</tr>
+<tr>
+<td><code>d</code><pur>a</pur><yel>"</yel></td>
+<td>Delete in quotes <em>(including quotes)</em></td>
+</tr>
+<tr>
+<td><code>d</code><pur>i</pur><yel>p</yel></td>
+<td>Delete a paragraph</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class=h3-wrap>
+<h3 id=selections><a class="h-anchor sf-hidden" href=#selections>#</a>Selections</h3>
+<div class=section>
+<table>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>v</code><pur>i</pur><yel>"</yel></td>
+<td>Select inner quotes "<code class=underline>...</code>"</td>
+</tr>
+<tr>
+<td><code>v</code><pur>a</pur><yel>"</yel></td>
+<td>Select quotes <code class=underline>"..."</code></td>
+</tr>
+<tr>
+<td><code>v</code><pur>i</pur><yel>[</yel></td>
+<td>Select inner brackets [<code class=underline>...</code>]</td>
+</tr>
+<tr>
+<td><code>v</code><pur>a</pur><yel>[</yel></td>
+<td>Select brackets <code class=underline>[...]</code></td>
+</tr>
+<tr>
+<td><code>v</code><pur>i</pur><yel>w</yel></td>
+<td>Select inner word</td>
+</tr>
+<tr>
+<td><code>v</code><pur>i</pur><yel>p</yel></td>
+<td>Select inner paragraph</td>
+</tr>
+<tr>
+<td><code>v</code><pur>i</pur><yel>p</yel><pur>i</pur><yel>p</yel></td>
+<td>Select more paragraph</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class=h3-wrap>
+<h3 id=misc><a class="h-anchor sf-hidden" href=#misc>#</a>Misc</h3>
+<div class=section>
+<table>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>c</code><pur>i</pur><yel>w</yel></td>
+<td>Change inner word</td>
+</tr>
+<tr>
+<td><code>c</code><pur>i</pur><yel>"</yel></td>
+<td>Change inner quotes</td>
+</tr>
+<tr>
+<td><code>c</code><pur>i</pur><yel>t</yel></td>
+<td>Change inner tags (HTML)</td>
+</tr>
+<tr>
+<td><code>c</code><pur>i</pur><yel>p</yel></td>
+<td>Change inner paragraph</td>
+</tr>
+<tr>
+<td><code>y</code><pur>i</pur><yel>p</yel></td>
+<td>Yank inner paragraph</td>
+</tr>
+<tr>
+<td><code>y</code><pur>a</pur><yel>p</yel></td>
+<td>Yank paragraph <em>(including newline)</em></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class=h2-wrap>
+<h2 id=vim-multiple-files><a class=h-anchor href=#vim-multiple-files>#</a>Vim Multiple files</h2>
+<div class=h3-wrap-list>
+<div class=h3-wrap>
+<h3 id=buffers><a class="h-anchor sf-hidden" href=#buffers>#</a>Buffers</h3>
+<div class=section>
+<table>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>:e file</code></td>
+<td>Edit a file in a new buffer</td>
+</tr>
+<tr>
+<td><code>:bn</code></td>
+<td>Go to the next buffer</td>
+</tr>
+<tr>
+<td><code>:bp</code></td>
+<td>Go to the previous buffer</td>
+</tr>
+<tr>
+<td><code>:bd</code></td>
+<td>Remove file from buffer list</td>
+</tr>
+<tr>
+<td><code>:b 5</code></td>
+<td>Open buffer #5</td>
+</tr>
+<tr>
+<td><code>:b file</code></td>
+<td>Go to a buffer by file</td>
+</tr>
+<tr>
+<td><code>:ls</code></td>
+<td>List all open buffers</td>
+</tr>
+<tr>
+<td><code>:sp file</code></td>
+<td>Open and split window</td>
+</tr>
+<tr>
+<td><code>:vs file</code></td>
+<td>Open and vertically split window</td>
+</tr>
+<tr>
+<td><code>:hid</code></td>
+<td>Hide this buffer</td>
+</tr>
+<tr>
+<td><code>:wn</code></td>
+<td>Write file and move to next</td>
+</tr>
+<tr>
+<td><code>:tab ba</code></td>
+<td>Edit all buffers as tabs</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class=h3-wrap>
+<h3 id=windows><a class="h-anchor sf-hidden" href=#windows>#</a>Windows</h3>
+<div class=section>
+<table class=shortcuts>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;C-w&gt;</code> <code>s</code></td>
+<td>Split window</td>
+</tr>
+<tr>
+<td><code>&lt;C-w&gt;</code> <code>v</code></td>
+<td>Split window vertically</td>
+</tr>
+<tr>
+<td><code>&lt;C-w&gt;</code> <code>w</code></td>
+<td>Switch windows</td>
+</tr>
+<tr>
+<td><code>&lt;C-w&gt;</code> <code>q</code></td>
+<td>Quit a window</td>
+</tr>
+<tr>
+<td><code>&lt;C-w&gt;</code> <code>T</code></td>
+<td>Break out into a new tab</td>
+</tr>
+<tr>
+<td><code>&lt;C-w&gt;</code> <code>x</code></td>
+<td>Swap current with next</td>
+</tr>
+<tr>
+<td><code>&lt;C-w&gt;</code> <code>-</code> <em>/</em> <code>+</code></td>
+<td>Decrease/Increase height</td>
+</tr>
+<tr>
+<td><code>&lt;C-w&gt;</code> <code>&lt;</code> <em>/</em> <code>&gt;</code></td>
+<td>Decrease/Increase width</td>
+</tr>
+<tr>
+<td><code>&lt;C-w&gt;</code> <code>|</code></td>
+<td>Max out the width</td>
+</tr>
+<tr>
+<td><code>&lt;C-w&gt;</code> <code>=</code></td>
+<td>Equally high and wide</td>
+</tr>
+<tr>
+<td><code>&lt;C-w&gt;</code> <code>h</code> <em>/</em> <code>l</code></td>
+<td>Go to the left/right window</td>
+</tr>
+<tr>
+<td><code>&lt;C-w&gt;</code> <code>j</code> <em>/</em> <code>k</code></td>
+<td>Go to the up/down window</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class=h3-wrap>
+<h3 id=tabs><a class="h-anchor sf-hidden" href=#tabs>#</a>Tabs</h3>
+<div class=section>
+<table>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>:tabe [file]</code></td>
+<td><yel>E</yel>dit file in a new tab</td>
+</tr>
+<tr>
+<td><code>:tabf [file]</code></td>
+<td>Open if exists in new tab</td>
+</tr>
+<tr>
+<td><code>:tabc</code></td>
+<td><yel>C</yel>lose current tab</td>
+</tr>
+<tr>
+<td><code>:tabo</code></td>
+<td>Close <yel>o</yel>ther tabs</td>
+</tr>
+<tr>
+<td><code>:tabs</code></td>
+<td>List all <yel>tabs</yel></td>
+</tr>
+<tr>
+<td><code>:tabr</code></td>
+<td>Go to fi<yel>r</yel>st tab</td>
+</tr>
+<tr>
+<td><code>:tabl</code></td>
+<td>Go to <yel>l</yel>ast tab</td>
+</tr>
+<tr>
+<td><code>:tabm 0</code></td>
+<td><yel>M</yel>ove to position <code>0</code></td>
+</tr>
+<tr>
+<td><code>:tabn</code></td>
+<td>Go to <yel>n</yel>ext tab</td>
+</tr>
+<tr>
+<td><code>:tabp</code></td>
+<td>Go to <yel>p</yel>revious tab</td>
+</tr>
+</tbody>
+</table>
+<h4 id=normal-mode-2><a class="h-anchor sf-hidden" href=#normal-mode-2>#</a>Normal mode</h4>
+<table class=shortcuts>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>gt</code></td>
+<td>Go to <yel>n</yel>ext tab</td>
+</tr>
+<tr>
+<td><code>gT</code></td>
+<td>Go to <yel>p</yel>revious tab</td>
+</tr>
+<tr>
+<td><code>2gt</code></td>
+<td>Go to tab number <code>2</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class=h2-wrap>
+<h2 id=vim-search-and-replace><a class=h-anchor href=#vim-search-and-replace>#</a>Vim Search and Replace</h2>
+<div class=h3-wrap-list>
+<div class=h3-wrap>
+<h3 id=search><a class="h-anchor sf-hidden" href=#search>#</a>Search</h3>
+<div class=section>
+<table class=shortcuts>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>/foo</code></td>
+<td>Search forward</td>
+</tr>
+<tr>
+<td><code>/foo\c</code></td>
+<td>Search forward <em>(case insensitive)</em></td>
+</tr>
+<tr>
+<td><code>?foo</code></td>
+<td>Search backward</td>
+</tr>
+<tr>
+<td><code>/\v\d+</code></td>
+<td>Search with <a href=https://quickref.me/regex>regex</a></td>
+</tr>
+<tr>
+<td><code>n</code></td>
+<td>Next matching search pattern</td>
+</tr>
+<tr>
+<td><code>N</code></td>
+<td>Previous match</td>
+</tr>
+<tr>
+<td><code>*</code></td>
+<td>Search for current word forward</td>
+</tr>
+<tr>
+<td><code>#</code></td>
+<td>Search for current word backward</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class=h3-wrap>
+<h3 id=replace-line><a class="h-anchor sf-hidden" href=#replace-line>#</a>Replace LINE</h3>
+<div class=section>
+<pre style=position:relative><button class="bg-emerald-500 p-2 text-white fadeIn shadow-xl rounded flex items-center absolute top-2 right-2" style=opacity:0><svg height=1em fill=currentColor viewBox="0 0 16 16"><path fill-rule=evenodd d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule=evenodd d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path> </svg></button><code class="hljs language-vim">:[<span class=hljs-built_in>range</span>]s/{pattern}/{str}/[flags]
+</code></pre>
+<hr>
+<table>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>:s/old/new</code></td>
+<td>Replace first</td>
+</tr>
+<tr>
+<td><code>:s/old/new/g</code></td>
+<td>Replace all</td>
+</tr>
+<tr>
+<td><code>:s/\vold/new/g</code></td>
+<td>Replace all with <a href=https://quickref.me/regex>regex</a></td>
+</tr>
+<tr>
+<td><code>:s/old/new/gc</code></td>
+<td>replace all <em>(Confirm)</em></td>
+</tr>
+<tr>
+<td><code>:s/old/new/i</code></td>
+<td>Ignore case replace first</td>
+</tr>
+<tr>
+<td><code>:2,6s/old/new/g</code></td>
+<td>Replace between lines <code>2</code>-<code>6</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class=h3-wrap>
+<h3 id=replace-file><a class="h-anchor sf-hidden" href=#replace-file>#</a>Replace FILE</h3>
+<div class=section>
+<pre style=position:relative><button class="bg-emerald-500 p-2 text-white fadeIn shadow-xl rounded flex items-center absolute top-2 right-2" style=opacity:0><svg height=1em fill=currentColor viewBox="0 0 16 16"><path fill-rule=evenodd d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule=evenodd d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path> </svg></button><code class="hljs language-vim">:%s/{pattern}/{str}/[flags]
+</code></pre>
+<hr>
+<table>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>:%s/old/new</code></td>
+<td>Replace first</td>
+</tr>
+<tr>
+<td><code>:%s/old/new/g</code></td>
+<td>Replace all</td>
+</tr>
+<tr>
+<td><code>:%s/old/new/gc</code></td>
+<td>Replace all <em>(Confirm)</em></td>
+</tr>
+<tr>
+<td><code>:%s/old/new/gi</code></td>
+<td>Replace all <em>(ignore case)</em></td>
+</tr>
+<tr>
+<td><code>:%s/\vold/new/g</code></td>
+<td>Replace all with <a href=https://quickref.me/regex>regex</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="h3-wrap row-span-2">
+<h3 id=ranges><a class="h-anchor sf-hidden" href=#ranges>#</a>Ranges</h3>
+<div class=section>
+<table>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>%</code></td>
+<td>Entire file</td>
+</tr>
+<tr>
+<td><code>’&lt;,’&gt;</code></td>
+<td>Current selection</td>
+</tr>
+<tr>
+<td><code>5</code></td>
+<td>Line <code>5</code></td>
+</tr>
+<tr>
+<td><code>5,10</code></td>
+<td>Lines <code>5</code> to <code>10</code></td>
+</tr>
+<tr>
+<td><code>$</code></td>
+<td>Last line</td>
+</tr>
+<tr>
+<td><code>2,$</code></td>
+<td>Lines <code>2</code> to Last</td>
+</tr>
+<tr>
+<td><code>.</code></td>
+<td>Current line</td>
+</tr>
+<tr>
+<td><code>,3</code></td>
+<td>Next <code>3</code> lines</td>
+</tr>
+<tr>
+<td><code>-3,</code></td>
+<td>Forward <code>3</code> lines</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="h3-wrap row-span-2">
+<h3 id=global-command><a class="h-anchor sf-hidden" href=#global-command>#</a>Global command</h3>
+<div class=section>
+<pre style=position:relative><button class="bg-emerald-500 p-2 text-white fadeIn shadow-xl rounded flex items-center absolute top-2 right-2" style=opacity:0><svg height=1em fill=currentColor viewBox="0 0 16 16"><path fill-rule=evenodd d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule=evenodd d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path> </svg></button><code class="hljs language-vim">:[<span class=hljs-built_in>range</span>]g/{pattern}/[<span class=hljs-keyword>command</span>]
+</code></pre>
+<hr>
+<table>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>:g/foo/d</code></td>
+<td>Delete lines containing <code>foo</code></td>
+</tr>
+<tr>
+<td><code>:g!/foo/d</code></td>
+<td>Delete lines not containing <code>foo</code></td>
+</tr>
+<tr>
+<td><code>:g/^\s*$/d</code></td>
+<td>Delete all blank lines</td>
+</tr>
+<tr>
+<td><code>:g/foo/t$</code></td>
+<td>Copy lines containing <code>foo</code> to EOF</td>
+</tr>
+<tr>
+<td><code>:g/foo/m$</code></td>
+<td>Move lines containing <code>foo</code> to EOF</td>
+</tr>
+<tr>
+<td><code>:g/^/m0</code></td>
+<td>Reverse a file</td>
+</tr>
+<tr>
+<td><code>:g/^/t.</code></td>
+<td>Duplicate every line</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class=h3-wrap>
+<h3 id=inverse-g><a class="h-anchor sf-hidden" href=#inverse-g>#</a>Inverse :g</h3>
+<div class=section>
+<pre style=position:relative><button class="bg-emerald-500 p-2 text-white fadeIn shadow-xl rounded flex items-center absolute top-2 right-2" style=opacity:0><svg height=1em fill=currentColor viewBox="0 0 16 16"><path fill-rule=evenodd d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule=evenodd d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path> </svg></button><code class="hljs language-vim">:[<span class=hljs-built_in>range</span>]v/{pattern}/[<span class=hljs-keyword>command</span>]
+</code></pre>
+<hr>
+<table>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>:v/foo/d</code></td>
+<td>Delete lines not containing <code>foo</code><br><em>(also <code>:g!/foo/d</code>)</em></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class=h3-wrap>
+<h3 id=flags><a class="h-anchor sf-hidden" href=#flags>#</a>Flags</h3>
+<div class=section>
+<table>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>g</code></td>
+<td>Replace all occurrences</td>
+</tr>
+<tr>
+<td><code>i</code></td>
+<td>Ignore case</td>
+</tr>
+<tr>
+<td><code>I</code></td>
+<td>Don't ignore case</td>
+</tr>
+<tr>
+<td><code>c</code></td>
+<td>Confirm each substitution</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class=h3-wrap>
+<h3 id=substitute-expression-magic><a class="h-anchor sf-hidden" href=#substitute-expression-magic>#</a>Substitute expression (magic)</h3>
+<div class=section>
+<table>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>&amp;</code> <em>|</em> <code>\0</code></td>
+<td>Replace with the whole matched</td>
+</tr>
+<tr>
+<td><code>\1</code>...<code>\9</code></td>
+<td>Replace with the group 0-9</td>
+</tr>
+<tr>
+<td><code>\u</code></td>
+<td>Uppercase next letter</td>
+</tr>
+<tr>
+<td><code>\U</code></td>
+<td>Uppercase following characters</td>
+</tr>
+<tr>
+<td><code>\l</code></td>
+<td>Lowercase next letter</td>
+</tr>
+<tr>
+<td><code>\L</code></td>
+<td>Lowercase following characters</td>
+</tr>
+<tr>
+<td><code>\e</code></td>
+<td>End of <code>\u</code>, <code>\U</code>, <code>\l</code> and <code>\L</code></td>
+</tr>
+<tr>
+<td><code>\E</code></td>
+<td>End of <code>\u</code>, <code>\U</code>, <code>\l</code> and <code>\L</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="h3-wrap col-span-2">
+<h3 id=examples-2><a class="h-anchor sf-hidden" href=#examples-2>#</a>Examples</h3>
+<div class=section>
+<pre style=position:relative><button class="bg-emerald-500 p-2 text-white fadeIn shadow-xl rounded flex items-center absolute top-2 right-2" style=opacity:0><svg height=1em fill=currentColor viewBox="0 0 16 16"><path fill-rule=evenodd d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule=evenodd d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path> </svg></button><code class="hljs wrap language-c">:s/a\|b/xxx\<span class=hljs-number>0</span>xxx/g		         # Modifies <span class=hljs-string>"a b"</span>      to <span class=hljs-string>"xxxaxxx xxxbxxx"</span>
+:s/test/\U&amp; file/                # Modifies <span class=hljs-string>"test"</span>     to <span class=hljs-string>"TEST FILE"</span>
+:s/\(test\)/\U\<span class=hljs-number>1</span>\e file/         # Modifies <span class=hljs-string>"test"</span>     to <span class=hljs-string>"TEST file"</span>
+:s/\v([abc])([efg])/\<span class=hljs-number>2</span>\<span class=hljs-number>1</span>/g	     # Modifies <span class=hljs-string>"af fa bg"</span> to <span class=hljs-string>"fa fa gb"</span>
+:s/\v\w+/\u\<span class=hljs-number>0</span>/g		             # Modifies <span class=hljs-string>"bla bla"</span>  to <span class=hljs-string>"Bla Bla"</span>
+:s/\v([ab])|([cd])/\<span class=hljs-number>1</span>x/g         # Modifies <span class=hljs-string>"a b c d"</span>  to <span class=hljs-string>"ax bx x x"</span>
+:%s/.*/\L&amp;/                      # Modifies <span class=hljs-string>"HTML"</span>     to <span class=hljs-string>"html"</span>
+:s/\v&lt;(.)(\w*)/\u\<span class=hljs-number>1</span>\L\<span class=hljs-number>2</span>/g        # Make every first letter of a word uppercase
+:%s/^\(.*\)\n\<span class=hljs-number>1</span>/\<span class=hljs-number>1</span>/              # Remove duplicate lines
+:%s/&lt;\/\=\(\w\+\)\&gt;/\U&amp;/g        # Convert HTML-Tags to uppercase
+:g/^pattern/s/$/mytext           # Find and append text to the end
+:g/pattern/norm! @i              # Run a macro on matching lines
+/^\(.*\)\(\r\?\n\<span class=hljs-number>1</span>\)\+$          # View the duplicates lines
+/\v^(.*)(\r?\n\<span class=hljs-number>1</span>)+$              # View the duplicates lines (very magic)
+:v/./,/./-j                      # Compress blank lines into a blank line
+:g/&lt;p1&gt;/,/&lt;p2&gt;/d                 # Delete inclusively from &lt;p1&gt; to &lt;p2&gt;
+</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class=h2-wrap>
+<h2 id=vimdiff><a class=h-anchor href=#vimdiff>#</a>Vimdiff</h2>
+<div class=h3-wrap-list>
+<div class="h3-wrap secondary">
+<h3 id=usage-3><a class="h-anchor sf-hidden" href=#usage-3>#</a>Usage</h3>
+<div class=section>
+<pre style=position:relative><button class="bg-emerald-500 p-2 text-white fadeIn shadow-xl rounded flex items-center absolute top-2 right-2" style=opacity:0><svg height=1em fill=currentColor viewBox="0 0 16 16"><path fill-rule=evenodd d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule=evenodd d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path> </svg></button><code class="hljs language-shell"><span class="hljs-meta prompt_">
+$ </span><span class=language-bash>vimdiff file1 file2 [file3]</span>
+<span class="hljs-meta prompt_">$ </span><span class=language-bash>vim -d file1 file2 [file3]</span>
+</code></pre>
+</div>
+</div>
+<div class="h3-wrap row-span-2">
+<h3 id=editing><a class="h-anchor sf-hidden" href=#editing>#</a>Editing</h3>
+<div class=section>
+<pre style=position:relative><button class="bg-emerald-500 p-2 text-white fadeIn shadow-xl rounded flex items-center absolute top-2 right-2" style=opacity:0><svg height=1em fill=currentColor viewBox="0 0 16 16"><path fill-rule=evenodd d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule=evenodd d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path> </svg></button><code class=hljs>:<span class=hljs-comment>[range]</span>diffget <span class=hljs-comment>[bufspec]</span>
+:<span class=hljs-comment>[range]</span>diffput <span class=hljs-comment>[bufspec]</span>
+</code></pre>
+<hr>
+<table class=shortcuts>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>do</code> <em>/</em> <code>:diffget</code></td>
+<td>Obtain (get) difference</td>
+</tr>
+<tr>
+<td><code>dp</code> <em>/</em> <code>:diffput</code></td>
+<td>Put difference</td>
+</tr>
+<tr>
+<td><code>:dif</code></td>
+<td>Re-scan differences</td>
+</tr>
+<tr>
+<td><code>:diffo</code></td>
+<td>Switch off diff mode</td>
+</tr>
+<tr>
+<td><code>:1,$+1diffget</code></td>
+<td>Get all differences</td>
+</tr>
+<tr>
+<td><code>ZQ</code></td>
+<td>Quit without changes</td>
+</tr>
+</tbody>
+</table>
+<p>See: <a href=#ranges>Ranges</a></p>
+</div>
+</div>
+<div class="h3-wrap row-span-2">
+<h3 id=folds><a class="h-anchor sf-hidden" href=#folds>#</a>Folds</h3>
+<div class=section>
+<table class=shortcuts>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>zo</code> <em>/</em> <code>zO</code></td>
+<td>Open</td>
+</tr>
+<tr>
+<td><code>zc</code> <em>/</em> <code>zC</code></td>
+<td>Close</td>
+</tr>
+<tr>
+<td><code>za</code> <em>/</em> <code>zA</code></td>
+<td>Toggle</td>
+</tr>
+<tr>
+<td><code>zv</code></td>
+<td>Open folds for this line</td>
+</tr>
+<tr>
+<td><code>zM</code></td>
+<td>Close all</td>
+</tr>
+<tr>
+<td><code>zR</code></td>
+<td>Open all</td>
+</tr>
+<tr>
+<td><code>zm</code></td>
+<td>Fold more <em>(foldlevel += 1)</em></td>
+</tr>
+<tr>
+<td><code>zr</code></td>
+<td>Fold less <em>(foldlevel -= 1)</em></td>
+</tr>
+<tr>
+<td><code>zx</code></td>
+<td>Update folds</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class=h3-wrap>
+<h3 id=jumping><a class="h-anchor sf-hidden" href=#jumping>#</a>Jumping</h3>
+<div class=section>
+<br>
+<table class=shortcuts>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>]c</code></td>
+<td>Next difference</td>
+</tr>
+<tr>
+<td><code>[c</code></td>
+<td>Previous difference</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class=h2-wrap>
+<h2 id=miscellaneous><a class=h-anchor href=#miscellaneous>#</a>Miscellaneous</h2>
+<div class=h3-wrap-list>
+<div class="h3-wrap row-span-2">
+<h3 id=case><a class="h-anchor sf-hidden" href=#case>#</a>Case</h3>
+<div class=section>
+<table class=shortcuts>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>vU</code></td>
+<td><em>Uppercase</em> character</td>
+</tr>
+<tr>
+<td><code>vu</code></td>
+<td><em>Lowercase</em> character</td>
+</tr>
+<tr>
+<td><code>~</code></td>
+<td><em>Toggle case</em> character</td>
+</tr>
+<tr>
+<td><code>viw</code> <code>U</code></td>
+<td><em>Uppercase</em> word</td>
+</tr>
+<tr>
+<td><code>viw</code> <code>u</code></td>
+<td><em>Lowercase</em> word</td>
+</tr>
+<tr>
+<td><code>viw</code> <code>~</code></td>
+<td><em>Toggle case</em> word</td>
+</tr>
+<tr>
+<td><code>VU</code> <em>/</em> <code>gUU</code></td>
+<td><em>Uppercase</em> line</td>
+</tr>
+<tr>
+<td><code>Vu</code> <em>/</em> <code>guu</code></td>
+<td><em>Lowercase</em> line</td>
+</tr>
+<tr>
+<td><code>V~</code> <em>/</em> <code>g~~</code></td>
+<td><em>Toggle case</em> line</td>
+</tr>
+<tr>
+<td><code>gggUG</code></td>
+<td><em>Uppercase</em> all text</td>
+</tr>
+<tr>
+<td><code>ggguG</code></td>
+<td><em>Lowercase</em> all text</td>
+</tr>
+<tr>
+<td><code>ggg~G</code></td>
+<td><em>Toggle case</em> all text</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class=h3-wrap>
+<h3 id=jumping-2><a class="h-anchor sf-hidden" href=#jumping-2>#</a>Jumping</h3>
+<div class=section>
+<table class=shortcuts>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;C-o&gt;</code></td>
+<td>Go back to previous</td>
+</tr>
+<tr>
+<td><code>&lt;C-i&gt;</code></td>
+<td>Go forward</td>
+</tr>
+<tr>
+<td><code>gf</code></td>
+<td>Go to file in cursor</td>
+</tr>
+<tr>
+<td><code>ga</code></td>
+<td>Display hex, ascii value</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="h3-wrap row-span-2">
+<h3 id=misc-command-lines><a class="h-anchor sf-hidden" href=#misc-command-lines>#</a>Misc command-lines</h3>
+<div class=section>
+<table>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>:h</code></td>
+<td>Help open help view</td>
+</tr>
+<tr>
+<td><code>:edit!</code></td>
+<td>Reload current file</td>
+</tr>
+<tr>
+<td><code>:2,8m0</code></td>
+<td>Move lines <code>2</code>-<code>8</code> to <code>0</code></td>
+</tr>
+<tr>
+<td><code>:noh</code></td>
+<td>Clear search highlights</td>
+</tr>
+<tr>
+<td><code>:sort</code></td>
+<td>Sort lines</td>
+</tr>
+<tr>
+<td><code>:ter</code></td>
+<td>Open a terminal window</td>
+</tr>
+<tr>
+<td><code>:set paste</code></td>
+<td>Enable Insert Paste sub-mode</td>
+</tr>
+<tr>
+<td><code>:set nopaste</code></td>
+<td>disable Insert Paste sub-mode</td>
+</tr>
+<tr>
+<td><code>:cq</code></td>
+<td>Exiting with an error<br><em>(aborting Git)</em></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class=h3-wrap>
+<h3 id=navigating><a class="h-anchor sf-hidden" href=#navigating>#</a>Navigating</h3>
+<div class=section>
+<table class=shortcuts>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>%</code></td>
+<td>Nearest/matching <code>{[()]}</code></td>
+</tr>
+<tr>
+<td><code>[(</code> <em>|</em> <code>[{</code></td>
+<td>Previous <code>(</code> or <code>{</code></td>
+</tr>
+<tr>
+<td><code>])</code> <em>|</em> <code>]{</code></td>
+<td>Next <code>)</code> or <code>}</code></td>
+</tr>
+<tr>
+<td><code>[m</code></td>
+<td>Previous method start</td>
+</tr>
+<tr>
+<td><code>[M</code></td>
+<td>Previous method end</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class=h3-wrap>
+<h3 id=counters><a class="h-anchor sf-hidden" href=#counters>#</a>Counters</h3>
+<div class=section>
+<table class=shortcuts>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;C-a&gt;</code></td>
+<td>Increase number</td>
+</tr>
+<tr>
+<td><code>&lt;C-x&gt;</code></td>
+<td>Decrease number</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="h3-wrap row-span-2 col-span-2">
+<h3 id=tags><a class="h-anchor sf-hidden" href=#tags>#</a>Tags</h3>
+<div class=section>
+<table class=shortcuts>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>:tag Classname</code></td>
+<td>Jump to first definition of Classname</td>
+</tr>
+<tr>
+<td><code>&lt;C-]&gt;</code></td>
+<td>Jump to definition</td>
+</tr>
+<tr>
+<td><code>g]</code></td>
+<td>See all definitions</td>
+</tr>
+<tr>
+<td><code>&lt;C-t&gt;</code></td>
+<td>Go back to last tag</td>
+</tr>
+<tr>
+<td><code>&lt;C-o&gt; &lt;C-i&gt;</code></td>
+<td>Back/forward</td>
+</tr>
+<tr>
+<td><code>:tselect Classname</code></td>
+<td>Find definitions of Classname</td>
+</tr>
+<tr>
+<td><code>:tjump Classname</code></td>
+<td>Find definitions of Classname (auto-select 1st)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class=h3-wrap>
+<h3 id=formatting><a class="h-anchor sf-hidden" href=#formatting>#</a>Formatting</h3>
+<div class=section>
+<table>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>:ce 8</code></td>
+<td>Center lines between <code>8</code> columns</td>
+</tr>
+<tr>
+<td><code>:ri 4</code></td>
+<td>Right-align lines at <code>4</code> columns</td>
+</tr>
+<tr>
+<td><code>:le</code></td>
+<td>Left-align lines</td>
+</tr>
+</tbody>
+</table>
+<p>See <code>:help formatting</code></p>
+</div>
+</div>
+<div class="h3-wrap col-span-2 row-span-4">
+<h3 id=marks><a class="h-anchor sf-hidden" href=#marks>#</a>Marks</h3>
+<div class=section>
+<table class=shortcuts>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>`^</code></td>
+<td>Last position of cursor in insert mode</td>
+</tr>
+<tr>
+<td><code>`.</code></td>
+<td>Last change in current buffer</td>
+</tr>
+<tr>
+<td><code>`"</code></td>
+<td>Last exited current buffer</td>
+</tr>
+<tr>
+<td><code>`0</code></td>
+<td>In last file edited</td>
+</tr>
+<tr>
+<td><code>''</code></td>
+<td>Back to line in current buffer where jumped from</td>
+</tr>
+<tr>
+<td><code>``</code></td>
+<td>Back to position in current buffer where jumped from</td>
+</tr>
+<tr>
+<td><code>`[</code></td>
+<td>To beginning of previously changed or yanked text</td>
+</tr>
+<tr>
+<td><code>`]</code></td>
+<td>To end of previously changed or yanked text</td>
+</tr>
+<tr>
+<td><code>`&lt;</code></td>
+<td>To beginning of last visual selection</td>
+</tr>
+<tr>
+<td><code>`&gt;</code></td>
+<td>To end of last visual selection</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td><code>ma</code></td>
+<td>Mark this cursor position as <code>a</code></td>
+</tr>
+<tr>
+<td><code>`a</code></td>
+<td>Jump to the cursor position <code>a</code></td>
+</tr>
+<tr>
+<td><code>'a</code></td>
+<td>Jump to the beginning of the line with position <code>a</code></td>
+</tr>
+<tr>
+<td><code>d'a</code></td>
+<td>Delete from current line to line of mark <code>a</code></td>
+</tr>
+<tr>
+<td><code>d`a</code></td>
+<td>Delete from current position to position of mark <code>a</code></td>
+</tr>
+<tr>
+<td><code>c'a</code></td>
+<td>Change text from current line to line of <code>a</code></td>
+</tr>
+<tr>
+<td><code>y`a</code></td>
+<td>Yank text from current position to position of <code>a</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td><code>:marks</code></td>
+<td>List all current marks</td>
+</tr>
+<tr>
+<td><code>:delm a</code></td>
+<td>Delete mark <code>a</code></td>
+</tr>
+<tr>
+<td><code>:delm a-d</code></td>
+<td>Delete marks <code>a</code>, <code>b</code>, <code>c</code>, <code>d</code></td>
+</tr>
+<tr>
+<td><code>:delm abc</code></td>
+<td>Delete marks <code>a</code>, <code>b</code>, <code>c</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class=h3-wrap>
+<h3 id=calculator><a class="h-anchor sf-hidden" href=#calculator>#</a>Calculator</h3>
+<div class=section>
+<table class=shortcuts>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;C-r&gt;</code> <code>=</code> 7*7</td>
+<td>Shows the result</td>
+</tr>
+<tr>
+<td><code>&lt;C-r&gt;</code> <code>=</code> 10/2</td>
+<td>Shows the result</td>
+</tr>
+</tbody>
+</table>
+<p>Do this in INSERT mode</p>
+</div>
+</div>
+<div class=h3-wrap>
+<h3 id=shell><a class="h-anchor sf-hidden" href=#shell>#</a>Shell</h3>
+<div class=section>
+<table>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>:!&lt;shell&gt;</code></td>
+<td>Interpret Shell Command</td>
+</tr>
+<tr>
+<td><code>:r!&lt;shell&gt;</code></td>
+<td>Read in output of shell</td>
+</tr>
+<tr>
+<td><code>:r!date</code></td>
+<td>Insert date</td>
+</tr>
+<tr>
+<td><code>:!!date</code></td>
+<td>Replace current line with date</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class=h3-wrap>
+<h3 id=command-line><a class="h-anchor sf-hidden" href=#command-line>#</a>Command line</h3>
+<div class=section>
+<table class=shortcuts>
+<thead class=sf-hidden>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;C-r&gt;&lt;C-w&gt;</code></td>
+<td>Insert current word into the command line</td>
+</tr>
+<tr>
+<td><code>&lt;C-r&gt;"</code></td>
+<td>Paste from " register</td>
+</tr>
+<tr>
+<td><code>&lt;C-x&gt;&lt;C-f&gt;</code></td>
+<td>Auto-completion of path in insert mode</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class=h3-wrap>
+<h3 id=tricks><a class="h-anchor sf-hidden" href=#tricks>#</a>Tricks</h3>
+<div class=section>
+<p>Remove duplicate lines</p>
+<pre style=position:relative><button class="bg-emerald-500 p-2 text-white fadeIn shadow-xl rounded flex items-center absolute top-2 right-2" style=opacity:0><svg height=1em fill=currentColor viewBox="0 0 16 16"><path fill-rule=evenodd d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule=evenodd d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path> </svg></button><code class="hljs language-shell">:sort | %!uniq -u
+</code></pre>
+<p>To number the lines in the file</p>
+<pre style=position:relative><button class="bg-emerald-500 p-2 text-white fadeIn shadow-xl rounded flex items-center absolute top-2 right-2" style=opacity:0><svg height=1em fill=currentColor viewBox="0 0 16 16"><path fill-rule=evenodd d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule=evenodd d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path> </svg></button><code class="hljs language-shell">:%!cat -n
+</code></pre>
+<p>Copy whole doc to clipboard</p>
+<pre style=position:relative><button class="bg-emerald-500 p-2 text-white fadeIn shadow-xl rounded flex items-center absolute top-2 right-2" style=opacity:0><svg height=1em fill=currentColor viewBox="0 0 16 16"><path fill-rule=evenodd d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule=evenodd d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path> </svg></button><code class="hljs language-shell">:%w !pbcopy            # Mac OS X
+:%w !xclip -i -sel c   # GNU/Linux
+:%w !xsel -i -b        # GNU/Linux
+</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class=h2-wrap>
+<h2 id=also-see><a class=h-anchor href=#also-see>#</a>Also see</h2>
+<div class=h3-wrap-list>
+<ul>
+<li><a target=_blank rel="noopener external nofollow noreferrer" href=https://devhints.io/vim>Devhints</a> <em>(devhints.io)</em></li>
+<li><a target=_blank rel="noopener external nofollow noreferrer" href=https://vim.rtorr.com/>Vim cheatsheet</a> <em>(vim.rotrr.com)</em></li>
+<li><a target=_blank rel="noopener external nofollow noreferrer" href=http://vimdoc.sourceforge.net/htmldoc/>Vim documentation</a> <em>(vimdoc.sourceforge.net)</em></li>
+<li><a target=_blank rel="noopener external nofollow noreferrer" href=http://openvim.com/>Interactive Vim tutorial</a> <em>(openvim.com)</em></li>
+</ul>
+</div>
+</div>
+ <div data-pw-desk=med_rect_btf id=pwDeskMedRectBtf3></div></div></div><div id=mysearch class="z-50 fixed inset-0 flex justify-center bg-slate-600/80 dark:bg-slate-900/90 items-start text-sm overflow-hidden lg:pt-16 lg:pb-20 hidden sf-hidden"></div><div id=carbon_container></div><script type=application/ld+json>{"@context":"https://schema.org","@type":"Organization","url":"https://quickref.me","logo":"https://quickref.me/images/favicon.png","description":"Quick Reference CheatSheet - share quick reference and cheat sheet for developers","name":"QuickRef.ME","contactPoint":{"contactType":"customer support","email":"support@quickref.me"}}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://quickref.me/"},{"@type":"ListItem","position":2,"name":"Vim Cheat Sheet & Quick Reference","item":"https://quickref.me/vim"}]}</script>
