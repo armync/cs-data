@@ -1,0 +1,52 @@
+/* Headings */
+h1, h2, h3 {
+    color: MidnightBlue;
+    margin-top: 1.5em;
+    margin-bottom: 0.8em;
+}
+
+h2 {
+    page-break-before: always;
+    page-break-after: avoid;
+}
+
+h3 {
+    page-break-after: avoid;
+}
+
+/* Table Styling */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 1.5em;
+    font-size: 10pt;
+    page-break-inside: avoid; /* Prevents table from breaking across pages */
+}
+
+table, th, td {
+    border: 1px solid DimGray;
+}
+
+th, td {
+    text-align: left;
+    padding: 0.4em;
+    vertical-align: top;
+    page-break-inside: avoid; /* Ensures table rows do not break */
+}
+
+/* Keep Table Header Color */
+th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+/* Prevent Row Splitting */
+tr {
+    page-break-inside: avoid; /* Prevents row splitting */
+}
+
+/* Page Layout */
+@page {
+    size: A4 landscape; /* Increases page width slightly */
+    margin: 2cm; /* Slightly larger margins for better spacing */
+}
