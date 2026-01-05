@@ -1,0 +1,51 @@
+pipeline {
+    agent { label 'jenkinsnode1' }
+
+    tools {
+        maven 'maven-3.9'
+    }
+
+    environment {
+        GIT_CRED = 'gitlab-pat'
+        REPO_URL = 'https://gitlab.endava.com/endava-university/regional-school-of-devops/ci-cd-with-jenkins.git'
+        BRANCH = 'main'
+    }
+
+    stages {
+        stage('Clone'){
+            steps {
+                checkout([
+                    $class: 'GitSCM',
+                    branches : [[name: "*/${env.BRANCH}"]],
+                    userRemoteConfigs: [[url: env.REPO_URL, credentialsId: env.GIT_CRED]]
+                ])
+            }
+        }
+
+        stage('Build '){
+            steps {
+                sh 'mvn -B -V clean compile'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'mvn -B test'
+            }
+
+            post { 
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                }
+            }
+        }
+        stage('Run') {
+            steps {
+                sh '''
+                    echo "Running the Hello app..."
+                    java -cp target/classes com.mycompany.app.App
+                '''
+            }
+        }
+    }
+}

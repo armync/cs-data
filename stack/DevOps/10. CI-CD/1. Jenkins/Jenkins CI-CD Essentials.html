@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Continuous Integration and Delivery with Jenkins</title>
+<style>
+  /* Base look & feel */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; }
+  .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 10px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); overflow: hidden; }
+  .content { padding: 40px; }
+  section { margin-bottom: 56px; scroll-margin-top: 90px; }
+  h1 { color: #1e3c72; font-size: 2.2rem; margin: 24px 0 24px; text-align: center; }
+  h2 { color: #1e3c72; font-size: 1.9rem; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 3px solid #667eea; }
+  h3 { color: #2a5298; font-size: 1.3rem; margin: 22px 0 10px; }
+  h4 { color: #444; font-size: 1.1rem; margin: 14px 0 8px; }
+  p { margin-bottom: 12px; text-align: left; }
+  ul, ol { margin-left: 26px; margin-bottom: 12px; }
+  li { margin-bottom: 6px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin: 16px 0; }
+  .card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 18px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.12); transition: transform 0.25s; }
+  .card:hover { transform: translateY(-4px); }
+  .highlight-box { background: #f0f4ff; border-left: 4px solid #667eea; padding: 16px; margin: 16px 0; border-radius: 8px; text-align: left; }
+  .warning { background: #fff3cd; border-left: 4px solid #ffc107; padding: 12px; margin: 16px 0; border-radius: 8px; }
+  .success { background: #d4edda; border-left: 4px solid #28a745; padding: 12px; margin: 16px 0; border-radius: 8px; }
+  .info { background: #d1ecf1; border-left: 4px solid #17a2b8; padding: 12px; margin: 16px 0; border-radius: 8px; }
+  code { background: #f4f4f4; padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; color: #e83e8c; }
+  pre { background: #282c34; color: #c7cbd1; padding: 16px; border-radius: 8px; overflow-x: auto; margin: 16px 0; border-left: 4px solid #667eea; }
+  pre code { background: none; color: #c7cbd1; padding: 0; }
+  .comparison-table { width: 100%; border-collapse: collapse; margin: 12px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+  .comparison-table th { background: #2a5298; color: white; padding: 10px; text-align: left; }
+  .comparison-table td { padding: 10px 12px; border-bottom: 1px solid #e9ecef; }
+  .workflow-steps { display: flex; flex-direction: column; gap: 12px; margin: 16px 0; }
+  .step { display: flex; align-items: center; background: #fff; border: 2px solid #667eea; border-radius: 12px; padding: 16px; transition: all 0.25s; }
+  .step:hover { box-shadow: 0 5px 15px rgba(102,126,234,0.3); transform: translateX(8px); }
+  .step-number { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 800; margin-right: 16px; flex-shrink: 0; }
+  .kbd { background:#eee;padding:2px 6px;border-radius:4px;border:1px solid #ccc; font-family: 'Courier New', monospace; }
+  @media (max-width: 768px) {
+    .content { padding: 20px; }
+    .step { flex-direction: column; text-align: left; align-items: flex-start; }
+    .step-number { margin-right: 0; margin-bottom: 10px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Continuous Integration and Delivery with Jenkins</h1>
+
+  <div class="content">
+
+    <section id="intro">
+      <h2>Introduction to CI and CD</h2>
+      <p><strong>Continuous Integration (CI)</strong> automatically builds, tests, and validates code each time a change is pushed. <strong>Continuous Delivery/Deployment (CD)</strong> takes validated artifacts and promotes them through environments, ultimately releasing to users in a controlled and repeatable way.</p>
+      <p>In simple terms, CI answers the question <em>“Is the code in the main branch working and testable right now?”</em> and CD answers <em>“Can we move that working code into production safely?”</em></p>
+
+      <div class="highlight-box">
+        <h3 style="margin-top:0;">If You Are New to CI/CD</h3>
+        <p>Before going deeper, here are a few basic terms you will see often:</p>
+        <ul>
+          <li><strong>Repository (repo):</strong> Where your source code lives (for example, on GitHub, GitLab, or Bitbucket).</li>
+          <li><strong>Commit:</strong> A saved change in your repository history.</li>
+          <li><strong>Branch:</strong> A separate line of development. Many teams use a main branch and short-lived feature branches.</li>
+          <li><strong>Build:</strong> The step that compiles/transforms your source code into something that can be executed or deployed (for example, a JAR file or a container image).</li>
+          <li><strong>Test:</strong> Automated checks that verify the code behaves as expected.</li>
+          <li><strong>Artifact:</strong> The built output of your application (for example, a JAR, a Docker image, a ZIP with static files).</li>
+          <li><strong>Environment:</strong> A place where your application runs (development, test, staging, production, and so on).</li>
+          <li><strong>Pipeline:</strong> A sequence of automated steps (build, test, package, deploy) defined as code.</li>
+          <li><strong>Agent:</strong> A machine (physical, virtual, or container) where Jenkins runs the build steps.</li>
+        </ul>
+        <p>If these concepts are new, it is enough to understand them at a high level. You do not need to know every detail to start using Jenkins.</p>
+      </div>
+
+      <div class="grid">
+        <div class="card"><h4>Why CI?</h4><p>Catch issues early, reduce integration pain, keep the main branch in a deployable state, and avoid “it works on my machine” situations.</p></div>
+        <div class="card"><h4>Why CD?</h4><p>Ship smaller changes more frequently, reduce release risk, and create a predictable release rhythm.</p></div>
+        <div class="card"><h4>Essentials</h4><p>Version control, automated tests, build artifacts, pipelines, environments, observability, and a clear promotion flow.</p></div>
+        <div class="card"><h4>Mindset</h4><p>Everything-as-code, immutable artifacts, fast feedback, trunk-based development, feature flags, and continuous learning from failures.</p></div>
+      </div>
+      <table class="comparison-table">
+        <thead><tr><th>Aspect</th><th>Continuous Integration</th><th>Continuous Delivery / Deployment</th></tr></thead>
+        <tbody>
+          <tr><td>Trigger</td><td>Every change (push/PR)</td><td>Manual or automated promotion</td></tr>
+          <tr><td>Outcome</td><td>Validated build + test results</td><td>Deployed artifact in target env</td></tr>
+          <tr><td>Feedback</td><td>Minutes</td><td>Minutes–hours with approvals</td></tr>
+          <tr><td>Risk control</td><td>Tests, code quality gates</td><td>Rollouts, flags, progressive delivery</td></tr>
+        </tbody>
+      </table>
+      <div class="highlight-box">
+        <strong>Rule of thumb:</strong> CI answers “are we broken?” as quickly as possible; CD answers “can we release now?” safely and repeatably.
+      </div>
+    </section>
+
+    <section id="pipelines">
+      <h2>Automation with Pipelines</h2>
+      <p>A <strong>pipeline</strong> is the automated workflow that starts from a code change and ends with a validated artifact (and possibly a deployment). It is the backbone of CI/CD.</p>
+      <div class="highlight-box">
+        <strong>Beginner note:</strong> You can think of a pipeline like a checklist that the system follows every time someone pushes code: pull the code, build it, run tests, and optionally deploy it.
+      </div>
+      <div class="workflow-steps">
+        <div class="step"><div class="step-number">1</div><div><h4>Source & Branching</h4><p>Use <em>trunk-based development</em> with short-lived branches. Protect <code>main</code> and require reviews plus CI checks. Avoid long-lived feature branches that drift from the actual production code.</p></div></div>
+        <div class="step"><div class="step-number">2</div><div><h4>Build</h4><p>Produce reproducible builds. Embed metadata (commit SHA, build time, build number) into artifacts so you can always answer “what is running in production?”.</p></div></div>
+        <div class="step"><div class="step-number">3</div><div><h4>Test</h4><p>Start with unit tests and add integration and end-to-end tests over time. Run tests in parallel whenever possible. Publish JUnit/XML and coverage reports for visibility.</p></div></div>
+        <div class="step"><div class="step-number">4</div><div><h4>Quality & Security</h4><p>Static analysis (SAST), dependency scanning (SCA), secret scanning, container image scanning, and SBOM generation. Fail early when risk is detected.</p></div></div>
+        <div class="step"><div class="step-number">5</div><div><h4>Package & Registry</h4><p>Publish versioned artifacts to a registry (for example, Maven, npm, Docker). Use immutable tags or digests so that the same artifact is deployed to every environment.</p></div></div>
+        <div class="step"><div class="step-number">6</div><div><h4>Deploy</h4><p>Automate deployment to non-production first. Use infrastructure as code (Terraform, Helm, Kustomize). Promote with approvals and change windows as needed; avoid rebuilding the same artifact for each environment.</p></div></div>
+        <div class="step"><div class="step-number">7</div><div><h4>Observe & Rollback</h4><p>Use telemetry (logs, metrics, traces), SLOs, health checks, and dashboards. Provide fast, tested rollback or roll-forward strategies.</p></div></div>
+      </div>
+      <div class="highlight-box"><strong>Tip:</strong> Keep pipelines fast (ideally under 10–15 minutes) by caching dependencies, splitting tests, and using elastic agents. Slow feedback reduces developer productivity.</div>
+
+      <h3>Core CI/CD Concepts</h3>
+      <ul>
+        <li><strong>Pipeline as Code:</strong> Store pipeline definitions (for example, a <code>Jenkinsfile</code>) in the same repository as your application.</li>
+        <li><strong>Shift Left:</strong> Run quality and security checks as early as possible in the pipeline.</li>
+        <li><strong>Fail Fast:</strong> Stop the pipeline quickly when critical checks fail, instead of running later stages unnecessarily.</li>
+        <li><strong>Idempotent Deployments:</strong> Running the same deployment step multiple times should lead to the same target state.</li>
+      </ul>
+    </section>
+
+    <section id="deploy">
+      <h2>Deployment Strategies</h2>
+      <p>Deployment strategies define <em>how</em> new versions of your application are rolled out to users. The appropriate choice depends on risk tolerance, traffic patterns, and infrastructure.</p>
+      <div class="grid">
+        <div class="card"><h4>Recreate</h4><p>Stop the old version and then start the new one. Simple to understand but causes downtime. Suitable for internal tools or maintenance windows.</p></div>
+        <div class="card"><h4>Rolling</h4><p>Replace instances gradually. Minimizes disruption and is common in Kubernetes. Works well when instances are stateless.</p></div>
+        <div class="card"><h4>Blue-Green</h4><p>Run two identical environments (“blue” is live, “green” is new). Switch traffic via routing or DNS; rollback is as simple as switching back.</p></div>
+        <div class="card"><h4>Canary</h4><p>Release to a small percentage of users first, then expand if the deployment is healthy. Combine with metrics and alerts for automatic promotion or rollback.</p></div>
+        <div class="card"><h4>Shadow</h4><p>Mirror real traffic to the new version without user impact and compare responses and performance before rollout.</p></div>
+        <div class="card"><h4>Feature Flags</h4><p>Decouple deployment from release. Toggle exposure, run A/B tests, and roll back instantly without redeploying.</p></div>
+      </div>
+      <div class="info">
+        <strong>Practical pattern:</strong> Use rolling deployments by default, canary or blue-green for high-risk changes, and feature flags for user-visible functionality.
+      </div>
+    </section>
+
+    <section id="jenkins-intro">
+      <h2>Jenkins: Introduction</h2>
+      <p>Jenkins is a flexible automation server with a large plugin ecosystem. In a modern setup, Jenkins configuration, pipelines, and infrastructure should be treated <em>as code</em>.</p>
+
+      <div class="highlight-box">
+        <h3 style="margin-top:0;">Pre-Requisites for Getting Started with Jenkins</h3>
+        <p>To follow the examples in this document, it helps to have:</p>
+        <ul>
+          <li>A basic understanding of Git (clone, commit, push).</li>
+          <li>Access to a Git repository hosting service (for example, GitHub, GitLab, or Bitbucket).</li>
+          <li>A machine or VM where you can run Docker (for example, a local development machine).</li>
+          <li>For the Java examples, a JDK and Maven or Gradle project.</li>
+        </ul>
+        <p>You can start on a local machine for learning and later move the same concepts to a shared Jenkins controller used by your team.</p>
+      </div>
+
+      <ul>
+        <li><strong>Key plugins</strong>: Pipeline, Git, Credentials Binding, Timestamper, Kubernetes, Docker, JUnit, JaCoCo, OWASP Dependency-Check, Pipeline Utility Steps (among others).</li>
+        <li><strong>Naming</strong>: The term <em>agent</em> replaces the legacy term <em>slave</em>. The older term may still appear in some user interfaces or documentation.</li>
+      </ul>
+      <div class="highlight-box">
+        <strong>Best practice:</strong> Keep Jenkins itself as “thin” as possible. Offload heavy builds to agents, store state in external systems (artifact registries, Git, databases), and back up <code>JENKINS_HOME</code> regularly.
+      </div>
+    </section>
+
+    <section id="jenkins-docker">
+      <h2>Setting up Jenkins with Docker</h2>
+      <p>You can run the Jenkins controller and a Docker-capable build agent using Docker Compose. This is convenient for local development and demonstrations. Persist Jenkins home to keep configuration and job history.</p>
+
+      <h3>docker-compose.yaml Explained</h3>
+      <p>The following file defines two services: the Jenkins controller itself and an inbound build agent that connects back to it.</p>
+      <pre><code># docker-compose.yaml
+services:
+  jenkins:
+    image: jenkins/jenkins:lts
+    user: root
+    ports:
+      - "8080:8080"   # UI
+      - "50000:50000" # JNLP agents
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock # optional if building docker on controller
+
+  dind-agent:
+    image: jenkins/inbound-agent:latest
+    environment:
+      - JENKINS_URL=http://jenkins:8080
+      - JENKINS_AGENT_NAME=docker-agent
+      - JENKINS_SECRET=&lt;from UI&gt;
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+volumes:
+  jenkins_home:
+</code></pre>
+
+      <h4>Key points in this file</h4>
+      <ul>
+        <li><code>jenkins/jenkins:lts</code> – Long-Term Support version of Jenkins for stability.</li>
+        <li><code>ports</code> – Exposes the web UI (<code>8080</code>) and the JNLP port (<code>50000</code>) used by agents.</li>
+        <li><code>jenkins_home</code> volume – Stores jobs, configuration, and build history so that your setup survives container restarts.</li>
+        <li><code>/var/run/docker.sock</code> – Mounting the host Docker socket allows builds to run <code>docker build</code> directly.</li>
+        <li><code>dind-agent</code> – An inbound agent image that connects to the controller using <code>JENKINS_URL</code>, <code>JENKINS_AGENT_NAME</code>, and <code>JENKINS_SECRET</code> (configured in the Jenkins UI).</li>
+      </ul>
+
+      <div class="info"><strong>Security note:</strong> Mounting the Docker socket grants high privileges. For production, prefer isolated agents or rootless runners.</div>
+    </section>
+
+    <section id="agents-plugins">
+      <h2>Managing Agents and Plugins</h2>
+      <h3>Agents</h3>
+      <p>Agents are where your builds actually run. The controller orchestrates the work; agents execute the steps.</p>
+      <ul>
+        <li><strong>Static agents</strong>: Long-lived VMs or containers with required tools. Stable but potentially wasteful at low utilization. Suitable for small setups or special hardware.</li>
+        <li><strong>Ephemeral agents</strong>: Provisioned per build on Kubernetes or in the cloud. Cost-efficient, reproducible toolchains, and less configuration drift.</li>
+        <li><strong>Labels</strong>: Tag agents by capability (for example, <code>linux &amp;&amp; java17</code>, <code>windows</code>, <code>docker</code>). Pipelines can target these labels.</li>
+      </ul>
+      <h3>Plugins</h3>
+      <ul>
+        <li>Keep plugins updated in step with Jenkins LTS and test updates in a staging Jenkins where possible.</li>
+        <li>Use Configuration as Code (JCasC) to store Jenkins system and plugin configuration in Git.</li>
+        <li>Review plugins periodically and remove unused ones to reduce attack surface and simplify upgrades.</li>
+      </ul>
+      <div class="warning">
+        <strong>Anti-pattern:</strong> Installing new plugins directly on a production Jenkins instance without review or backup can cause outages and security issues.
+      </div>
+    </section>
+
+    <section id="first-pipeline">
+      <h2>Writing Your First Jenkins Pipeline</h2>
+      <p>The simplest way to start is to create a <code>Jenkinsfile</code> in your repository and point a Multibranch Pipeline job to it. Jenkins will automatically discover branches and pull requests.</p>
+
+      <div class="highlight-box">
+        <strong>Beginner workflow:</strong>
+        <ol>
+          <li>Create or use an existing application repository.</li>
+          <li>Add a <code>Jenkinsfile</code> at the root of the repository.</li>
+          <li>Set up a Multibranch Pipeline job in Jenkins that points to the repository URL.</li>
+          <li>Trigger the first build manually and then configure webhooks so future builds start automatically.</li>
+        </ol>
+      </div>
+
+      <h3>The Jenkinsfile</h3>
+      <pre><code>// Jenkinsfile (declarative)
+pipeline {
+  agent any
+  options { timestamps(); ansiColor('xterm') }
+  triggers { pollSCM('@daily') } // replace with webhooks in real setups
+  tools { jdk 'jdk17' }
+
+  stages {
+    stage('Checkout') {
+      steps { checkout scm }
+    }
+
+    stage('Build') {
+      steps { sh 'mvn -B -U -DskipTests package' }
+      post { success { archiveArtifacts artifacts: 'target/*.jar', fingerprint: true } }
+    }
+
+    stage('Test') {
+      steps {
+        sh 'mvn -B test'
+        junit 'target/surefire-reports/*.xml'
+      }
+      post { always { publishHTML(target: [reportDir: 'target/site', reportFiles: 'index.html', reportName: 'Site']) } }
+    }
+
+    stage('Security & Quality') {
+      steps {
+        sh 'mvn -B verify -Pdependency-check'
+        // e.g., run spotbugs/jacoco here
+      }
+      post { always { recordIssues enabledForFailure: true, tools: [java(), spotBugs(pattern: '**/spotbugsXml.xml')] } }
+    }
+
+    stage('Package & Publish') {
+      when { branch 'main' }
+      steps {
+        withCredentials([usernamePassword(credentialsId: 'nexus-creds', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]) {
+          sh 'mvn -B deploy -DskipTests'
+        }
+      }
+    }
+  }
+}
+</code></pre>
+
+      <h3>What each part does</h3>
+      <ul>
+        <li><code>pipeline { ... }</code> – Declarative pipeline syntax, easier to read and validate than scripted pipelines.</li>
+        <li><code>agent any</code> – Runs on any available agent. In larger setups, you typically specify labels (for example, <code>agent { label 'linux &amp;&amp; java17' }</code>).</li>
+        <li><code>options { timestamps(); ansiColor('xterm') }</code> – Adds timestamps to logs and enables colored output for better readability.</li>
+        <li><code>triggers { pollSCM('@daily') }</code> – Polls SCM for changes once per day. In production, use webhooks so builds trigger on every push.</li>
+        <li><code>tools { jdk 'jdk17' }</code> – Tells Jenkins to provision a configured JDK (named <code>jdk17</code> in Global Tool Configuration).</li>
+        <li><strong>Stage: Checkout</strong> – <code>checkout scm</code> pulls the source code for the current branch or pull request.</li>
+        <li><strong>Stage: Build</strong> – Runs a Maven build without tests (<code>-DskipTests</code>) to compile and package. On success, it archives the generated JAR files.</li>
+        <li><strong>Stage: Test</strong> – Executes tests and publishes JUnit results plus an HTML site (for example, Maven site or documentation).</li>
+        <li><strong>Stage: Security &amp; Quality</strong> – Runs dependency checks (OWASP plugin) and collects static analysis results (for example, SpotBugs) via <code>recordIssues</code>.</li>
+        <li><strong>Stage: Package &amp; Publish</strong> – Only runs on <code>main</code>; uses credentials to deploy to an artifact repository such as Nexus or Artifactory.</li>
+      </ul>
+
+      <div class="info">
+        <strong>Idea:</strong> Treat this Jenkinsfile as your “contract” for CI. As your project matures, you can extend it with additional stages (smoke tests, performance tests, deployment) while keeping the logic versioned with your code.
+      </div>
+    </section>
+
+    <section id="java-ci">
+      <h2>Setting up CI for a Sample Java Application</h2>
+      <p>This section outlines a minimal CI flow for a Java/Maven application and how it integrates with Jenkins.</p>
+      <ol>
+        <li>Create a new Git repository with a Maven or Gradle project and a <code>Jenkinsfile</code>.</li>
+        <li>Define Java toolchains in Jenkins (Manage Jenkins → Global Tool Configuration).</li>
+        <li>Configure credentials for artifact registries (for example, Nexus or Artifactory) and source control.</li>
+        <li>Enable branch indexing via Multibranch Pipeline and configure GitHub or Bitbucket webhooks.</li>
+        <li>Publish test results (<code>junit</code>), coverage (<code>jacoco</code>), and sites (<code>publishHTML</code>).</li>
+      </ol>
+
+      <h3>pom.xml (important snippets)</h3>
+      <pre><code># pom.xml (snippets)
+&lt;build&gt;
+  &lt;plugins&gt;
+    &lt;plugin&gt;
+      &lt;groupId&gt;org.jacoco&lt;/groupId&gt;
+      &lt;artifactId&gt;jacoco-maven-plugin&lt;/artifactId&gt;
+      &lt;version&gt;0.8.12&lt;/version&gt;
+      &lt;executions&gt;
+        &lt;execution&gt;
+          &lt;goals&gt;
+            &lt;goal&gt;prepare-agent&lt;/goal&gt;
+          &lt;/goals&gt;
+        &lt;/execution&gt;
+      &lt;/executions&gt;
+    &lt;/plugin&gt;
+    &lt;plugin&gt;
+      &lt;groupId&gt;org.owasp&lt;/groupId&gt;
+      &lt;artifactId&gt;dependency-check-maven&lt;/artifactId&gt;
+      &lt;version&gt;10.0.4&lt;/version&gt;
+    &lt;/plugin&gt;
+  &lt;/plugins&gt;
+&lt;/build&gt;
+</code></pre>
+
+      <h4>What these plugins do</h4>
+      <ul>
+        <li><strong>JaCoCo Maven Plugin</strong> – Instruments your code to measure test coverage. The <code>prepare-agent</code> goal attaches the JaCoCo agent to the JVM during tests.</li>
+        <li><strong>OWASP Dependency-Check</strong> – Scans your dependencies against known vulnerabilities (CVEs). Failing the build when severe vulnerabilities exist is a strong security gate.</li>
+      </ul>
+      <div class="success">
+        <strong>Goal:</strong> After each commit, you know that tests pass, coverage is acceptable, and you are not shipping dependencies with known critical vulnerabilities.
+      </div>
+    </section>
+
+    <section id="cloud-agents">
+      <h2>Using Cloud for Dynamic Agent Provisioning</h2>
+      <p>The Kubernetes plugin can be used to spin up ephemeral agents per build. You define Pod templates with required containers and tools. This keeps agents clean and scalable.</p>
+
+      <h3>Kubernetes-based Jenkinsfile Example</h3>
+      <pre><code>// Jenkinsfile using Kubernetes ephemeral pod
+def label = "maven-${UUID.randomUUID().toString()}"
+podTemplate(label: label, cloud: 'kubernetes', yaml: '''
+apiVersion: v1
+kind: Pod
+spec:
+  serviceAccountName: jenkins
+  containers:
+    - name: maven
+      image: maven:3.9.9-eclipse-temurin-17
+      command: ['cat']
+      tty: true
+      resources:
+        requests: { cpu: '250m', memory: '512Mi' }
+        limits:   { cpu: '2',    memory: '2Gi' }
+    - name: docker
+      image: docker:27-cli
+      command: ['cat']
+      tty: true
+      volumeMounts:
+        - name: dockersock
+          mountPath: /var/run/docker.sock
+  volumes:
+    - name: dockersock
+      hostPath: { path: /var/run/docker.sock }
+''') {
+  node(label) {
+    stage('Build') { container('maven') { sh 'mvn -B -U -DskipTests package' } }
+    stage('Image') { container('docker') { sh 'docker build -t registry/app:${GIT_COMMIT} .' } }
+  }
+}
+</code></pre>
+
+      <h4>How this works</h4>
+      <ul>
+        <li><code>podTemplate(...)</code> – Tells Jenkins how to create a temporary Kubernetes Pod that will act as the build agent.</li>
+        <li><code>label</code> – A unique label for this pod so the <code>node(label)</code> block can schedule work onto it.</li>
+        <li><code>serviceAccountName: jenkins</code> – Service account used by the pod to talk to the Kubernetes API.</li>
+        <li><strong>Containers:</strong>
+          <ul>
+            <li><code>maven</code> – Contains the JDK and Maven for building the Java project.</li>
+            <li><code>docker</code> – Contains the Docker CLI to build images using the mounted Docker socket.</li>
+          </ul>
+        </li>
+        <li><code>stage('Build')</code> – Executes the Maven build inside the <code>maven</code> container.</li>
+        <li><code>stage('Image')</code> – Builds a Docker image tagged with the current <code>GIT_COMMIT</code>.</li>
+      </ul>
+
+      <div class="warning"><strong>Better isolation:</strong> For production, consider building container images without the host Docker socket (for example, Kaniko, BuildKit rootless, or buildah) inside the pod.</div>
+    </section>
+
+    <section id="shared-lib">
+      <h2>Shared Pipeline Libraries</h2>
+      <p>Common steps can be extracted into a reusable Jenkins Shared Library. The library is stored in its own Git repository and registered under <em>Manage Jenkins → Global Pipeline Libraries</em>.</p>
+
+      <h3>Library Structure</h3>
+      <pre><code>repo-root/
+  vars/
+    ci.groovy           # global step: ci()
+    mavenBuild.groovy   # global step: mavenBuild(args)
+  src/org/company/ci/
+    Utils.groovy        # helper classes
+  resources/
+    email-template.html
+</code></pre>
+
+      <h3>Example: vars/mavenBuild.groovy</h3>
+      <pre><code>// vars/mavenBuild.groovy
+def call(String goals = 'clean verify') {
+  stage('Maven Build') {
+    sh "mvn -B ${goals}"
+    junit 'target/surefire-reports/*.xml'
+    step([$class: 'JacocoPublisher'])
+  }
+}
+</code></pre>
+
+      <h3>Using the Library from a Jenkinsfile</h3>
+      <pre><code>// Jenkinsfile using the library
+@Library('company-ci-lib@v1') _
+
+pipeline {
+  agent { label 'linux &amp;&amp; java17' }
+  stages {
+    stage('Checkout') { steps { checkout scm } }
+    stage('Build & Test') { steps { mavenBuild('clean verify') } }
+  }
+}
+</code></pre>
+
+      <h4>What this provides</h4>
+      <ul>
+        <li><strong>DRY Pipelines:</strong> Shared steps like <code>mavenBuild</code> live in one place instead of being duplicated across many Jenkinsfiles.</li>
+        <li><strong>Consistency:</strong> Every service can have the same quality gates (tests, coverage, static analysis) by default.</li>
+        <li><strong>Centralized improvements:</strong> Updating the shared library automatically improves all consuming pipelines.</li>
+      </ul>
+      <div class="success"><strong>Benefits:</strong> Reusable pipelines, consistent quality checks, faster onboarding, and centralized updates.</div>
+    </section>
+
+    <section id="advanced">
+      <h2>Advanced CI/CD Topics</h2>
+      <div class="grid">
+        <div class="card"><h4>Artifact Strategy</h4><p>Publish once, promote the same artifact across environments. Track provenance (SLSA), sign with Cosign, and attach SBOMs.</p></div>
+        <div class="card"><h4>Environments & IaC</h4><p>Use Terraform for infrastructure and Helm or Kustomize for applications. Keep environment configuration in Git and change it via pull requests.</p></div>
+        <div class="card"><h4>GitOps</h4><p>Use Argo CD or Flux to reconcile cluster state from Git; CD becomes a pull-based, auditable loop.</p></div>
+        <div class="card"><h4>Progressive Delivery</h4><p>Use tools such as Argo Rollouts or Flagger for canary deployments and automated analysis with metrics and SLO gates.</p></div>
+        <div class="card"><h4>Compliance</h4><p>Introduce policy-as-code (OPA, Conftest), change approvals, artifact retention rules, and audit logs.</p></div>
+        <div class="card"><h4>Secrets</h4><p>Rotate secrets frequently. Use Vault, KMS, or External Secrets and prefer short-lived tokens over long-lived credentials.</p></div>
+        <div class="card"><h4>Caching & Speed</h4><p>Use remote build caches, test splitting, dependency proxies, and elastic agents to keep feedback fast.</p></div>
+        <div class="card"><h4>Observability</h4><p>Expose build and deployment events to monitoring so that you can correlate changes with error rates and latency.</p></div>
+      </div>
+      <div class="highlight-box">
+        <strong>Next step:</strong> Once you have basic CI/CD working, invest in observability, security, and quality gates. These turn “we can deploy” into “we can deploy confidently.”
+      </div>
+    </section>
+
+    <section id="troubleshooting">
+      <h2>Troubleshooting</h2>
+      <pre><code># Common Jenkins issues
+# 1) Hanging builds     → check agent capacity/labels, node logs, and workspace locks.
+# 2) SCM webhooks       → verify webhook secret, reachable URL, and multibranch settings.
+# 3) Permission errors  → use folders + role strategy; scope credentials minimally.
+# 4) Slow pipelines     → enable parallel stages, cache dependencies, use ephemeral cloud agents.
+# 5) Flaky tests        → retry with backoff and increase observability for integration tests.
+</code></pre>
+      <div class="highlight-box"><strong>Remember:</strong> Keep everything in code (JCasC, Jenkinsfile, Pod templates, Terraform/Helm). Review changes via pull requests and automate promotions between environments.</div>
+    </section>
+
+  </div>
+</div>
+</body>
+</html>

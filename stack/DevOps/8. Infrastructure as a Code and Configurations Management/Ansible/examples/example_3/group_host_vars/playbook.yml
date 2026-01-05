@@ -1,0 +1,57 @@
+---
+- hosts: all
+  become: yes
+  gather_facts: no
+  tasks:
+
+    - name: check hostname
+      debug:
+        msg: "hostname var is {{ hostname }} and inventory_hostname is {{ inventory_hostname }}"
+    - name: check group exists
+      group:
+        name: "{{ group }}"
+        state: present
+
+    # - name: Allow passwordless sudo for group
+      #since this is part of the pre-task homework..
+      #you'll have to add this part after you are done with the pre-task
+      #try to use variables here
+
+    - name: Add user ansible
+      user:
+        name: ansible
+        groups: "{{ group }}"
+        append: yes
+        state: present
+        createhome: yes
+    
+    # - name: add key
+      #same here, try to use variables in this example- name: add key
+
+- hosts: webapp
+  become: yes
+  gather_facts: no
+  tasks:
+    - name: Install apache tomcat
+      yum:
+        name: "httpd-{{ httpd_version }}"
+        state: present
+
+- hosts: database
+  gather_facts: no
+  become: yes
+  tasks:
+    - name: add key
+      rpm_key:
+        state: present
+        key: https://repo.mysql.com/RPM-GPG-KEY-mysql-2022
+
+    - name: yum install mysql-server rpm
+      yum:
+        name: "{{ mysql_url_rpm }}"
+        state: present
+
+    - name: yum install mysql-server package
+      yum:
+        name: "{{ mysql_package_name }}"
+        state: present

@@ -1,0 +1,285 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: AWS Exercices 1 - Homework
+
+# -- Parameters --
+Parameters:
+  KeyName:
+    Type: AWS::EC2::KeyPair::KeyName
+    Description: choose ssh key. use or create. EC2 > Key
+  AmiId:
+    Type: AWS::EC2::Image::Id
+    Description: uBuntu eu-central-1 Noble Numbat 24.04 LTS amd64 hvm:ebs-ssd-gp3 20251022
+    Default: ami-004e960cde33f9146
+  AvailabilityZone:
+    Type: AWS::EC2::AvailabilityZone::Name
+    Default: eu-central-1a # Uses Frankfurt
+  PublicSubnetCidr:
+    Type: String
+    Default: 10.0.1.0/28
+  PrivateSubnetCidr:
+    Type: String
+    Default: 10.0.2.0/28 # next to public
+
+# -- Resources --
+Resources:
+
+  MyVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+        - Key: Name
+          Value: hw-vpc
+        - Key: Owner
+          Value: Armin
+
+  PublicSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref MyVPC # use existent VPC
+      AvailabilityZone: !Ref AvailabilityZone # use existent AZ
+      CidrBlock: !Ref PublicSubnetCidr # use existent public subnet
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: hw-public-subnet
+        - Key: Owner
+          Value: Armin
+
+  PrivateSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref MyVPC
+      AvailabilityZone: !Ref AvailabilityZone
+      CidrBlock: !Ref PrivateSubnetCidr
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: hw-private-subnet
+        - Key: Owner
+          Value: Armin
+
+  InternetGateway: 
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: hw-igws
+        - Key: Owner
+          Value: Armin
+
+  AttachGateway: # must attach the Internet Gateway to VPC, not just create it!
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref MyVPC
+      InternetGatewayId: !Ref InternetGateway
+
+  EipForNat: # an Elastic IP address is a static IPv4 address designed for dynamic cloud computing
+    Type: AWS::EC2::EIP
+    Properties:
+      Domain: vpc
+
+  NatGateway:
+    Type: AWS::EC2::NatGateway
+    Properties:
+      AllocationId: !GetAtt EipForNat.AllocationId  # attach this NAT Gateway to the Elastic IP created above!
+      SubnetId: !Ref PublicSubnet
+      Tags:
+        - Key: Name
+          Value: hw-nat
+        - Key: Owner
+          Value: Armin
+
+  PublicRouteTable: # container that holds routing rules for public subnet
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref MyVPC
+      Tags:
+        - Key: Name
+          Value: hw-public-rt
+        - Key: Owner
+          Value: Armin
+
+  PublicDefaultRoute: # adds specific routing rule (entry) to table above!
+    Type: AWS::EC2::Route
+    DependsOn: AttachGateway
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref InternetGateway
+
+  AssocPublicSubnet:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PublicSubnet
+      RouteTableId: !Ref PublicRouteTable
+
+  PrivateRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref MyVPC
+      Tags:
+        - Key: Name
+          Value: hw-private-rt
+        - Key: Owner
+          Value: Armin
+
+  PrivateDefaultRoute:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId: !Ref PrivateRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId: !Ref NatGateway
+
+  AssocPrivateSubnet:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PrivateSubnet
+      RouteTableId: !Ref PrivateRouteTable
+
+  PublicSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow SSH-HTTP
+      VpcId: !Ref MyVPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0 # can use own ip for better security!
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: hw-public-sg
+        - Key: Owner
+          Value: Armin
+
+  PrivateSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow app traffic from public instance
+      VpcId: !Ref MyVPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          SourceSecurityGroupId: !Ref PublicSG
+        - IpProtocol: tcp
+          FromPort: 8080  # PetClinic default
+          ToPort: 8080
+          SourceSecurityGroupId: !Ref PublicSG
+      Tags:
+        - Key: Name
+          Value: hw-private-sg
+        - Key: Owner
+          Value: Armin
+
+  # Public/bastion + nginx
+  PublicInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: !Ref AmiId
+      InstanceType: t3.micro # low compute
+      KeyName: !Ref KeyName
+      SubnetId: !Ref PublicSubnet
+      SecurityGroupIds: [!Ref PublicSG]
+      BlockDeviceMappings:
+        - DeviceName: /dev/sda1
+          Ebs:
+            VolumeSize: 8  # gb
+            VolumeType: gp2  # gp2
+            DeleteOnTermination: true
+      Tags:
+        - Key: Name
+          Value: hw-public-instance
+        - Key: Owner
+          Value: Armin
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          apt-get update -y
+          apt-get install -y nginx
+          cat >/etc/nginx/sites-available/petclinic <<EOF
+          server {
+            listen 80;
+            location / {
+              proxy_pass http://${PrivateInstance.PrivateIp}:8080;
+            }
+          }
+          EOF
+          ln -sf /etc/nginx/sites-available/petclinic /etc/nginx/sites-enabled/petclinic
+          rm -f /etc/nginx/sites-enabled/default
+          systemctl restart nginx
+          
+  # Private app
+  PrivateInstance:
+    Type: AWS::EC2::Instance
+    DependsOn:
+      - PrivateDefaultRoute # checks if NAT is created and the route is active
+    Properties:
+      ImageId: !Ref AmiId
+      InstanceType: t3.micro
+      KeyName: !Ref KeyName
+      SubnetId: !Ref PrivateSubnet
+      SecurityGroupIds: [!Ref PrivateSG]
+      BlockDeviceMappings:
+        - DeviceName: /dev/sda1
+          Ebs:
+            VolumeSize: 8
+            VolumeType: gp2
+            DeleteOnTermination: true
+      Tags:
+        - Key: Name
+          Value: hw-private-instance
+        - Key: Owner
+          Value: Armin
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          exec > >(tee /var/log/user-data.log)
+          exec 2>&1
+          apt-get update -y
+          apt-get install -y openjdk-21-jdk git maven
+          cd /home/ubuntu
+          sudo -u ubuntu git clone https://github.com/spring-projects/spring-petclinic.git
+          cd spring-petclinic
+          sudo -u ubuntu git checkout b26f235
+          sudo -u ubuntu mvn -DskipTests package
+          sudo -u ubuntu nohup java -jar target/*.jar --server.port=8080 --server.address=0.0.0.0 > /var/log/petclinic.log 2>&1 &
+
+# -- Output --
+Outputs:
+  PublicIP:
+    Description: Public IP of nginx instance (browser)
+    Value: !GetAtt PublicInstance.PublicIp
+
+# INFRASTRUCTURE OVERVIEW
+# 
+# Network Architecture:
+# - VPC: 10.0.0.0/16 in eu-central-1a with DNS enabled
+# - Public Subnet: 10.0.1.0/28 (auto-assigns public IPs)
+# - Private Subnet: 10.0.2.0/28 (no public IPs)
+# - Internet Gateway: Provides direct internet for public subnet
+# - NAT Gateway: Enables private subnet outbound internet (via EIP in public subnet)
+# - Route Tables: Public -> IGW (0.0.0.0/0), Private -> NAT (0.0.0.0/0)
+#
+# Security Groups:
+# - Public SG: Allows SSH (22) and HTTP (80) from anywhere
+# - Private SG: Allows SSH (22) and app traffic (8080) only from Public SG
+#
+# EC2 Instances (both t3.micro, 8GB gp2, Ubuntu 24.04):
+# - Public Instance: Bastion + nginx reverse proxy (port 80 -> private:8080)
+#  * reverse proxy -> access backend application (petclinic) through public instance (nginx)
+#  * bastion -> access private network ssh through public instance ssh (Security Group)
+# - Private Instance: Spring PetClinic app on port 8080 (in-memory DB)
+#
+# Access Flow:
+# User -> Public IP:80 -> nginx -> Private IP:8080 -> PetClinic
+# SSH: User -> Public Instance (bastion) -> Private Instance
+#
+# UserData: Auto-installs nginx on public, builds/runs PetClinic on private

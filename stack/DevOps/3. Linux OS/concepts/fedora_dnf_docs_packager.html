@@ -1,0 +1,291 @@
+<!DOCTYPE html> <html lang=en class=dark style><!--
+ Page saved with SingleFile 
+ url: https://docs.fedoraproject.org/en-US/quick-docs/dnf/ 
+ saved date: Sun Sep 28 2025 18:12:57 GMT+0300 (Eastern European Summer Time)
+--><meta charset=utf-8>
+<meta name=viewport content="width=device-width, initial-scale=1.0">
+<title>Using the DNF software package manager :: Fedora Docs</title>
+<link rel=canonical href=https://docs.fedoraproject.org/en-US/quick-docs/dnf/>
+<meta name=description content="DNF is a software package manager that installs, updates, and removes packages on Fedora and is the successor to YUM (Yellow-Dog Updater Modified). DNF makes it easy to maintain packages…">
+<meta name=generator content="Antora 3.1.10">
+<style>body,html{height:100%}*,::after,::before{-webkit-box-sizing:inherit;box-sizing:inherit}html{-webkit-box-sizing:border-box;box-sizing:border-box;font-size:1.1em;-moz-text-size-adjust:100%;-ms-text-size-adjust:100%;text-size-adjust:100%}@media (min-width:1024px){html{font-size:1.2em}}a:hover{text-decoration:underline}::-webkit-scrollbar{width:.6666rem;height:.6666rem}::-webkit-scrollbar-track{background-color:#f0f0f0}::-webkit-scrollbar-thumb{background-color:#c1c1c1}::-webkit-scrollbar-thumb:window-inactive{background:transparent}@media screen and (min-width:1024px){.body{display:-webkit-box;display:-ms-flexbox;display:flex}}@media screen and (max-width:1023.5px){aside.toc.sidebar{display:none}main>.content{overflow-x:auto}}@media screen and (min-width:1024px){main{-webkit-box-flex:1;-ms-flex:auto;flex:auto;min-width:0}main>.content{display:-webkit-box;display:-ms-flexbox;display:flex}aside.toc.sidebar{-webkit-box-flex:0;-ms-flex:0 0 9rem;flex:0 0 9rem;-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}}@media screen and (min-width:1216px){aside.toc.sidebar{-ms-flex-preferred-size:12rem;flex-basis:12rem}}@media screen and (min-width:769px){}@media screen and (min-width:1024px){}@media screen and (min-width:769px){}@media screen and (min-width:1024px){}@media screen and (min-width:1024px){}@media screen and (min-width:1024px){}@media (min-width:1024px){}@media (min-width:1024px){}@media (min-width:1024px){}.dark .toc-menu{--tw-text-opacity:1;color:rgb(197 199 204/var(--tw-text-opacity))}.toc-content{position:sticky;top:5.75rem}.toc.sidebar .toc-menu{margin-right:.75rem}.toc .toc-menu h3{font-weight:700}.dark .toc .toc-menu h3{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity))}.toc .toc-menu h3{font-size:.88889rem;line-height:1.3;margin:0-.5px;padding-bottom:.25rem}.toc.sidebar .toc-menu h3{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;height:2.5rem;-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end}.toc .toc-menu ul{font-size:.83333rem;line-height:1.2;list-style:none;margin:0;padding:0}.toc.sidebar .toc-menu ul{max-height:calc(100vh - 8.25rem);overflow-y:auto;-ms-scroll-chaining:none;overscroll-behavior:none;scrollbar-width:none}.toc .toc-menu ul::-webkit-scrollbar{width:0;height:0}@media screen and (min-width:1024px){.toc .toc-menu h3{font-size:.83333rem}.toc .toc-menu ul{font-size:.75rem}}.toc .toc-menu li{margin:0}.toc .toc-menu li[data-level="2"] a{padding-left:1.25rem}.toc .toc-menu a{border-left-width:2px}.dark .toc .toc-menu a{--tw-border-opacity:1;border-color:rgb(31 41 55/var(--tw-border-opacity))}.toc .toc-menu a{color:inherit;padding:.25rem 0 .25rem .5rem;text-decoration:none}.sidebar.toc .toc-menu a{display:block;outline:none}.toc .toc-menu a:hover{color:#1565c0}.sidebar.toc .toc-menu a:focus{background:#fafafa}.doc{margin:0 auto;max-width:40rem;padding:0 1rem 4rem}@media (min-width:1024px){.doc{margin:0 2rem;max-width:54rem;min-width:0}}.doc h1{line-height:1.3}.doc h2,.doc h3{font-weight:600;line-height:1.3;margin:1rem 0 0}article.doc h1{font-weight:600}.doc h3{font-family:Open sans,Helvetica,Arial}.doc h3{font-size:24px}.doc h2>a.anchor,.doc h3>a.anchor{position:absolute;text-decoration:none;width:1.75ex;margin-left:-1.5ex;visibility:hidden;font-size:.8em;font-weight:400;padding-top:.05em}.doc h1>a.anchor::before,.doc h2>a.anchor::before,.doc h3>a.anchor::before,.doc h4>a.anchor::before,.doc h5>a.anchor::before,.doc h6>a.anchor::before{content:"§"}.doc h1:hover>a.anchor,.doc h2:hover>a.anchor,.doc h3:hover>a.anchor,.doc h4:hover>a.anchor,.doc h5:hover>a.anchor,.doc h6:hover>a.anchor{visibility:visible}.doc a,.doc a:visited{--tw-text-opacity:1;color:rgb(60 110 180/var(--tw-text-opacity))}.dark .doc a,.dark .doc a:visited{--tw-text-opacity:1;color:rgb(81 162 218/var(--tw-text-opacity))}.doc a:hover{--tw-text-opacity:1;color:rgb(41 65 114/var(--tw-text-opacity))}.dark .doc a:hover{--tw-text-opacity:1;color:rgb(60 110 180/var(--tw-text-opacity))}.doc p code{font-size:.9em;padding:.075rem .25rem .125rem;border-radius:.2rem}.doc pre{font-size:.9rem;line-height:1.5;margin:0}.doc .listingblock,.doc .paragraph,.doc .ulist{margin:1rem 0 0}@media (min-width:1024px){}.doc>h1{font-size:2rem}#preamble+.sect1,.doc .sect1+.sect1{margin-top:2.5rem}.doc h2:not(.discrete){border-bottom:1px solid #ddd;margin-left:-1rem;margin-right:-1rem;padding:.4rem 1.5rem .1rem;font-size:36px;font-weight:700}article.doc h2{border-bottom:solid #0275d8!important;padding:.4rem .9rem .1rem!important}.doc p{font-size:18px;margin:0}.doc .content,.doc p{-webkit-hyphens:auto;-ms-hyphens:auto;hyphens:auto}.doc .content pre{-webkit-hyphens:none;-ms-hyphens:none;hyphens:none}#preamble .abstract blockquote{background:#f0f0f0;border-left:5px solid #e1e1e1;margin:0;padding:.75em 1em}.doc ul{margin:0;padding:0 0 0 1.5rem}.doc .ulist li{margin-bottom:.5rem}.doc pre.highlight code,.doc pre:not(.highlight){display:block;overflow-x:auto;padding:.75rem}.doc .listingblock>.content{position:relative}body{padding-top:3.25rem}@media screen and (max-width:768.5px){}@media screen and (max-width:1023.5px){}@media screen and (min-width:1024px){}/*! GitHub style for highlight.js (c) Vasily Polovnyov <vast@whiteants.net> */@-webkit-keyframes datatables-loader-1{0%{-webkit-transform:scale(0);transform:scale(0)}to{-webkit-transform:scale(1);transform:scale(1)}}@keyframes datatables-loader-1{0%{-webkit-transform:scale(0);transform:scale(0)}to{-webkit-transform:scale(1);transform:scale(1)}}@-webkit-keyframes datatables-loader-3{0%{-webkit-transform:scale(1);transform:scale(1)}to{-webkit-transform:scale(0);transform:scale(0)}}@keyframes datatables-loader-3{0%{-webkit-transform:scale(1);transform:scale(1)}to{-webkit-transform:scale(0);transform:scale(0)}}@-webkit-keyframes datatables-loader-2{0%{-webkit-transform:translate(0);transform:translate(0)}to{-webkit-transform:translate(24px);transform:translate(24px)}}@keyframes datatables-loader-2{0%{-webkit-transform:translate(0);transform:translate(0)}to{-webkit-transform:translate(24px);transform:translate(24px)}}@media screen and (max-width:767px){}@media screen and (max-width:640px){}#preamble .abstract blockquote{background-color:inherit;color:inherit;border-radius:8px;border-color:#aad0ee;border-style:none solid;border-width:5px;font-size:.9em;font-style:italic;text-align:justify;padding-bottom:1.1em}.toc.embedded+#preamble .abstract blockquote{margin-top:1.5em}/*! tailwindcss v3.2.4 | MIT License | https://tailwindcss.com*/*,::after,::before{-webkit-box-sizing:border-box;box-sizing:border-box;border:0 solid #e5e7eb}::after,::before{--tw-content:""}html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;-o-tab-size:4;tab-size:4;font-family:Open Sans,ui-sans-serif,system-ui,sans-serif;-webkit-font-feature-settings:normal;font-feature-settings:normal}body{margin:0;line-height:inherit}a{text-decoration:inherit}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}h1{margin:0}ul{list-style:none}:disabled{cursor:default}svg{display:block;vertical-align:middle}h1,h2,h3{font-family:Montserrat,ui-sans-serif,system-ui,sans-serif}a,blockquote,li,p,ul{font-family:Open Sans,ui-sans-serif,system-ui,sans-serif}pre{font-family:Source Code Pro,ui-monospace,monospace}@media (min-width:1024px){h1{font-size:3rem;line-height:1}}@media (min-width:1280px){h1{font-size:4.5rem;line-height:1}}.dark h1{--tw-text-opacity:1;color:rgb(81 162 218/var(--tw-text-opacity))}h2{font-size:1.875rem}@media (min-width:1024px){h2{font-size:2.25rem;line-height:2.5rem}}@media (min-width:1024px){h3{font-size:1.875rem;line-height:2.25rem}}@media (min-width:1024px){}@media (min-width:1024px){}code{font-family:Source Code Pro,ui-monospace,monospace}.dark code{--tw-bg-opacity:1;background-color:rgb(12 20 32/var(--tw-bg-opacity));--tw-text-opacity:1;color:rgb(156 163 175/var(--tw-text-opacity))}ul{list-style-type:disc}pre{border-radius:.25rem;border-width:1px;padding-left:.5rem;padding-right:.5rem}@media (min-width:640px){pre{font-size:1.125rem;line-height:1.75rem}}.dark pre{--tw-border-opacity:1;border-color:rgb(55 65 81/var(--tw-border-opacity));--tw-bg-opacity:1;background-color:rgb(12 20 32/var(--tw-bg-opacity));--tw-text-opacity:1;color:rgb(156 163 175/var(--tw-text-opacity))}*,::after,::before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,0.5);--tw-ring-offset-shadow:0 0 transparent;--tw-ring-shadow:0 0 transparent;--tw-shadow:0 0 transparent;--tw-shadow-colored:0 0 transparent;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: }::-webkit-backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,0.5);--tw-ring-offset-shadow:0 0 transparent;--tw-ring-shadow:0 0 transparent;--tw-shadow:0 0 transparent;--tw-shadow-colored:0 0 transparent;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: }@media (min-width:640px){}@media (min-width:768px){}@media (min-width:1024px){}@media (min-width:1280px){}@media (min-width:1536px){}.absolute{position:absolute}.left-6{left:1.5rem}.mt-8{margin-top:2rem}.mb-1{margin-bottom:.25rem}.mt-16{margin-top:4rem}.h-6{height:1.5rem}.h-3{height:.75rem}.h-4{height:1rem}.w-6{width:1.5rem}.w-4{width:1rem}.dark .dark\:bg-fp-blue-darkest{--tw-bg-opacity:1;background-color:rgb(8 13 21/var(--tw-bg-opacity))}.dark .dark\:fill-gray-400{fill:#9ca3af}.dark .dark\:text-white{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity))}.dark .dark\:text-gray-100{--tw-text-opacity:1;color:rgb(243 244 246/var(--tw-text-opacity))}.dark .dark\:text-fp-gray-light{--tw-text-opacity:1;color:rgb(197 199 204/var(--tw-text-opacity))}@media (min-width:640px){}@media (min-width:768px){}@media (min-width:1024px){}@media (min-width:1280px){}@media (min-width:1536px){}</style>
+<style>@keyframes fa-spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}</style>
+<style>/*! Asciidoctor Tabs | Copyright (c) 2018-present Dan Allen | MIT License */</style>
+<meta property=og:type content=website>
+<meta property=og:site_name content="Fedora Docs">
+<meta property=og:title content="Using the DNF software package manager">
+<meta property=og:description content="DNF is a software package manager that installs, updates, and removes packages on Fedora and is the successor to YUM (Yellow-Dog Updater Modified). DNF makes it easy to maintain packages…">
+<meta property=og:image content=https://docs.fedoraproject.org/en-US/_/img/docs_logo.png>
+<style>@media screen and (max-width:768px){}</style><meta name=referrer content=no-referrer><link type=image/x-icon rel="shortcut icon" href="data:image/vnd.microsoft.icon;base64,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Uf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/ZolDi3aFQJgAAAAAAAAAAAAAAAAAAAADaolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/5cCK//r07P//////////////////////+PDj/+K4e//aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolDh15xOGgAAAAAAAAAAAAAAANqiUf/aolH/2qJR/9qiUf/aolH/2qJR/+nJmv/+/v7//////////////////////////////////v37/+S9hf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/ZoFDFv38/BAAAAAAAAAAA2qJR/9qiUf/aolH/2qJR/9qiUf/gsm///v38///////+/fz/7tWy/+K5fP/jun//79m4//7+/f///////Pn0/92pX//aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aoE93AAAAAAAAAADaolH/2qJR/9qiUf/aolH/2qJR//Dcvf///////////+fDj//aolH/2qJR/9qiUf/aolH/6sue////////////68+m/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qhUPPdm00XAAAAANqiUf/aolH/2qJR/9qiUf/aolH/+vPq///////48OP/2qJR/9qiUf/aolH/2qJR/9qiUf/ao1T//Pjz///////16NT/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9miT4cAAAAA2qJR/9qiUf/aolH/2qJR/9qiUf/8+vf///////Piyf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/37d3///////jv4f/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qFQ6f+/PwTaolH/2qJR/9qiUf/aolH/2qJR//nw5P//////+fLn/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR//fs3f//////+fDk/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2J9PQ9qiUf/aolH/2qJR/9qiUf/aolH/7tay////////////6cqd/9qiUf/aolH/2qJR/9qiUf/aolH/9+zd///////58OP/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aok+E2qJR/9qiUf/aolH/2qJR/9qiUf/erGX//fr3///////+/v7/8t/E/+W/if/iuHr/4rd5/9qiUf/37N3///////rz6f/it3n/4rd4/9+wbP/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qhULTaolH/2qJR/9qiUf/aolH/2qJR/9qiUf/lwIr//v38////////////////////////////2qRV//fs3f///////////////////////v7+/+XAif/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qFQ09qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/iuHv/+O7g///////////////////////apFX/9+3d////////////////////////////6ciZ/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolDk2qJQ+tqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/4bRz/+fFkv/pyJj/6cia/9qiUv/37d3///////v27v/pyZr/6cmb/+fEkf/ao1T/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUOTZolDq2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR//ft3f//////+fDj/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2aFQ09qhUMraolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/9+3d///////58OT/2qJR/9qiUf/aolH/2qJR/9qiUf/mwYz/6MWT/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aoVC02qFPmdqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/37d3///////nw5P/aolH/2qJR/9qiUf/aolH/4bR0//7+/v//////5L2F/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qhT4PZok5Y2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR//fs3P//////+fHl/9qiUf/aolH/2qJR/9qiUf/iuHv////////////oxpb/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/26BOQdqRSA7ZoVD12qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/8+PL///////+/fz/369q/9qiUf/aolH/2qJR/+vNo////////////+S9hP/aolH/2qJR/9qiUf/aolH/2qJR/9qhUOi/fz8EAAAAANmhUJzaolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/nw4/////////////68+r/6MWT/+S7gf/t0qz//vz7///////79u//26VX/9qiUf/aolH/2qJR/9qiUf/aolH/2KFOhQAAAAAAAAAA1Z5LJdmhUPraolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUv/05c///////////////////////////////////v39/+W+hv/aolH/2qJR/9qiUf/aolH/2qJR/9qhUPLanUgVAAAAAAAAAAAAAAAA2qFOi9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9ulV//w2rr//v79//////////////////ny6P/ku4L/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2aJPdAAAAAAAAAAAAAAAAAAAAADiqVQJ2aFP09qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/erGT/58OP/+jG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9//+/v7////////////////////////////+/v7//Pn1//DdwP/cp1v/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2aFQ89ifT1AAAAAAAAAAAAAAAAAAAAAAAAAAANqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/96sZP/159P//v7+//////////////////////////////////////////////////7+/f/w3L7/3Kle/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9mgT+bYoE0uAAAAAAAAAAAAAAAAAAAAANqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/26VX//LfxP/+/v7//////////////////Pn1//bq2P/05M7/9uva//379//////////////////+/Pv/7dKt/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9mhUP3ZoE+k359PEAAAAAAAAAAAAAAAANqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/6cqd//7+/f////////////7+/f/z4sn/4LFv/9yoXf/bp1r/3Khd/9+ycP/15tL//v7+/////////////fz6/+O5fv/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/ZoVD4159OWwAAAAAAAAAAAAAAANqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/cqV7/+O7g//////////////////Tl0P/cqF3/2qJR/9qiUf/aolH/2qJR/9qiUf/drGT/9unW//////////////////Tm0v/ao1P/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR39+fPxAAAAAAAAAAANqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/ku4H/+/fw/////////////Pjy/9+vav/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/4rd6//79/P////////////v27//fr2v/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9ihToUAAAAAAAAAANqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/pyJj//fv5////////////8d7B/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJS//ft3/////////////z69f/kvIL/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9mhUOLXn08gAAAAANqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/qzKD//v38////////////68+m/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR//Lgxf////////////369//lwIn/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qhUPbZok9gAAAAANqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/pyZr//fz6////////////7te1/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR//Hew/////////////37+P/mwYz/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9mhUP7aolGa5ZlMCtqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/lvob//Pjy////////////+fPp/9qjU//aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR//Hew/////////////37+P/mwo3/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aoVDQ3aFMHtqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/erWf/+fDk/////////////////+vPp//bpFb/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR//Hew/////////////37+P/mwYz/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aoVD216BLM9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolL/7dSx//////////////////z69f/qzaP/3apg/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR//Hew/////////////37+P/mwYz/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH+2qJOYdqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/26db//nx5/////////////7+/v/9/Pr/+vTq//Dcvv/qy5//6MiZ/+jHmP/htXX/2qJR//Hew/////////////78+v/w2rv/6MeX/+jGlv/oxZT/4bV2/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2aBPlNqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/+G1df/69ez//v7+///////////////////////////////////////t0qz/2qJS//Hew////////////////////////////////////////v7+/+nJnP/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2aFQstqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qjU//lwIn/+O/i///////////////////////////////////////t0qz/2qJS//Hfw/////////////////////////////////////////////ft3v/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2aFPytqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolL/3api/+3Ur//8+vb////////////////////////////t0qz/2qJS//Hfw/////////////////////////////////////////////Dbvv/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJP1tqhT/naolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/drGT/58aU/+/Yt//x3sP/8uDF//Lgx//nwo//2qJS//Hfw/////////////79/P/369r/8+LJ//Piyv/z4sr/7dSw/9umWv/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2aJQ1dqhUOvaolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR//Hfw/////////////37+P/mwYz/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJPydmiT9TaolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR//Hfw/////////////37+P/mwYz/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qBPsNqgT63aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR//Hfw/////////////37+P/mwo3/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/92qYf/gsm//3q1m/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2aFPkNmgUHzaolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR//Hfw/////////////37+P/mwo3/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/3qxk//Xn0//9/Pn/+O7g/+G1df/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/ZoVD+2Z9PYNidTDzZoVD+2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR//HfxP////////////37+P/mwo3/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/6MeX//7+/v////////////DavP/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/ZoVD12aRPMN+fShjZoU/j2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR//Hfw/////////////37+P/mwYz/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/58aV//////////////////Piy//aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolDM055PHdSUPwzZoE+w2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/+/au/////////////79+//pyZv/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/68+l//////////////////Hewv/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9mhUP7aoU+ZzJlMCgAAAADYoU5y2aFQ+NqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/+jHl/////////////7+/v/05tH/3apg/9qiUf/aolH/2qJR/9qiUf/dqWD/9+zc/////////////////+nKnf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUfXYoE1cAAAAAAAAAADZoksv2qFQ3tqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/96tZv/79/H////////////+/v7/8uHI/+CycP/dq2P/3axj/+Czcf/y4MX//v38/////////////Pn0/92rYv/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9mgT97RmkgcAAAAAAAAAAD/qlUD2qFQmNqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9ulVv/v2Lf//v38//////////////////z48v/26tj/9uva//v38f/+/v7////////////+/fv/68+l/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9mgT4EAAAAAAAAAAAAAAAAAAAAA359KGNmiUO/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/erWX/9uvb//////////////////////////////////////////////////7+/v/x3L//3Khc/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2aFP2syZMwoAAAAAAAAAAAAAAAAAAAAAAAAAANqhTmjaoVD52qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qi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"><style>.sf-hidden{display:none!important}</style><meta http-equiv=content-security-policy content="default-src 'none'; font-src 'self' data:; img-src 'self' data:; style-src 'unsafe-inline'; media-src 'self' data:; script-src 'unsafe-inline' data:; object-src 'self' data:; frame-src 'self' data:;"></head>
+ <body class="article dark:bg-fp-blue-darkest text-black dark:text-white">
+<header class=header role=banner style=display:none!important>
+ <nav class="fixed z-50 top-0 w-full bg-gradient-to-l from-fp-blue to-fp-blue-light dark:bg-none dark:bg-fp-blue-dark" style=display:none!important>
+ <div class="mx-auto px-2 sm:px-6 lg:px-8" style=display:none!important>
+ <div class="relative flex h-14 items-center justify-between" style=display:none!important>
+ <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start" style=display:none!important>
+ 
+ <div class="hidden sm:ml-auto sm:block" style=display:none!important>
+ <div class="flex space-x-4" style=display:none!important>
+ <div id=search-field class="relative inline-flex cursor-pointer items-center rounded px-4 text-xs text-gray-500 dark:text-gray-200" style=display:none!important>
+ <svg class="absolute left-6 fill-gray-400 dark:fill-gray-400 h-3" xmlns=http://www.w3.org/2000/svg viewBox="0 0 512 512"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"></path></svg>
+ 
+ 
+ </div>
+ </div>
+ </div>
+ <button type=button id=themeSwitch class="hidden sm:block stroke-slate-400 fill-slate-400" style=display:none!important>
+ <span class=dark:hidden style=display:none!important>
+ <svg viewBox="0 0 24 24" fill=none stroke-width=2 stroke-linecap=round stroke-linejoin=round class="w-6 h-6">
+ <path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"></path>
+ <path d="M12 4v1M17.66 6.344l-.828.828M20.005 12.004h-1M17.66 17.664l-.828-.828M12 20.01V19M6.34 17.664l.835-.836M3.995 12.004h1.01M6 6l.835.836"></path>
+ </svg>
+ </span>
+ <span class="hidden dark:inline" style=display:none!important>
+ <svg viewBox="0 0 512 512" class="w-4 h-4">
+ <path d="M421.6 379.9c-.6641 0-1.35 .0625-2.049 .1953c-11.24 2.143-22.37 3.17-33.32 3.17c-94.81 0-174.1-77.14-174.1-175.5c0-63.19 33.79-121.3 88.73-152.6c8.467-4.812 6.339-17.66-3.279-19.44c-11.2-2.078-29.53-3.746-40.9-3.746C132.3 31.1 32 132.2 32 256c0 123.6 100.1 224 223.8 224c69.04 0 132.1-31.45 173.8-82.93C435.3 389.1 429.1 379.9 421.6 379.9zM255.8 432C158.9 432 80 353 80 256c0-76.32 48.77-141.4 116.7-165.8C175.2 125 163.2 165.6 163.2 207.8c0 99.44 65.13 183.9 154.9 212.8C298.5 428.1 277.4 432 255.8 432z"></path>
+ </svg>
+ </span>
+ </button>
+ </div>
+ </div>
+ </div>
+ </nav>
+</header>
+<div class=body>
+<div class="nav-container dark:text-gray-300 bg-fp-gray-lightest dark:bg-fp-blue-darker dark:border-r dark:border-gray-800" data-component=quick-docs data-version=master style=display:none!important>
+ 
+</div>
+<main class=article>
+<div class="toolbar bg-fp-gray-lightest dark:bg-fp-blue-darkest dark:text-gray-300 dark:border-b dark:border-gray-800" role=navigation style=display:none!important>
+ 
+ 
+ 
+ 
+ 
+</div>
+ <div class=content>
+<aside class="toc sidebar dark:text-fp-gray-light" data-title=Contents data-levels=2>
+ <div class=toc-content>
+ <div class=toc-menu><h3>Contents</h3><ul><li data-level=1><a href=#sect-usage>Usage</a><li data-level=1><a href=#sect-automatic-updates>Automatic Updates</a><li data-level=1><a href=#sect-system-upgrades>System Upgrades</a><li data-level=1><a href=#sect-language-support-using-dnf>Language Support Using DNF</a><li data-level=1><a href=#sect-plugins>Plugins</a><li data-level=1><a href=#exclude-package>Excluding Packages From Transactions</a><li data-level=2><a href=#sect-using-dnf-plugin>Using the DNF Versionlock plugin</a><li data-level=1></ul></div>
+ 
+ </div>
+</aside>
+<article class="doc dark:text-gray-100">
+<h1 class="page mt-8 mb-1">Using the DNF software package manager</h1>
+<aside class="toc embedded sf-hidden"></aside><div id=preamble>
+<div class=sectionbody>
+<div class="quoteblock abstract">
+<blockquote>
+DNF is a software package manager that installs, updates, and removes packages on Fedora and is the successor to YUM (Yellow-Dog Updater Modified).
+</blockquote>
+</div>
+<div class=paragraph>
+<p>DNF makes it easy to maintain packages by automatically checking for dependencies and determines the actions required to install packages.
+This method eliminates the need to manually install or update the package, and its dependencies, using the <code>rpm</code> command.
+DNF is now the default software package management tool in Fedora.</p>
+</div>
+</div>
+</div>
+<div class=sect1>
+<h2 id=sect-usage><a class=anchor href=#sect-usage></a>Usage</h2>
+<div class=sectionbody>
+<div class=paragraph>
+<p><code>dnf</code> can be used exactly as <code>yum</code> to search, install or remove packages.</p>
+</div>
+<div class=paragraph>
+<p>To search the repositories for a package type:</p>
+</div>
+<div class=listingblock>
+<div class=content>
+<pre># dnf search packagename</pre>
+</div>
+</div>
+<div class=paragraph>
+<p>To install the package:</p>
+</div>
+<div class=listingblock>
+<div class=content>
+<pre># dnf install packagename</pre>
+</div>
+</div>
+<div class=paragraph>
+<p>To remove a package:</p>
+</div>
+<div class=listingblock>
+<div class=content>
+<pre># dnf remove packagename</pre>
+</div>
+</div>
+<div class=paragraph>
+<p>Other common DNF commands include:</p>
+</div>
+<div class=ulist>
+<ul>
+<li>
+<p><code>autoremove</code> - removes packages installed as dependencies that are no longer required by currently installed programs.</p>
+</li>
+<li>
+<p><code>check-update</code> - checks for updates, but does not download or install the packages.</p>
+</li>
+<li>
+<p><code>downgrade</code> - reverts to the previous version of a package.</p>
+</li>
+<li>
+<p><code>info</code> - provides basic information about the package including name, version, release, and description.</p>
+</li>
+<li>
+<p><code>reinstall</code> - reinstalls the currently installed package.</p>
+</li>
+<li>
+<p><code>upgrade</code> - checks the repositories for newer packages and updates them.</p>
+</li>
+<li>
+<p><code>exclude</code> - exclude a package from the transaction.</p>
+</li>
+</ul>
+</div>
+<div class=paragraph>
+<p>For more DNF commands refer to the man pages by typing <code>man dnf</code> at the command-line, or <a href=https://dnf.readthedocs.io/en/latest/command_ref.html>DNF Read The Docs</a></p>
+</div>
+</div>
+</div>
+<div class=sect1>
+<h2 id=sect-automatic-updates><a class=anchor href=#sect-automatic-updates></a>Automatic Updates</h2>
+<div class=sectionbody>
+<div class=paragraph>
+<p>The <code>dnf-automatic</code> package is a component that allows automatic download and installation of updates.
+It can automatically monitor and report, via e-mail, the availability of updates or send a log about downloaded packages and installed updates.</p>
+</div>
+<div class=paragraph>
+<p>For more information, refer to the <a href=https://dnf.readthedocs.org/en/latest/automatic.html>Read the Docs: DNF-Automatic</a> page.</p>
+</div>
+</div>
+</div>
+<div class=sect1>
+<h2 id=sect-system-upgrades><a class=anchor href=#sect-system-upgrades></a>System Upgrades</h2>
+<div class=sectionbody>
+<div class=paragraph>
+<p>The Fedora system can be upgraded directly with DNF, or with the DNF system upgrade plugin.
+Refer to the <a href=https://docs.fedoraproject.org/en-US/quick-docs/upgrading-fedora-offline/ class="xref page">DNF System Upgrade</a> document for more details.</p>
+</div>
+</div>
+</div>
+<div class=sect1>
+<h2 id=sect-language-support-using-dnf><a class=anchor href=#sect-language-support-using-dnf></a>Language Support Using DNF</h2>
+<div class=sectionbody>
+<div class=paragraph>
+<p>DNF can be used to install or remove Language Support.
+A detailed description with a list of available languages can be found on <a href=https://fedoraproject.org/wiki/I18N/Language_Support_Using_Dnf>Language Support Using Dnf</a> page.</p>
+</div>
+</div>
+</div>
+<div class=sect1>
+<h2 id=sect-plugins><a class=anchor href=#sect-plugins></a>Plugins</h2>
+<div class=sectionbody>
+<div class=paragraph>
+<p>The core DNF functionality can be extended with plugins.
+There are officially supported <a href=https://dnf-plugins-core.readthedocs.io/>Core DNF plugins</a>
+and also third-party <a href=https://dnf-plugins-extras.readthedocs.io/>Extras DNF Plugins</a>.
+To install them, run</p>
+</div>
+<div class=listingblock>
+<div class=content>
+<pre># dnf install dnf-plugins-core-PLUGIN_NAME</pre>
+</div>
+</div>
+<div class=paragraph>
+<p>or</p>
+</div>
+<div class=listingblock>
+<div class=content>
+<pre># dnf install dnf-plugins-extras-PLUGIN_NAME</pre>
+</div>
+</div>
+</div>
+</div>
+<div class=sect1>
+<h2 id=exclude-package><a class=anchor href=#exclude-package></a>Excluding Packages From Transactions</h2>
+<div class=sectionbody>
+<div class=paragraph>
+<p>Sometimes it is useful to ignore specific packages from transactions, such as updates.
+One such case, for example, could be when an update includes a regression or a bug.
+DNF allows you to exclude a package from the transaction:</p>
+</div>
+<div class=ulist>
+<ul>
+<li>
+<p>using the command line</p>
+</li>
+</ul>
+</div>
+<div class=listingblock>
+<div class=content>
+<pre>sudo dnf upgrade --exclude=packagename</pre>
+</div>
+</div>
+<div class=ulist>
+<ul>
+<li>
+<p>using its configuration files</p>
+</li>
+</ul>
+</div>
+<div class=paragraph>
+<p>You can add a line to <code>/etc/dnf/dnf.conf</code> to exclude packages:</p>
+</div>
+<div class=listingblock>
+<div class=content>
+<pre>excludepkgs=packagename</pre>
+</div>
+</div>
+<div class=paragraph>
+<p>This can also be added to the specific repository configuration files in <code>/etc/yum.repos.d/</code>.
+<a href=https://en.wikipedia.org/wiki/Glob_(programming)>Globs</a> may be used here to list multiple packages, and each specification must be separated by a comma.
+If you have used this configuration, you can disable it in individual DNF commands using using the <code>--disableexcludes</code> command line switch.</p>
+</div>
+<div class=paragraph>
+<p>If you use a GUI update application which does not allow you to specify packages to exclude when they run, this method can be used.</p>
+</div>
+<div class=sect2>
+<h3 id=sect-using-dnf-plugin><a class=anchor href=#sect-using-dnf-plugin></a>Using the DNF Versionlock plugin</h3>
+<div class=paragraph>
+<p>You can also use the DNF <code>versionlock</code> plugin to limit the packages that are included in a transaction.
+It allows you to list what versions of particular packages should be considered in a transaction.
+All other versions of the specified packages will be ignored.
+The plugin is part of <code>dnf-plugins-core</code> package and can be installed using the command below:</p>
+</div>
+<div class=listingblock>
+<div class=content>
+<pre>sudo dnf install 'dnf-command(versionlock)'</pre>
+</div>
+</div>
+<div class=paragraph>
+<p>To lock the currently installed version of a package, use:</p>
+</div>
+<div class=listingblock>
+<div class=content>
+<pre>sudo dnf versionlock add package</pre>
+</div>
+</div>
+<div class=paragraph>
+<p>To remove the version lock, use:</p>
+</div>
+<div class=listingblock>
+<div class=content>
+<pre>sudo dnf versionlock delete package</pre>
+</div>
+</div>
+<div class=paragraph>
+<p>The <code>list</code> command can be used to list all locked packages, while the <code>clear</code> command will delete all locked entries.</p>
+</div>
+</div>
+</div>
+</div>
+<div class=mt-16>
+ 
+</div>
+</article>
+ </div>
+</main>
+</div>
+ 

@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Linux Essentials — Concrete Study Guide</title>
+<style>
+    :root{
+      --bg:#0b0f14; --panel:#121821; --soft:#1a2230; --text:#e6edf3; --muted:#9fb1c6; --accent:#4dabf7; --accent-2:#94f7d0; --border:#263041;
+      --code-bg:#0e141b; --good:#2fd27a; --warn:#ffd43b; --bad:#ff6b6b;
+    }
+    
+    }
+    html,body{height:100%}
+    body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif}
+    header{position:static;background:var(--panel);border-bottom:1px solid var(--border)}
+    .wrap{max-width:1200px;margin:0 auto;padding:18px 16px}
+    h1{font-size:clamp(28px,3.8vw,40px);margin:4px 0 12px;letter-spacing:.3px}
+    .subtitle{color:var(--muted)}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+    .search{flex:1;display:flex;align-items:center;border:1px solid var(--border);background:var(--soft);border-radius:12px;padding:10px 12px;gap:8px}
+    .search input{flex:1;background:transparent;border:0;outline:0;color:var(--text)}
+    .btn{appearance:none;border:1px solid var(--border);background:var(--soft);color:var(--text);padding:10px 14px;border-radius:12px;cursor:pointer;font-weight:600}
+    .btn:hover{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in oklab,var(--accent) 20%, transparent)}
+    .chip{font-size:12px;border:1px solid var(--border);padding:3px 8px;border-radius:999px;color:var(--muted)}
+
+    nav#toc{position:sticky;top:98px;align-self:start}
+    .layout { display: block; }
+    @media (max-width: 960px){.layout { display: block; }}
+    .toc-card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:14px}
+    .toc-card h3{margin:6px 10px 10px;font-size:14px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}
+    .toc{list-style:none;margin:0;padding:0;max-height:72vh;overflow:auto}
+    .toc a{display:block;padding:8px 10px;border-radius:10px;color:var(--text);text-decoration:none}
+    .toc a:hover{background:var(--soft);color:var(--accent)}
+    .toc .idx{font-variant-numeric:tabular-nums;opacity:.65;margin-right:.6em}
+
+    main{padding:18px 16px}
+    section.topic{background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:18px 16px;margin:14px 0}
+    section.topic h2{margin:4px 0 10px;font-size:22px}
+    section.topic .lead{color:var(--muted)}
+    .kicker{display:inline-block;background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800;letter-spacing:.06em;text-transform:uppercase;font-size:12px}
+    .meta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+    .callout{border-left:4px solid var(--accent);background:color-mix(in oklab,var(--accent) 8%, var(--panel));padding:12px 12px;border-radius:12px;margin:12px 0}
+    .callout.warn{border-left-color:var(--warn);background:color-mix(in oklab,var(--warn) 14%, var(--panel))}
+    .callout.danger{border-left-color:var(--bad);background:color-mix(in oklab,var(--bad) 10%, var(--panel))}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    @media (max-width: 880px){.grid{grid-template-columns:1fr}}
+
+    pre{background:var(--code-bg);border:1px solid var(--border);padding:12px;border-radius:12px;overflow:auto;position:relative}
+    code{font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:13px}
+    .copy{position:absolute;top:8px;right:8px;border:1px solid var(--border);background:var(--soft);border-radius:8px;padding:6px 8px;font-size:12px;cursor:pointer}
+    .kbd{border:1px solid var(--border);background:var(--soft);border-bottom-width:3px;border-radius:6px;padding:2px 6px;font-family:ui-monospace,monospace}
+
+    table{width:100%;border-collapse:separate;border-spacing:0;overflow:hidden;border:1px solid var(--border);border-radius:12px}
+    th,td{padding:10px;border-bottom:1px solid var(--border);text-align:left}
+    thead th{background:var(--soft)}
+
+    .tag{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid var(--border);color:var(--muted);font-size:12px}
+
+    .footer{color:var(--muted);text-align:center;padding:30px 16px}
+
+    /* Print tweaks */
+    @media print{
+      header, .toolbar, nav#toc, .btn-floating{display:none}
+      section.topic{break-inside:avoid}
+      body{background:#fff;color:#000}
+    }
+
+    .btn-floating{position:fixed;bottom:18px;right:18px;border-radius:12px;padding:12px 14px;background:var(--soft);border:1px solid var(--border)}
+  
+/* one-line blurbs under section titles */
+.blurb{font-size:.95rem;opacity:.9;margin:6px 0 0 0;color:var(--muted, #a0a0a0)}
+</style>
+</head>
+<body>
+<header>
+<div class="wrap">
+<h1>Linux Essentials — Concrete Study Guide</h1>
+<div class="subtitle">Everything you need to get productive on the command line, with examples you can run.</div>
+</div>
+</header>
+<div class="wrap layout">
+
+<main id="content" tabindex="-1">
+<!-- 1. Boot process -->
+<section class="topic" id="boot-process">
+<div class="meta"><span class="kicker">Topic 01</span> <span class="tag">Boot process</span></div>
+<h2>Boot process</h2><p class="blurb">From power-on to shell: firmware → bootloader → kernel → init/systemd → login.</p>
+<p class="lead">From power-on to a login prompt: <strong>Firmware → Bootloader → Kernel &amp; initramfs → PID 1 (systemd) → Targets/services</strong>.</p>
+<div class="grid">
+<div>
+<h3>Flow &amp; components</h3>
+<ul>
+<li><strong>Firmware</strong> (BIOS/UEFI) initializes hardware, selects a boot device.</li>
+<li><strong>Bootloader</strong> (e.g., GRUB, systemd-boot) loads the kernel and optional <code>initramfs</code>.</li>
+<li><strong>Kernel</strong> sets up memory, devices, mounts root FS (or asks initramfs to), then executes <strong>PID 1</strong>.</li>
+<li><strong>PID 1</strong> is usually <code>systemd</code>; it starts targets and services in parallel with dependencies.</li>
+</ul>
+<div class="callout"><strong>Tip:</strong> UEFI systems often have an EFI System Partition (ESP) mounted at <code>/boot/efi</code>.</div>
+</div>
+<div>
+<h3>Useful commands</h3>
+<pre><button class="copy" title="Copy">Copy</button><code># What happened this boot?
+journalctl -b --no-pager | less
+# Kernel messages
+sudo dmesg --color=always | less -R
+# Show default target (like runlevel)
+systemctl get-default
+# List failed services
+systemctl --failed
+# On UEFI: list boot entries
+sudo efibootmgr
+# Regenerate GRUB menu (Debian/Ubuntu)
+sudo update-grub
+# Regenerate initramfs (Debian/Ubuntu)
+sudo update-initramfs -u</code></pre>
+<div class="callout warn"><strong>Note:</strong> Commands to rebuild GRUB/initramfs differ by distro (<code>grub2-mkconfig</code>, <code>dracut</code>, etc.). Check your distro docs.</div>
+</div>
+</div>
+</section>
+<!-- 2. Basic commands -->
+<section class="topic" id="basic-commands">
+<div class="meta"><span class="kicker">Topic 02</span> <span class="tag">Basic commands</span></div>
+<h2>Basic commands</h2><p class="blurb">Everyday survival kit: list, move, copy, remove, get help, and navigate the filesystem.</p>
+<p class="lead">Everyday navigation, file ops, help.</p>
+<div class="grid">
+<div>
+<pre><button class="copy">Copy</button><code># Navigation
+pwd                 # print working directory
+ls -lah             # list (long, all, human sizes)
+cd /path/to/dir     # change directory
+
+# Files &amp; dirs
+touch notes.txt     # create empty file
+mkdir -p a/b/c      # create nested dirs
+cp -r src/ dst/     # copy recursively
+mv old new          # rename/move
+rm -i file          # remove (confirm)
+rm -rf dir          # ⚠ delete directory tree</code></pre>
+</div>
+<div>
+<pre><button class="copy">Copy</button><code># Help
+man ls              # manual page
+ls --help           # builtin help
+
+# Inspection
+file *              # detect file types
+wc -l file.txt      # count lines
+stat file.txt       # metadata (mtime, perms)
+
+du -sh *            # sizes of items in CWD
+df -h               # mounted filesystems</code></pre>
+</div>
+</div>
+</section>
+<!-- 3. Reading from files -->
+<section class="topic" id="reading-files">
+<div class="meta"><span class="kicker">Topic 03</span> <span class="tag">Reading from files</span></div>
+<h2>Reading from files</h2><p class="blurb">Peek at files safely: cat for quick dumps, less/head/tail for paged or partial views.</p>
+<div class="grid">
+<div>
+<h3>Viewing</h3>
+<pre><button class="copy">Copy</button><code>cat file.txt                    # small files
+less -S file.txt                # pager; -S no wrap
+head -n 20 file.txt             # first N lines
+tail -n 50 file.txt             # last N lines
+tail -f /var/log/syslog         # follow new lines
+nl -ba file.txt                 # add line numbers
+awk 'NR==42' file.txt           # show line 42</code></pre>
+</div>
+<div>
+<h3>Extracting</h3>
+<pre><button class="copy">Copy</button><code># Columns and fields
+cut -d: -f1 /etc/passwd         # first field by ':'
+awk -F, '{print $2}' data.csv   # 2nd column of CSV
+awk '/ERROR/' app.log | wc -l   # count ERROR lines
+
+# Patterns
+grep -n "^root" /etc/passwd     # line numbers
+rg -n "TODO" -S .               # ripgrep (if installed)
+
+# Bytes / hex
+od -An -tx1 -N 16 file.bin      # first 16 bytes hex</code></pre>
+</div>
+</div>
+</section>
+<!-- 4. sed editing -->
+<section class="topic" id="sed">
+<div class="meta"><span class="kicker">Topic 04</span> <span class="tag">Using sed</span></div>
+<h2>Using <code>sed</code> to edit files</h2><p class="blurb">Change text files in-place; learn save/quit, search/replace, and basic motions.</p>
+<div class="grid">
+<div>
+<h3>Substitutions</h3>
+<pre><button class="copy">Copy</button><code># Basic: replace foo with bar (print to stdout)
+sed 's/foo/bar/' file
+# Global per line; case-insensitive
+sed 's/foo/bar/gi' file
+# In-place edit with backup
+sed -i.bak 's/8080/9090/g' app.conf
+# Use a different delimiter for paths
+sed -i 's#/var/www#/srv/http#g' conf</code></pre>
+<h3>Ranges &amp; deletes</h3>
+<pre><button class="copy">Copy</button><code># Delete lines 5-10
+sed '5,10d' file
+# Delete lines matching pattern
+sed '/^#/d' file            # drop comments
+# Only operate on matched lines
+sed '/^server/ s/80/443/' nginx.conf</code></pre>
+</div>
+<div>
+<h3>Insert/append &amp; capture groups</h3>
+<pre><button class="copy">Copy</button><code># Insert line before matches
+sed '/\[Service\]/i Environment=FOO=1' service.ini
+# Append after matches
+sed '/pattern/a New line here' file
+# Capture and reuse (\1)
+echo "name: Alice" | sed -E 's/name: (.*)/user=\1/'</code></pre>
+<div class="callout warn"><strong>Safety:</strong> Always keep a backup (<code>-i.bak</code>) or use version control when editing configs.</div>
+</div>
+</div>
+</section>
+<!-- 5. Comparing files -->
+<section class="topic" id="comparing-files">
+<div class="meta"><span class="kicker">Topic 05</span> <span class="tag">Comparing files</span></div>
+<h2>Comparing files</h2><p class="blurb">Quick idea: what it is, why it matters, and the handful of commands you’ll use 90% of the time.</p>
+<div class="grid">
+<div>
+<pre><button class="copy">Copy</button><code># Unidiff (patch-friendly)
+diff -u old.conf new.conf | less
+# Side-by-side
+sdiff -w 120 old new | less -S
+# Binary compare
+cmp -l a.bin b.bin
+# Directory trees
+diff -ru dirA dirB | less</code></pre>
+</div>
+<div>
+<pre><button class="copy">Copy</button><code># Common lines analysis
+comm file1 file2           # assumes both sorted
+
+# Hashes
+sha256sum file.iso
+md5sum * | sort -k 2       # quick integrity scan</code></pre>
+</div>
+</div>
+</section>
+<!-- 6. Finding files -->
+<section class="topic" id="finding-files">
+<div class="meta"><span class="kicker">Topic 06</span> <span class="tag">Finding files</span></div>
+<h2>Finding files</h2><p class="blurb">Locate things: find for filenames/metadata; grep/rg for text patterns.</p>
+<div class="grid">
+<div>
+<h3>find(1)</h3>
+<pre><button class="copy">Copy</button><code># By name/type
+find . -type f -name "*.log"
+find /var -maxdepth 2 -type d -iname "*nginx*"
+# By time/size/owner
+find /tmp -type f -mtime +7 -delete
+find . -type f -size +100M -print
+find / -user alice -perm -u+s 2&gt;/dev/null
+# Safe exec (-print0 with xargs -0)
+find . -type f -print0 | xargs -0 grep -n "ERROR"</code></pre>
+</div>
+<div>
+<h3>locate(1)</h3>
+<pre><button class="copy">Copy</button><code># Very fast DB-backed search
+sudo updatedb            # update index (periodic via cron normally)
+locate sshd_config
+locate -i --regex '.*\.(jpg|png)$'</code></pre>
+<div class="callout"><strong>Tip:</strong> Consider <code>fd</code> or <code>ripgrep</code> for blazing-fast developer workflows if available.</div>
+</div>
+</div>
+</section>
+<!-- 7. Piping & redirection -->
+<section class="topic" id="piping-redirection">
+<div class="meta"><span class="kicker">Topic 07</span> <span class="tag">Pipes &amp; redirection</span></div>
+<h2>Piping and redirection</h2><p class="blurb">Wire commands together: | chains stdout, &gt; overwrites, &gt;&gt; appends, 2&gt; redirects errors.</p>
+<div class="grid">
+<div>
+<pre><button class="copy">Copy</button><code># Stdout &amp; stderr
+cmd &gt; out.txt            # stdout only
+cmd &gt;&gt; out.txt           # append
+cmd 2&gt; err.txt           # stderr only
+cmd &gt; all.txt 2&gt;&amp;1       # both to same file
+
+# Pipes
+dmesg | grep -i usb | less
+
+# tee: write to file AND stdout
+make 2&gt;&amp;1 | tee build.log | less -R</code></pre>
+</div>
+<div>
+<pre><button class="copy">Copy</button><code># Here-docs &amp; process substitution
+cat &lt;&lt;'EOF' &gt; script.sh
+#!/usr/bin/env bash
+echo "Hello"
+EOF
+chmod +x script.sh
+
+# Feed output of a cmd as a file-like input
+diff &lt;(sort a.txt) &lt;(sort b.txt)</code></pre>
+</div>
+</div>
+</section>
+<!-- 8. Archiving files -->
+<section class="topic" id="archiving">
+<div class="meta"><span class="kicker">Topic 08</span> <span class="tag">Archiving</span></div>
+<h2>Archiving files</h2><p class="blurb">Variables &amp; PATH; export and persist via shell rc files; subshells inherit their env.</p>
+<div class="grid">
+<div>
+<h3>tar + compression</h3>
+<pre><button class="copy">Copy</button><code># Create gz archive
+ tar -czf site.tar.gz site/
+# List contents
+ tar -tf site.tar.gz | less
+# Extract into ./dest
+ mkdir -p dest &amp;&amp; tar -xzf site.tar.gz -C dest
+# Exclude patterns
+ tar -czf src.tar.gz src/ --exclude-vcs --exclude='*.log'</code></pre>
+<div class="callout"><strong>Compression choices:</strong> <code>gzip</code> (fast), <code>bzip2</code> (smaller), <code>xz</code>/<code>zstd</code> (modern; try <code>-I zstd</code>).</div>
+</div>
+<div>
+<h3>zip</h3>
+<pre><button class="copy">Copy</button><code>zip -r project.zip project/
+unzip -l project.zip   # list
+unzip project.zip -d ./here</code></pre>
+</div>
+</div>
+</section>
+<!-- 9. Permissions -->
+<section class="topic" id="permissions">
+<div class="meta"><span class="kicker">Topic 09</span> <span class="tag">Permissions</span></div>
+<h2>Working with file permissions</h2><p class="blurb">Access model: user/group/other with r=4, w=2, x=1; change with chmod/chown/chgrp.</p>
+<div class="grid">
+<div>
+<h3>Basics</h3>
+<pre><button class="copy">Copy</button><code>ls -l                  # e.g. -rwxr-x--- 1 alice dev 1K Sep 1 file
+chmod u+x script.sh    # add execute for user
+chmod g-w,o-r file     # remove specific bits
+chmod 640 file         # numeric (u=rwx=7,g=4,o=0)
+chown bob:dev file     # change owner &amp; group
+chgrp dev file         # change group only</code></pre>
+<div class="callout"><strong>Modes:</strong> r=4, w=2, x=1 → sum per class (u/g/o). Dirs need <code>x</code> to traverse.</div>
+</div>
+<div>
+<h3>Advanced</h3>
+<pre><button class="copy">Copy</button><code># Special bits
+chmod 4755 prog    # setuid
+chmod 2755 dir     # setgid (new files get group)
+chmod 1777 /tmp    # sticky (only owner can delete)
+
+# Default perms via umask
+umask              # show (e.g., 0022)
+# ACLs (if supported)
+setfacl -m u:alice:rwx project/
+getfacl project/</code></pre>
+</div>
+</div>
+</section>
+<!-- 10. Recording terminal sessions -->
+<section class="topic" id="recording-sessions">
+<div class="meta"><span class="kicker">Topic 10</span> <span class="tag">Recording sessions</span></div>
+<h2>Recording terminal sessions</h2><p class="blurb">Talk to other machines: inspect links/ports; SSH for remote shells; curl for HTTP APIs.</p>
+<div class="grid">
+<div>
+<h3>script &amp; scriptreplay</h3>
+<pre><button class="copy">Copy</button><code># Record everything typed/printed
+script -t timing.txt typescript
+# ...do your work, then exit with Ctrl-D
+# Replay with original timings
+scriptreplay timing.txt typescript</code></pre>
+<div class="callout">Outputs go to <code>typescript</code>. Use <code>script -a</code> to append.</div>
+</div>
+<div>
+<h3>Bonus</h3>
+<ul>
+<li><strong>asciinema</strong> (if installed) creates shareable, high-fidelity terminal casts.</li>
+<li>Record a single command: <code>script -qc "your command" out.log</code>.</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- 11. Screen -->
+<section class="topic" id="screen">
+<div class="meta"><span class="kicker">Topic 11</span> <span class="tag">GNU screen</span></div>
+<h2>GNU <code>screen</code> basics</h2><p class="blurb">Everyday survival kit: list, move, copy, remove, get help, and navigate the filesystem.</p>
+<div class="grid">
+<div>
+<pre><button class="copy">Copy</button><code># Start named session
+screen -S work
+# Detach (keep running)
+Ctrl-a d
+# List &amp; reattach
+screen -ls
+screen -r work
+# Split regions
+Ctrl-a S   # horizontal
+Ctrl-a |   # vertical
+Ctrl-a tab # focus next
+# Kill current window
+Ctrl-a K</code></pre>
+</div>
+<div>
+<div class="callout">Config file: <code>~/.screenrc</code>. Popular alternative: <strong>tmux</strong> with similar key bindings.</div>
+</div>
+</div>
+</section>
+<!-- 12. Crontab -->
+<section class="topic" id="crontab">
+<div class="meta"><span class="kicker">Topic 12</span> <span class="tag">Crontab</span></div>
+<h2>Crontab (scheduled tasks)</h2><p class="blurb">Run things later or repeatedly: crontab for periodic tasks; systemd timers as modern alternative.</p>
+<div class="grid">
+<div>
+<h3>Per-user crontab</h3>
+<pre><button class="copy">Copy</button><code>crontab -e             # edit your crontab
+crontab -l             # list entries
+# Fields: min hour dom month dow  (use * as wildcard)
+# Example: run backup at 02:30 daily
+30 2 * * * /usr/local/bin/backup.sh &gt;&gt; /var/log/backup.log 2&gt;&amp;1</code></pre>
+</div>
+<div>
+<h3>Special strings &amp; env</h3>
+<pre><button class="copy">Copy</button><code># Run at boot
+@reboot /usr/local/bin/startup
+# Weekly at 05:00
+@weekly /path/job.sh
+# Environment inside crontab
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin
+MAILTO=you@example.com</code></pre>
+<div class="callout warn"><strong>System cron:</strong> <code>/etc/crontab</code>, <code>/etc/cron.d/</code>, <code>/etc/cron.daily</code>… On some systems, <strong>systemd timers</strong> replace cron for new services.</div>
+</div>
+</div>
+</section>
+<!-- 13. Bash scripting -->
+<section class="topic" id="bash-scripting">
+<div class="meta"><span class="kicker">Topic 13</span> <span class="tag">Bash scripting</span></div>
+<h2>Bash scripting</h2><p class="blurb">Talk to other machines: inspect links/ports; SSH for remote shells; curl for HTTP APIs.</p>
+<div class="grid">
+<div>
+<h3>Skeleton &amp; safety</h3>
+<pre><button class="copy">Copy</button><code>#!/usr/bin/env bash
+set -Eeuo pipefail
+IFS=$'\n\t'
+
+log(){ printf '[%s] %s\n' "$(date +%T)" "$*"; }
+trap 'log "Error on line $LINENO"' ERR
+
+: "${1?Usage: $0 NAME}"   # require arg NAME
+name=$1
+
+log "Hello, $name"</code></pre>
+</div>
+<div>
+<h3>Idioms</h3>
+<pre><button class="copy">Copy</button><code># Variables &amp; arrays
+foo="value"; readonly CONST=42
+arr=(one two three)
+for x in "${arr[@]}"; do echo "$x"; done
+
+# Conditionals &amp; tests
+if [[ -f /etc/os-release ]]; then source /etc/os-release; fi
+[[ -n ${VAR:-} ]] || echo "VAR is empty"
+
+# getopts
+while getopts ":vho:" opt; do
+  case $opt in
+    v) verbose=1;;
+    o) out=$OPTARG;;
+    h) echo "help"; exit 0;;
+    *) echo "bad option"; exit 2;;
+  esac
+done</code></pre>
+</div>
+</div>
+</section>
+<!-- 14. Vi(m) -->
+<section class="topic" id="vim">
+<div class="meta"><span class="kicker">Topic 14</span> <span class="tag">Vim</span></div>
+<h2>Vi(m) essentials</h2><p class="blurb">Talk to other machines: inspect links/ports; SSH for remote shells; curl for HTTP APIs.</p>
+<div class="grid">
+<div>
+<table>
+<thead><tr><th>Action</th><th>Keys</th></tr></thead>
+<tbody>
+<tr><td>Insert mode</td><td><span class="kbd">i</span>, <span class="kbd">a</span>, <span class="kbd">o</span></td></tr>
+<tr><td>Save / quit</td><td><span class="kbd">:w</span>, <span class="kbd">:q</span>, <span class="kbd">:wq</span>, <span class="kbd">:q!</span></td></tr>
+<tr><td>Movement</td><td><span class="kbd">h</span><span class="kbd">j</span><span class="kbd">k</span><span class="kbd">l</span>, <span class="kbd">w</span>/<span class="kbd">b</span>, <span class="kbd">0</span>/<span class="kbd">$</span>, <span class="kbd">gg</span>/<span class="kbd">G</span></td></tr>
+<tr><td>Search</td><td><span class="kbd">/pattern</span> then <span class="kbd">n</span>/<span class="kbd">N</span></td></tr>
+<tr><td>Copy/paste</td><td><span class="kbd">yy</span> (yank line), <span class="kbd">p</span> (paste)</td></tr>
+<tr><td>Undo/redo</td><td><span class="kbd">u</span> / <span class="kbd">Ctrl</span>+<span class="kbd">r</span></td></tr>
+</tbody>
+</table>
+</div>
+<div>
+<pre><button class="copy">Copy</button><code>" Replace ALL in file
+:%s/old/new/g
+" Line numbers &amp; syntax
+:set number
+:syntax on
+" Indentation (2 spaces, expand tabs)
+:set ts=2 sw=2 et</code></pre>
+<div class="callout">Open multiple files: <code>vim file1 file2</code>, switch with <code>:bn</code>/<code>:bp</code>. Visual mode: <span class="kbd">v</span>.</div>
+</div>
+</div>
+</section>
+<!-- 15. Services -->
+<section class="topic" id="services">
+<div class="meta"><span class="kicker">Topic 15</span> <span class="tag">Services</span></div>
+<h2>Managing services (systemd)</h2><p class="blurb">Manage long‑running services: systemctl start/stop/status, enable at boot, inspect unit files.</p>
+<div class="grid">
+<div>
+<pre><button class="copy">Copy</button><code># Basic lifecycle
+sudo systemctl status nginx
+sudo systemctl start nginx
+sudo systemctl stop nginx
+sudo systemctl restart nginx
+sudo systemctl enable --now nginx   # start at boot
+
+# Logs
+journalctl -u nginx --since "1 hour ago"</code></pre>
+</div>
+<div>
+<pre><button class="copy">Copy</button><code># Service discovery
+systemctl list-units --type=service --state=running
+# Override (drop-in) configuration
+sudo systemctl edit nginx
+# Default target (boot state)
+systemctl get-default
+# Change target (like runlevel)
+sudo systemctl set-default multi-user.target</code></pre>
+<div class="callout warn"><strong>Legacy:</strong> Older distros use SysVinit (<code>service</code>, <code>chkconfig</code>). Prefer systemd on modern systems.</div>
+</div>
+</div>
+</section>
+<!-- 16. Monitoring -->
+<section class="topic" id="monitoring">
+<div class="meta"><span class="kicker">Topic 16</span> <span class="tag">Monitoring</span></div>
+<h2>Monitoring &amp; troubleshooting</h2><p class="blurb">Transform text streams: filter, slice columns, substitute, and aggregate quickly.</p>
+<div class="grid">
+<div>
+<pre><button class="copy">Copy</button><code># System snapshot
+top                 # htop if installed
+free -h             # memory
+vmstat 1            # vm stats
+uptime              # load average
+watch -n2 'df -h'   # live disk view
+
+# Per-process
+ps aux | sort -rk 3,3 | head        # top CPU
+ps aux | sort -rk 4,4 | head        # top MEM</code></pre>
+</div>
+<div>
+<pre><button class="copy">Copy</button><code># I/O &amp; network
+sudo iostat -xz 1     # disk I/O (sysstat)
+ss -tulpn             # sockets by process (or: netstat -plnt)
+lsof -i :5432         # who uses port 5432
+
+# Logs &amp; kernel
+journalctl -p err -b  # errors this boot
+sudo dmesg -T | less  # kernel ring buffer</code></pre>
+</div>
+</div>
+</section>
+<!-- 17. Login scripts -->
+<section class="topic" id="login-scripts">
+<div class="meta"><span class="kicker">Topic 17</span> <span class="tag">Login scripts</span></div>
+<h2>Managing login scripts (shell init)</h2><p class="blurb">Where events live: /var/log and journalctl; follow with -f, filter by unit/time/priority.</p>
+<div class="grid">
+<div>
+<h3>Files &amp; order (Bash)</h3>
+<ul>
+<li>Login shells read <code>/etc/profile</code>, then the first of <code>~/.bash_profile</code>, <code>~/.bash_login</code>, or <code>~/.profile</code>.</li>
+<li>Interactive non-login shells read <code>~/.bashrc</code>.</li>
+<li>On logout, <code>~/.bash_logout</code> runs.</li>
+</ul>
+<div class="callout">Put aliases/functions in <code>~/.bashrc</code> and source it from <code>~/.bash_profile</code>:</div>
+<pre><button class="copy">Copy</button><code>[[ -f ~/.bashrc ]] &amp;&amp; . ~/.bashrc</code></pre>
+</div>
+<div>
+<h3>Examples</h3>
+<pre><button class="copy">Copy</button><code># ~/.bashrc
+export EDITOR=vim
+export PATH="$HOME/bin:$PATH"
+# Safer rm
+alias rm='rm -i'
+# Prompt with git branch
+PS1='\u@\h:\w$(git branch --show-current 2&gt;/dev/null | sed "s/.*/ (\0)/")$ '</code></pre>
+</div>
+</div>
+</section>
+<!-- 18. Local users -->
+<section class="topic" id="users">
+<div class="meta"><span class="kicker">Topic 18</span> <span class="tag">Users</span></div>
+<h2>Local users administration</h2><p class="blurb">Transform text streams: filter, slice columns, substitute, and aggregate quickly.</p>
+<div class="grid">
+<div>
+<pre><button class="copy">Copy</button><code># Create user with home dir &amp; default shell
+sudo useradd -m -s /bin/bash alice
+sudo passwd alice
+# Add to groups
+sudo usermod -aG sudo,dev alice
+# Change shell
+sudo chsh -s /usr/bin/fish alice
+# Expiration / password policy
+sudo chage -l alice
+sudo chage -M 90 -W 7 alice</code></pre>
+<div class="callout">Inspect: <code>/etc/passwd</code> (accounts), <code>/etc/shadow</code> (password hashes), skeleton in <code>/etc/skel</code>.</div>
+</div>
+<div>
+<pre><button class="copy">Copy</button><code># Remove user (+home)
+sudo userdel -r alice
+# Who am I / my IDs
+whoami; id; groups
+# Switch user (needs password)
+su - bob</code></pre>
+</div>
+</div>
+</section>
+<!-- 19. Local groups -->
+<section class="topic" id="groups">
+<div class="meta"><span class="kicker">Topic 19</span> <span class="tag">Groups</span></div>
+<h2>Local groups administration</h2><p class="blurb">Transform text streams: filter, slice columns, substitute, and aggregate quickly.</p>
+<div class="grid">
+<div>
+<pre><button class="copy">Copy</button><code># Create / modify / delete groups
+sudo groupadd dev
+sudo groupmod -n developers dev
+sudo groupdel oldgroup
+# Manage membership
+sudo gpasswd -a alice developers
+sudo gpasswd -d alice developers
+# Temp login to new group
+newgrp developers</code></pre>
+</div>
+<div>
+<div class="callout">Files: <code>/etc/group</code>, <code>/etc/gshadow</code>. Primary group is set in <code>/etc/passwd</code>.</div>
+</div>
+</div>
+</section>
+<!-- 20. Sudoers -->
+<section class="topic" id="sudoers">
+<div class="meta"><span class="kicker">Topic 20</span> <span class="tag">Sudoers</span></div>
+<h2>Sudoers file</h2><p class="blurb">Accounts &amp; roles: useradd/usermod; groups for access; sudo for least‑privilege elevation.</p>
+<div class="grid">
+<div>
+<h3>Edit safely</h3>
+<pre><button class="copy">Copy</button><code># ALWAYS use visudo (syntax check)
+sudo visudo
+# Or add a dedicated drop-in file
+sudo visudo -f /etc/sudoers.d/90-admins</code></pre>
+<div class="callout danger"><strong>Do not</strong> edit <code>/etc/sudoers</code> with a normal editor — a syntax error can lock you out.</div>
+</div>
+<div>
+<h3>Examples</h3>
+<pre><button class="copy">Copy</button><code># Allow members of 'sudo' to do anything (typical)
+%sudo   ALL=(ALL:ALL) ALL
+# Passwordless for specific cmd
+alice  ALL=(root) NOPASSWD: /usr/sbin/systemctl restart nginx
+# Set secure PATH for sudo
+Defaults secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"</code></pre>
+<div class="callout warn">Group names are prefixed with <code>%</code>. Use the <code>visudo</code> includedir (e.g., <code>/etc/sudoers.d</code>) for modular rules.</div>
+</div>
+</div>
+</section>
+<!-- Wrap-up tips -->
+</main>
+</div>
+<script>
+    // Copy buttons
+    document.querySelectorAll('pre').forEach(pre=>{
+      const btn = pre.querySelector('.copy');
+      if(!btn) return;
+      btn.addEventListener('click', async ()=>{
+        const code = pre.querySelector('code').innerText;
+        try{ await navigator.clipboard.writeText(code); btn.textContent='Copied'; setTimeout(()=>btn.textContent='Copy',1200);}catch(e){ btn.textContent='Oops'; setTimeout(()=>btn.textContent='Copy',1200);}    
+      });
+    });
+
+    });
+  </script>
+</body>
+</html>

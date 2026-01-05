@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jenkins with Podman in WSL - Complete Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        h2 {
+            color: #2c3e50;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        h3 {
+            color: #34495e;
+            font-size: 1.3em;
+            margin: 25px 0 15px 0;
+        }
+        
+        .step {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .step-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            border-radius: 50%;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        code {
+            background: #2c3e50;
+            color: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        pre {
+            background: #2c3e50;
+            color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+        }
+        
+        pre code {
+            background: none;
+            padding: 0;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .warning::before {
+            content: "⚠️ ";
+            font-size: 1.2em;
+        }
+        
+        .success {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .success::before {
+            content: "✓ ";
+            font-size: 1.2em;
+            color: #28a745;
+        }
+        
+        .info {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .info::before {
+            content: "ℹ️ ";
+            font-size: 1.2em;
+        }
+        
+        ul {
+            margin-left: 30px;
+            margin-top: 10px;
+        }
+        
+        li {
+            margin: 8px 0;
+        }
+        
+        .command-box {
+            position: relative;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+        
+        .copy-btn:hover {
+            background: #5568d3;
+        }
+        
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+        
+        .architecture {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Jenkins with Podman in WSL</h1>
+            <p>Complete Step-by-Step Guide</p>
+        </header>
+        
+        <div class="content">
+            <!-- Prerequisites -->
+            <div class="section">
+                <h2>Prerequisites</h2>
+                <div class="step">
+                    <p>Before starting, ensure you have:</p>
+                    <ul>
+                        <li>Windows 10/11 with WSL2 enabled</li>
+                        <li>Ubuntu or Debian-based WSL distribution</li>
+                        <li>Podman installed in WSL</li>
+                        <li>Basic terminal/command line knowledge</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Architecture Overview -->
+            <div class="section">
+                <h2>Architecture Overview</h2>
+                <div class="architecture">
+                    <p><strong>Jenkins Main Container</strong> (Port 8080, 50000)</p>
+                    <p>↕️</p>
+                    <p><strong>Podman Network</strong></p>
+                    <p>↕️</p>
+                    <p><strong>Jenkins Node Container</strong> (SSH Agent)</p>
+                </div>
+            </div>
+
+            <!-- Step 1: Verify Environment -->
+            <div class="section">
+                <h2>Step 1: Verify Your Environment</h2>
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <strong>Open WSL Terminal</strong>
+                    <p>Open your WSL terminal (Ubuntu, Debian, etc.)</p>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <strong>Check Podman Installation</strong>
+                    <div class="command-box">
+                        <pre><code># Verify Podman is installed
+podman --version
+
+# If not installed, install it:
+sudo apt update
+sudo apt install -y podman podman-compose</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Create Project Directory -->
+            <div class="section">
+                <h2>Step 2: Create Project Directory</h2>
+                <div class="step">
+                    <div class="command-box">
+                        <pre><code># Create and navigate to project folder
+mkdir -p ~/jenkins-podman
+cd ~/jenkins-podman</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Generate SSH Keys -->
+            <div class="section">
+                <h2>Step 3: Generate SSH Keys</h2>
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <strong>Generate SSH Key Pair in PEM Format</strong>
+                    <div class="command-box">
+                        <pre><code># Generate RSA key in PEM format (compatible with Jenkins)
+ssh-keygen -t rsa -b 2048 -m PEM -f jenkins_agent_key -N "" -C "jenkins@node"</code></pre>
+                    </div>
+                    <div class="warning">
+                        <strong>Important:</strong> The <code>-m PEM</code> flag is required for Jenkins compatibility
+                    </div>
+                    <p>This creates two files:</p>
+                    <ul>
+                        <li><code>jenkins_agent_key</code> - Private key (keep secret)</li>
+                        <li><code>jenkins_agent_key.pub</code> - Public key (safe to share)</li>
+                    </ul>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <strong>Verify Key Format</strong>
+                    <div class="command-box">
+                        <pre><code># Check the private key format
+head -1 jenkins_agent_key</code></pre>
+                    </div>
+                    <div class="success">
+                        The first line should show: <code>-----BEGIN RSA PRIVATE KEY-----</code>
+                    </div>
+                    <div class="info">
+                        The public key should start with <code>ssh-rsa</code> and end with <code>jenkins@node</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4: Create Environment File -->
+            <div class="section">
+                <h2>Step 4: Create Environment File</h2>
+                <div class="step">
+                    <strong>Create .env File with Public Key</strong>
+                    <div class="command-box">
+                        <pre><code># Create .env file with the PUBLIC key
+echo -n "SSH_PUBLIC_KEY=" > .env
+cat jenkins_agent_key.pub >> .env
+
+# Verify it's correct
+cat .env</code></pre>
+                    </div>
+                    <div class="warning">
+                        <strong>Important:</strong> Make sure you use the PUBLIC key (.pub file), NOT the private key!
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 5: Create Docker Compose File -->
+            <div class="section">
+                <h2>Step 5: Create Docker Compose File</h2>
+                <div class="step">
+                    <strong>Create docker-compose.yml</strong>
+                    <div class="command-box">
+                        <pre><code>nano docker-compose.yml</code></pre>
+                    </div>
+                    <p>Paste this content:</p>
+                    <div class="command-box">
+                        <pre><code>version: '3.8'
+
+services:
+  jenkinsmain:
+    image: docker.io/jenkins/jenkins:lts
+    container_name: jenkinsmain
+    hostname: jenkinsmain.local
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home:Z
+    mem_limit: 1536m
+    cpus: 2
+    restart: unless-stopped
+    networks:
+      - jenkins_net
+
+  jenkinsnode1:
+    image: docker.io/jenkins/ssh-agent:latest
+    container_name: jenkinsnode1
+    hostname: node1.local
+    environment:
+      - JENKINS_AGENT_SSH_PUBKEY=${SSH_PUBLIC_KEY}
+    mem_limit: 512m
+    cpus: 1
+    restart: unless-stopped
+    networks:
+      - jenkins_net
+
+networks:
+  jenkins_net:
+    driver: bridge
+
+volumes:
+  jenkins_home:</code></pre>
+                    </div>
+                    <p>Save and exit (Ctrl+X, then Y, then Enter)</p>
+                </div>
+            </div>
+
+            <!-- Step 6: Start Jenkins -->
+            <div class="section">
+                <h2>Step 6: Start Jenkins Containers</h2>
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <strong>Start with Podman Compose</strong>
+                    <div class="command-box">
+                        <pre><code># Start all containers in detached mode
+podman-compose up -d</code></pre>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <strong>Verify Containers are Running</strong>
+                    <div class="command-box">
+                        <pre><code># Check container status
+podman ps</code></pre>
+                    </div>
+                    <div class="success">
+                        You should see two containers: <code>jenkinsmain</code> and <code>jenkinsnode1</code>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <strong>Wait for Jenkins to Initialize</strong>
+                    <div class="command-box">
+                        <pre><code># Wait about 30 seconds, then get the initial password
+sleep 30
+podman exec jenkinsmain cat /var/jenkins_home/secrets/initialAdminPassword</code></pre>
+                    </div>
+                    <div class="info">
+                        Copy this password - you'll need it to unlock Jenkins!
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <strong>Get Jenkins Node Hostname</strong>
+                    <div class="command-box">
+                        <pre><code># Verify the node hostname
+podman exec jenkinsnode1 hostname</code></pre>
+                    </div>
+                    <div class="info">
+                        You'll use the hostname <code>jenkinsnode1</code> (not IP) when configuring the Jenkins node. This ensures the connection remains stable even if container IPs change.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 7: Access Jenkins -->
+            <div class="section">
+                <h2>Step 7: Access Jenkins Web Interface</h2>
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <strong>Open Jenkins in Browser</strong>
+                    <p>Navigate to: <a href="http://localhost:8080" target="_blank">http://localhost:8080</a></p>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <strong>Unlock Jenkins</strong>
+                    <ul>
+                        <li>Paste the initial admin password you got earlier</li>
+                        <li>Click "Continue"</li>
+                    </ul>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <strong>Install Suggested Plugins</strong>
+                    <ul>
+                        <li>Click "Install suggested plugins"</li>
+                        <li>Wait for installation to complete (2-5 minutes)</li>
+                    </ul>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <strong>Create First Admin User</strong>
+                    <ul>
+                        <li>Username: <code>admin</code> (or your choice)</li>
+                        <li>Password: (your choice)</li>
+                        <li>Full name: Your name</li>
+                        <li>Email: Your email</li>
+                        <li>Click "Save and Continue"</li>
+                    </ul>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">5</span>
+                    <strong>Instance Configuration</strong>
+                    <ul>
+                        <li>Keep the default URL: <code>http://localhost:8080</code></li>
+                        <li>Click "Save and Finish"</li>
+                        <li>Click "Start using Jenkins"</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Step 8: Configure Jenkins Node -->
+            <div class="section">
+                <h2>Step 8: Configure Jenkins Node</h2>
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <strong>Navigate to Nodes</strong>
+                    <ul>
+                        <li>Click "Manage Jenkins" (left sidebar)</li>
+                        <li>Click "Nodes" or "Manage Nodes and Clouds"</li>
+                    </ul>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <strong>Create New Node</strong>
+                    <ul>
+                        <li>Click "New Node"</li>
+                        <li>Node name: <code>jenkinsnode1</code></li>
+                        <li>Type: "Permanent Agent"</li>
+                        <li>Click "Create"</li>
+                    </ul>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <strong>Configure Node Settings</strong>
+                    <p>Fill in these values:</p>
+                    <ul>
+                        <li><strong>Number of executors:</strong> 1</li>
+                        <li><strong>Remote root directory:</strong> <code>/home/jenkins</code></li>
+                        <li><strong>Labels:</strong> <code>node1 linux</code></li>
+                        <li><strong>Usage:</strong> Use this node as much as possible</li>
+                        <li><strong>Launch method:</strong> Launch agents via SSH</li>
+                        <li><strong>Host:</strong> <code>jenkinsnode1</code></li>
+                    </ul>
+                    <div class="warning">
+                        <strong>Important:</strong> Use the hostname <code>jenkinsnode1</code> instead of an IP address. This prevents connection issues when containers restart.
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <strong>Add SSH Credentials</strong>
+                    <p>Click "Add" next to Credentials dropdown, then "Jenkins":</p>
+                    <ul>
+                        <li><strong>Kind:</strong> SSH Username with private key</li>
+                        <li><strong>Scope:</strong> Global</li>
+                        <li><strong>ID:</strong> <code>jenkins-node1-key</code></li>
+                        <li><strong>Description:</strong> Jenkins Node 1 SSH Key</li>
+                        <li><strong>Username:</strong> <code>jenkins</code></li>
+                        <li><strong>Private Key:</strong> Select "Enter directly"</li>
+                    </ul>
+                    
+                    <p>Now get your private key from WSL:</p>
+                    <div class="command-box">
+                        <pre><code># In WSL terminal
+cat ~/jenkins-podman/jenkins_agent_key</code></pre>
+                    </div>
+                    
+                    <div class="warning">
+                        Copy the ENTIRE output including:<br>
+                        <code>-----BEGIN RSA PRIVATE KEY-----</code><br>
+                        and<br>
+                        <code>-----END RSA PRIVATE KEY-----</code><br><br>
+                        Make sure there are NO extra spaces or blank lines at the beginning or end.
+                    </div>
+                    
+                    <p>Paste it into the "Key" text box in Jenkins</p>
+                    <ul>
+                        <li><strong>Host Key Verification Strategy:</strong> Non verifying Verification Strategy</li>
+                        <li>Click "Add"</li>
+                        <li>Select the credential you just created from the dropdown</li>
+                        <li>Click "Save"</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Step 9: Launch Agent -->
+            <div class="section">
+                <h2>Step 9: Launch the Agent</h2>
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <strong>Start the Connection</strong>
+                    <ul>
+                        <li>Click on "jenkinsnode1" in the nodes list</li>
+                        <li>Click "Launch agent"</li>
+                        <li>Wait 5-10 seconds</li>
+                        <li>Refresh the page</li>
+                    </ul>
+                </div>
+                
+                <div class="success">
+                    You should see: <strong>"Agent successfully connected and online"</strong>
+                </div>
+            </div>
+
+            <!-- Step 10: Test Setup -->
+            <div class="section">
+                <h2>Step 10: Verify SSH Connection (Optional)</h2>
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <strong>Test SSH from Jenkins Main to Node</strong>
+                    <div class="command-box">
+                        <pre><code># Enter the Jenkins main container
+podman exec -it jenkinsmain bash
+
+# Create temporary key file
+cat > /tmp/testkey << 'EOF'
+# Paste your private key here: cat ~/jenkins-podman/jenkins_agent_key
+EOF
+
+chmod 600 /tmp/testkey
+
+# Test SSH connection using hostname
+ssh -i /tmp/testkey -o StrictHostKeyChecking=no jenkins@jenkinsnode1
+
+# If successful, you'll get a shell prompt on the node
+# Type 'exit' to return to main container, then 'exit' again to return to WSL
+exit</code></pre>
+                    </div>
+                    <div class="success">
+                        If SSH works, the Jenkins agent connection will work too!
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 11: Test Setup -->
+            <div class="section">
+                <h2>Step 11: Test Your Setup with a Job</h2>
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <strong>Create a Test Job</strong>
+                    <ul>
+                        <li>Go to Jenkins Dashboard</li>
+                        <li>Click "New Item"</li>
+                        <li>Name: <code>test-node</code></li>
+                        <li>Type: "Freestyle project"</li>
+                        <li>Click "OK"</li>
+                    </ul>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <strong>Configure the Job</strong>
+                    <p><strong>Under "General":</strong></p>
+                    <ul>
+                        <li>Check "Restrict where this project can be run"</li>
+                        <li>Label Expression: <code>node1</code></li>
+                    </ul>
+                    
+                    <p><strong>Under "Build Steps":</strong></p>
+                    <ul>
+                        <li>Click "Add build step"</li>
+                        <li>Select "Execute shell"</li>
+                        <li>Enter this command:</li>
+                    </ul>
+                    <div class="command-box">
+                        <pre><code>echo "=== Node Information ==="
+echo "Hostname: $(hostname)"
+echo "IP Address: $(hostname -I)"
+echo "User: $(whoami)"
+echo "Working Directory: $(pwd)"
+uname -a</code></pre>
+                    </div>
+                    <ul>
+                        <li>Click "Save"</li>
+                    </ul>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <strong>Run the Job</strong>
+                    <ul>
+                        <li>Click "Build Now"</li>
+                        <li>Wait for the build to complete</li>
+                        <li>Click on the build number (e.g., "#1")</li>
+                        <li>Click "Console Output"</li>
+                    </ul>
+                </div>
+                
+                <div class="success">
+                    The console output should show the job ran on <code>node1.local</code>!
+                </div>
+            </div>
+
+            <!-- Useful Commands -->
+            <div class="section">
+                <h2>Useful Commands</h2>
+                
+                <h3>Container Management</h3>
+                <div class="command-box">
+                    <pre><code># View running containers
+podman ps
+
+# View all containers (including stopped)
+podman ps -a
+
+# View container logs
+podman logs jenkinsmain
+podman logs jenkinsnode1
+
+# Follow logs in real-time
+podman logs -f jenkinsmain
+
+# Restart a container
+podman restart jenkinsmain
+
+# Stop all containers
+podman-compose down
+
+# Stop and remove volumes (fresh start)
+podman-compose down
+podman volume rm jenkins-podman_jenkins_home</code></pre>
+                </div>
+
+                <h3>Access Containers</h3>
+                <div class="command-box">
+                    <pre><code># Execute command in container
+podman exec jenkinsmain ls -la /var/jenkins_home
+
+# Open interactive shell
+podman exec -it jenkinsmain bash
+
+# Check Jenkins version
+podman exec jenkinsmain java -jar /usr/share/jenkins/jenkins.war --version</code></pre>
+                </div>
+
+                <h3>Network Management</h3>
+                <div class="command-box">
+                    <pre><code># List networks
+podman network ls
+
+# Inspect network
+podman network inspect jenkins-podman_jenkins_net
+
+# Get container IP
+podman inspect jenkinsnode1 | grep IPAddress</code></pre>
+                </div>
+            </div>
+
+            <!-- Troubleshooting -->
+            <div class="section">
+                <h2>Troubleshooting</h2>
+                
+                <h3>Containers Won't Start</h3>
+                <div class="step">
+                    <div class="command-box">
+                        <pre><code># Check logs for errors
+podman logs jenkinsmain
+podman logs jenkinsnode1
+
+# Check if ports are already in use
+sudo netstat -tlnp | grep :8080
+
+# Remove and recreate containers
+podman-compose down
+podman-compose up -d</code></pre>
+                    </div>
+                </div>
+
+                <h3>Can't Access Jenkins on localhost:8080</h3>
+                <div class="step">
+                    <div class="command-box">
+                        <pre><code># Check if Jenkins is running
+podman ps | grep jenkinsmain
+
+# Check port binding
+podman port jenkinsmain
+
+# Test from within WSL
+curl http://localhost:8080
+
+# Get WSL IP (access from Windows)
+ip addr show eth0 | grep inet</code></pre>
+                    </div>
+                </div>
+
+                <h3>Agent Won't Connect</h3>
+                <div class="step">
+                    <p><strong>Error: "PEM problem: it is of unknown type"</strong></p>
+                    <p>The SSH key is in the wrong format. Regenerate with PEM format:</p>
+                    <div class="command-box">
+                        <pre><code>cd ~/jenkins-podman
+rm jenkins_agent_key jenkins_agent_key.pub .env
+ssh-keygen -t rsa -b 2048 -m PEM -f jenkins_agent_key -N "" -C "jenkins@node"
+echo -n "SSH_PUBLIC_KEY=" > .env
+cat jenkins_agent_key.pub >> .env
+podman-compose down
+podman-compose up -d</code></pre>
+                    </div>
+                    <p>Then update the credentials in Jenkins with the new private key.</p>
+                </div>
+
+                <div class="step">
+                    <p><strong>Error: "No route to host" or wrong IP</strong></p>
+                    <p>Use the hostname instead of IP address:</p>
+                    <ul>
+                        <li>In Jenkins node configuration, set <strong>Host</strong> to: <code>jenkinsnode1</code></li>
+                        <li>This prevents connection issues when container IPs change</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <p><strong>General connection issues:</strong></p>
+                    <p>Check these common issues:</p>
+                    <ul>
+                        <li>Verify you used the <strong>private key</strong> (not public) in Jenkins credentials</li>
+                        <li>Verify the key starts with <code>-----BEGIN RSA PRIVATE KEY-----</code></li>
+                        <li>Verify no extra spaces or blank lines in the key</li>
+                        <li>Check if containers can communicate:</li>
+                    </ul>
+                    <div class="command-box">
+                        <pre><code># Test container connectivity
+podman exec jenkinsmain getent hosts jenkinsnode1</code></pre>
+                    </div>
+                </div>
+
+                <h3>Reset Everything</h3>
+                <div class="step">
+                    <div class="command-box">
+                        <pre><code># Complete reset (WARNING: deletes all data)
+cd ~/jenkins-podman
+podman-compose down
+podman volume rm jenkins-podman_jenkins_home
+podman network rm jenkins-podman_jenkins_net
+rm -f .env
+
+# Then start from Step 3 again</code></pre>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

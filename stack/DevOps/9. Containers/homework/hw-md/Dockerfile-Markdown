@@ -1,0 +1,17 @@
+ARG AUTHOR="Armin"
+ARG COMPANY="Endava"
+ARG DESCRIPTION="Markdown wiki"
+ARG VERSION="x"
+ARG FILETOCOPY
+
+FROM nginx:alpine
+
+ARG AUTHOR COMPANY DESCRIPTION VERSION
+LABEL AUTHOR="${AUTHOR}" COMPANY="${COMPANY}" DESCRIPTION="${DESCRIPTION}" version="${VERSION}"
+
+COPY index.html /usr/share/nginx/html/
+COPY wiki/ /usr/share/nginx/html/wiki/
+
+COPY ${FILETOCOPY:-} /
+
+EXPOSE 80

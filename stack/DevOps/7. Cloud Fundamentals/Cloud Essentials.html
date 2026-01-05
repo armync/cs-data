@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Cloud Essentials – Comprehensive Guide</title>
+<style>
+  :root { --bg:#0b0f14; --panel:#121821; --soft:#1a2230; --text:#e6edf3; --muted:#9fb1c6; --accent:#4dabf7; --border:#263041; --code-bg:#0e141b; }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif}
+  header{background:var(--panel);border-bottom:1px solid var(--border);text-align:center;padding:28px 16px}
+  h1{font-size:clamp(28px,3.6vw,44px);margin:0 0 6px;color:var(--accent)}
+  main{max-width:1100px;margin:0 auto;padding:26px 16px}
+  section{background:var(--panel);border:1px solid var(--border);border-radius:18px;margin:18px 0;padding:20px}
+  h2{color:var(--accent);margin:0 0 10px}
+  h3{margin:14px 0 6px;color:var(--accent)}
+  p{margin:8px 0}
+  ul{margin-top:0}
+  table{width:100%;border-collapse:collapse;background:var(--soft);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+  th,td{padding:10px;border-bottom:1px solid var(--border);vertical-align:top}
+  th{background:color-mix(in oklab,var(--accent) 14%,var(--soft));text-align:left}
+  tr:last-child td{border-bottom:0}
+  code, pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  pre{background:var(--code-bg);border:1px solid var(--border);border-radius:12px;padding:12px;overflow:auto;font-size:13.5px}
+  .muted{color:var(--muted)}
+  .callout{border-left:4px solid var(--accent);background:color-mix(in oklab,var(--accent) 8%, var(--panel));padding:12px;border-radius:10px;margin:14px 0}
+  .pill{display:inline-block;padding:2px 8px;border:1px solid var(--border);border-radius:999px;background:var(--soft);font-size:12px;color:var(--muted)}
+  .grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+</style>
+</head>
+<body>
+<header>
+  <h1>Cloud Essentials</h1>
+  
+</header>
+<main>
+  <!-- 1. Introduction -->
+  <section>
+    <h2>Introduction</h2>
+    <p>Cloud computing delivers compute, storage, networking, databases, and higher-level services over the internet. It trades capital expenditure for operational expenditure and enables elastic scaling, global reach, and programmable infrastructure.</p>
+    <div class="grid">
+      <div>
+        <h3>Service Models</h3>
+        <ul>
+          <li><strong>IaaS</strong>: Virtual machines, storage, networks you manage.</li>
+          <li><strong>PaaS</strong>: Managed runtimes/databases where you bring code & data.</li>
+          <li><strong>SaaS</strong>: Complete applications delivered as a service.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Deployment Models</h3>
+        <ul>
+          <li><strong>Public Cloud</strong>: Shared provider infrastructure.</li>
+          <li><strong>Private</strong>: Dedicated environment (hosted or on‑prem).</li>
+          <li><strong>Hybrid</strong>: Mix of on‑prem and public cloud.</li>
+          <li><strong>Multi‑Cloud</strong>: Using multiple public clouds.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1b. Cloud Building Blocks (Basics) -->
+  <section>
+    <h2>Cloud Building Blocks (Basics)</h2>
+    <div class="grid">
+      <div>
+        <h3>Accounts & Tenants</h3>
+        <ul>
+          <li><strong>AWS Account</strong> / <strong>Azure Subscription</strong> under a tenant (Entra ID).</li>
+          <li>Use separate accounts/subscriptions for <em>prod</em>, <em>stage</em>, <em>dev</em>.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Regions & AZs</h3>
+        <ul>
+          <li><strong>Region</strong>: Geographical location (e.g., eu-west-1, West Europe).</li>
+          <li><strong>Availability Zone (AZ)</strong>: Independent data centers inside a region.</li>
+          <li>Design for multi‑AZ for high availability.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Edge Locations</h3>
+        <ul>
+          <li>CDN and edge services operate closer to users for latency and caching.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Services 101</h3>
+        <ul>
+          <li><strong>Compute</strong>: EC2 / Azure VMs.</li>
+          <li><strong>Object Storage</strong>: S3 / Blob Storage.</li>
+          <li><strong>Databases</strong>: RDS/Aurora / Azure SQL, PostgreSQL, MySQL.</li>
+          <li><strong>Networking</strong>: VPC / VNet, subnets, routing, gateways.</li>
+          <li><strong>Identity</strong>: IAM / Entra ID & RBAC; Key management: KMS / Key Vault.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout"><strong>Rule of thumb:</strong> Pick a single region near your users/data, then spread across multiple AZs.</div>
+  </section>
+
+  <!-- 2. Cloud vs On-Premises -->
+  <section>
+    <h2>Understand Cloud vs On‑Premises</h2>
+    <table>
+      <thead>
+        <tr><th>Aspect</th><th>On‑Premises</th><th>Cloud</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Ownership</strong></td><td>You own facilities, hardware, and licenses.</td><td>Provider owns infra; you consume services.</td></tr>
+        <tr><td><strong>Flexibility</strong></td><td>Scaling requires procurement cycles.</td><td>Elastic scale within minutes or seconds.</td></tr>
+        <tr><td><strong>Responsibility</strong></td><td>You manage the full stack.</td><td>Shared model (see below).</td></tr>
+        <tr><td><strong>Cost Model</strong></td><td>CAPEX heavy; slower to adjust.</td><td>OPEX pay‑as‑you‑go; quick to right‑size.</td></tr>
+      </tbody>
+    </table>
+    <div class="callout"><strong>Remember:</strong> The cloud makes spinning up easy — cleaning up is your job.</div>
+  </section>
+
+  <!-- 3. Cloud Operating Model -->
+  <section>
+    <h2>Learn the Cloud Operating Model</h2>
+    <ul>
+      <li><strong>APIs over Hardware</strong>: Everything is programmable; use Infrastructure as Code (IaC).</li>
+      <li><strong>On‑Demand</strong>: Provision resources when needed; automate teardown.</li>
+      <li><strong>Managed Services</strong>: Offload undifferentiated heavy lifting (patching, HA).</li>
+      <li><strong>Scaling by Default</strong>: Auto‑scale groups, serverless, and managed databases.</li>
+    </ul>
+    <pre><code># Example: create a resource group & VM on Azure (CLI)
+az group create -n rg-demo -l westeurope
+az vm create -g rg-demo -n vm1 --image Ubuntu2204 --size Standard_B2s --public-ip-sku Standard
+
+# Example: create an EC2 instance on AWS (CLI)
+aws ec2 run-instances --image-id ami-xyz --instance-type t3.micro --subnet-id subnet-abc --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=vm1}]'
+</code></pre>
+  </section>
+
+  <!-- 4. Shared Responsibility Model -->
+  <section>
+    <h2>Grasp the Shared Responsibility Model</h2>
+    <div class="grid">
+      <div>
+        <h3>Provider Secures</h3>
+        <ul>
+          <li>Physical data centers, power, cooling</li>
+          <li>Global backbone network</li>
+          <li>Hypervisor and underlying hardware</li>
+          <li>Managed service control planes</li>
+        </ul>
+      </div>
+      <div>
+        <h3>You Secure</h3>
+        <ul>
+          <li>Identity & access (users, roles, keys)</li>
+          <li>Data (classification, encryption, backups)</li>
+          <li>Network boundaries (subnets, security groups/NSGs)</li>
+          <li>Configuration & patching of what you manage</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout"><strong>Tip:</strong> Document who owns what for every service you deploy.</div>
+  </section>
+
+  <!-- 5. Think Security First -->
+  <section>
+    <h2>Think Security First</h2>
+    <ul>
+      <li>Start with <strong>least privilege</strong> policies; grant narrowly and review regularly.</li>
+      <li>Rotate credentials and prefer <strong>short‑lived tokens</strong> over static keys.</li>
+      <li>Encrypt <strong>in transit</strong> (TLS) and <strong>at rest</strong> (KMS/Key Vault managed keys).</li>
+      <li>Segment networks; deny‑by‑default security groups/NSGs.</li>
+    </ul>
+  </section>
+
+  <!-- 6. Networking Fundamentals -->
+  <section>
+    <h2>Networking Fundamentals</h2>
+    <h3>VPC / VNet Topology</h3>
+    <ul>
+      <li><strong>VPC (AWS)</strong> / <strong>VNet (Azure)</strong>: Your isolated virtual network with a CIDR (e.g., 10.0.0.0/16).</li>
+      <li><strong>Subnets</strong>: Split the CIDR into <em>public</em> and <em>private</em> subnets, ideally per AZ.</li>
+      <li><strong>Route Tables</strong>: Control where traffic goes (e.g., to Internet Gateway, NAT Gateway, peering).</li>
+      <li><strong>Security Groups / NSGs</strong>: Stateful firewalls at instance/NIC level.</li>
+      <li><strong>NACLs</strong> (AWS): Optional stateless subnet firewalls.</li>
+    </ul>
+
+    <h3>Public vs Private Subnets</h3>
+    <table>
+      <thead><tr><th>Subnet Type</th><th>Inbound</th><th>Outbound</th><th>Typical Workloads</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Public</strong></td><td>Allowed from internet via <em>Internet Gateway</em> (IGW) + public IP.</td><td>Direct to internet via IGW.</td><td>Load balancers, bastion, NAT gateways.</td></tr>
+        <tr><td><strong>Private</strong></td><td>No direct internet inbound.</td><td>Outbound internet via <em>NAT Gateway</em> (AWS) / <em>NAT Gateway</em> (Azure) in a public subnet.</td><td>App servers, databases, internal services.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>NAT vs Public IP</h3>
+    <table>
+      <thead><tr><th>Concept</th><th>NAT (Outbound‑only)</th><th>Public IP</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Visibility</strong></td><td>Private instances reach the internet via NAT; not directly reachable inbound.</td><td>Instance/service is internet‑reachable.</td></tr>
+        <tr><td><strong>Use Case</strong></td><td>Patch/download from internet without exposing hosts.</td><td>Host public web/API endpoints.</td></tr>
+        <tr><td><strong>Examples</strong></td><td>AWS NAT Gateway; Azure NAT Gateway.</td><td>AWS Elastic IP; Azure Public IP.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Gateways & Linking Components</h3>
+    <ul>
+      <li><strong>Internet Gateway (AWS)</strong> / <strong>Public IP + default route (Azure)</strong>: Enables internet access for public subnets.</li>
+      <li><strong>NAT Gateway</strong>: Deployed in a public subnet; private subnets route 0.0.0.0/0 to it for outbound internet.</li>
+      <li><strong>PrivateLink / Private Endpoint</strong>: Private access to SaaS/cloud services without traversing the public internet.</li>
+      <li><strong>Peering / VNet Peering</strong>: Connect two VPCs/VNets privately; update route tables accordingly.</li>
+      <li><strong>Transit Gateway / Virtual WAN</strong>: Hub‑and‑spoke connectivity at scale.</li>
+    </ul>
+
+    <pre><code># Minimal public/private design (AWS CLI concepts)
+# 1) Create VPC & subnets per AZ
+aws ec2 create-vpc --cidr-block 10.0.0.0/16
+# ... create subnets: 10.0.0.0/24 (public-a), 10.0.1.0/24 (private-a), etc.
+# 2) Attach Internet Gateway and route 0.0.0.0/0 from public route table to IGW
+# 3) Create NAT Gateway in public-a; route private subnets' 0.0.0.0/0 to NAT GW
+# 4) Place ALB in public; app servers in private; DB in isolated private
+
+# Minimal public/private design (Azure CLI concepts)
+az network vnet create -g rg -n vnet --address-prefix 10.1.0.0/16 \
+  --subnet-name public --subnet-prefix 10.1.0.0/24
+az network vnet subnet create -g rg --vnet-name vnet -n private --address-prefix 10.1.1.0/24
+# Create Public IP + NAT Gateway and associate with public subnet; 
+# create route table for private subnet with default route to NAT Gateway
+</code></pre>
+
+    <h3>Cloud Backbone Networks</h3>
+    <p>Hyperscalers operate private global backbones (e.g., <em>AWS Global Network</em>, <em>Azure Backbone</em>) interconnecting regions and edge locations for lower latency and improved reliability compared to the public internet.</p>
+  </section>
+
+  <!-- 7. Identities & Access -->
+  <section>
+    <h2>Identities & Access</h2>
+    <h3>Service Principal / Non‑Human Identity</h3>
+    <p>Use programmatic identities for automation and workloads (CI/CD, apps). Prefer managed identities tied to compute where available.</p>
+    <pre><code># Azure: create a service principal
+az ad sp create-for-rbac --name app-sp --role Contributor --scopes /subscriptions/&lt;subId&gt;/resourceGroups/rg-demo
+# Output includes appId (client id) and password (client secret)
+
+# AWS: create a role for an application with least-privilege policy
+aws iam create-role --role-name app-role --assume-role-policy-document file://trust.json
+aws iam put-role-policy --role-name app-role --policy-name app-inline --policy-document file://least-priv.json
+</code></pre>
+
+    <h3>Least Privilege</h3>
+    <ul>
+      <li>Start from <span class="pill">Deny All</span> and add only what the workload needs.</li>
+      <li>Scope by <em>resource</em> and <em>action</em>; separate duties for deploy vs operate.</li>
+      <li>Use access reviews and time‑bound elevation (PIM/temporary credentials).</li>
+    </ul>
+  </section>
+
+  <!-- 8. Connectivity & SSH -->
+  <section>
+    <h2>Connectivity & SSH</h2>
+    <h3>SSH</h3>
+    <p>Use SSH to securely administer Linux VMs. Prefer key‑based auth or one‑time short‑lived certs. Disable password logins and root SSH where possible.</p>
+    <pre><code># Generate an Ed25519 key and connect
+ssh-keygen -t ed25519 -C "you@example.com"
+ssh -i ~/.ssh/id_ed25519 ubuntu@&lt;public-ip-or-dns&gt;
+
+# SSH through a bastion host (ProxyJump)
+ssh -J bastion@bastion.example.com app@10.1.1.10
+</code></pre>
+
+    <h3>Bastion / Jump Host</h3>
+    <ul>
+      <li>Hardened entry point in a public subnet to reach private resources.</li>
+      <li>Restrict inbound to your office/VPN IP ranges; log all sessions.</li>
+      <li>Alternatives: AWS Systems Manager Session Manager, Azure Bastion (agentless).</li>
+    </ul>
+  </section>
+
+  <!-- 9. Encryption: SSL/TLS & CAs -->
+  <section>
+    <h2>SSL/TLS, Certificate Authorities, and Automation</h2>
+    <p>TLS encrypts data in transit. Certificates are issued by Certificate Authorities (CAs). Use managed certs or automate issuance/renewal (e.g., ACME/Let’s Encrypt).</p>
+    <pre><code># Check a server's TLS cert chain
+openssl s_client -connect example.com:443 -servername example.com -showcerts &lt; /dev/null
+
+# Request/renew via certbot (Let’s Encrypt)
+sudo certbot certonly --dns-route53 -d api.example.com
+</code></pre>
+  </section>
+
+  <!-- 10. Observability & Logging -->
+  <section>
+    <h2>Observability & Logging (Logging Isn’t Free)</h2>
+    <ul>
+      <li>Collect <strong>metrics</strong>, <strong>logs</strong>, and <strong>traces</strong> for visibility.</li>
+      <li>Define retention by environment (e.g., 7–14 days for dev, 30–90 for prod).</li>
+      <li>Sample traces, filter high‑volume logs, and archive to cold storage to control cost.</li>
+    </ul>
+    <pre><code># AWS: set log retention (example via CLI)
+aws logs put-retention-policy --log-group-name /prod/api --retention-in-days 30
+
+# Azure: set diagnostic settings to archive to storage
+az monitor diagnostic-settings create -g rg-demo -n diagToStorage \
+  --resource &lt;resourceId&gt; --storage-account &lt;saName&gt; --logs '[{"category":"AppServiceHTTPLogs","enabled":true}]'
+</code></pre>
+  </section>
+
+  <!-- 11. Cost Management -->
+  <section>
+    <h2>Know the Cost of Ownership</h2>
+    <ul>
+      <li><strong>Egress Costs</strong>: Data leaving the provider network incurs charges.</li>
+      <li>Idle resources still cost money (disks, IPs, NAT gateways, snapshots).</li>
+      <li>Right‑size instances; use spot/preemptible where appropriate.</li>
+      <li>Adopt budgets and alerts; tag for showback/chargeback.</li>
+    </ul>
+    <pre><code># AWS: simple budget alert (example snippet)
+aws budgets create-budget --account-id &lt;acct&gt; --budget file://budget.json
+
+# Azure: cost management export (example snippet)
+az costmanagement export create --name monthly --type ActualCost --scope /subscriptions/&lt;subId&gt;
+</code></pre>
+  </section>
+
+  <!-- 12. Storage & Data Management -->
+  <section>
+    <h2>Storage & Data Management</h2>
+    <h3>Lifecycle Rules</h3>
+    <p>Move infrequently accessed data to colder tiers automatically to save cost.</p>
+    <pre><code># AWS S3 lifecycle (JSON excerpt)
+{
+  "Rules": [{
+    "ID": "logs-archive",
+    "Filter": {"Prefix": "logs/"},
+    "Status": "Enabled",
+    "Transitions": [{"Days": 30, "StorageClass": "STANDARD_IA"}],
+    "NoncurrentVersionTransitions": [{"NoncurrentDays": 30, "StorageClass": "GLACIER"}]
+  }]
+}
+
+# Azure Blob lifecycle (rule snippet)
+{
+  "name": "logs-archive",
+  "type": "Lifecycle",
+  "definition": {
+    "actions": {"baseBlob": {"tierToCool": {"daysAfterModificationGreaterThan": 30}}},
+    "filters": {"blobTypes": ["blockBlob"], "prefixMatch": ["logs/"]}
+  }
+}
+</code></pre>
+
+    <h3>Resource Tagging (Follow the Money)</h3>
+    <ul>
+      <li>Standardize keys: <code>env</code>, <code>owner</code>, <code>cost-center</code>, <code>application</code>, <code>data-classification</code>.</li>
+      <li>Enforce via policy (AWS Tag Policies / Azure Policy) and CI checks.</li>
+    </ul>
+    <pre><code># AWS: tag a resource
+aws ec2 create-tags --resources i-abc123 --tags Key=env,Value=prod Key=owner,Value=team-x
+
+# Azure: tag a resource group
+az group update -n rg-demo --set tags.env=prod tags.owner=team-x
+</code></pre>
+  </section>
+
+  <!-- 13. Reliability & HA -->
+  <section>
+    <h2>High Availability (HA) — Applications and Clusters</h2>
+    <ul>
+      <li>Design for <strong>AZ</strong> failure: deploy across multiple Availability Zones.</li>
+      <li>Use managed HA: load balancers, multi‑AZ databases, auto‑scaling.</li>
+      <li>Chaos testing & runbooks; regular backup+restore drills.</li>
+    </ul>
+    <pre><code># AWS: ALB + target group (conceptual CLI)
+aws elbv2 create-load-balancer --name web-alb --subnets subnet-a subnet-b
+aws elbv2 create-target-group --name web-tg --vpc-id vpc-xyz --protocol HTTP --port 80
+
+# Azure: Standard Load Balancer / Application Gateway (conceptual CLI)
+az network lb create -g rg-demo -n web-lb --sku Standard --frontend-ip-name fe1 --backend-pool-name be1
+</code></pre>
+
+    <h3>Incident Priority Levels</h3>
+    <table>
+      <thead><tr><th>Level</th><th>Description</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td><strong>P0</strong></td><td>Critical outage; severe business impact.</td><td>All customers unable to log in.</td></tr>
+        <tr><td><strong>P1</strong></td><td>Major degradation; workaround exists.</td><td>High error rate in one region.</td></tr>
+        <tr><td><strong>P2</strong></td><td>Minor impact or isolated issue.</td><td>One non‑critical microservice degraded.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 14. Vulnerabilities: CVE & GHSA -->
+  <section>
+    <h2>CVE & GHSA (Vulnerability Identifiers)</h2>
+    <ul>
+      <li><strong>CVE</strong>: Common identifiers for publicly known vulnerabilities.</li>
+      <li><strong>GHSA</strong>: GitHub Security Advisories, often linked to CVEs, focused on developer ecosystems.</li>
+      <li>Track advisories for OS images, containers, libraries, and managed services; patch promptly.</li>
+    </ul>
+    <pre><code># Check for vulnerable packages in a container (example with Trivy)
+trivy image --severity HIGH,CRITICAL yourregistry/app:latest
+</code></pre>
+  </section>
+
+  <!-- 15. AWS vs Azure Service Mapping -->
+  <section>
+    <h2>AWS vs Azure — Service Mapping</h2>
+    <table>
+      <thead>
+        <tr><th>Category</th><th>AWS Service</th><th>Azure Equivalent</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Compute (VMs)</td><td>EC2</td><td>Virtual Machines</td><td>Scalable virtual servers.</td></tr>
+        <tr><td>Autoscaling</td><td>Auto Scaling</td><td>Virtual Machine Scale Sets</td><td>Automatic instance scaling.</td></tr>
+        <tr><td>Containers</td><td>ECS / <span class="pill">EKS</span></td><td>AKS</td><td>Managed container orchestration.</td></tr>
+        <tr><td>Serverless</td><td>Lambda</td><td>Azure Functions</td><td>Event‑driven compute.</td></tr>
+        <tr><td>Object Storage</td><td>S3</td><td>Blob Storage</td><td>Durable object store.</td></tr>
+        <tr><td>Block Storage</td><td>EBS</td><td>Managed Disks</td><td>Persistent VM disks.</td></tr>
+        <tr><td>File Storage</td><td>EFS / FSx</td><td>Azure Files</td><td>NFS/SMB shared storage.</td></tr>
+        <tr><td>Relational DB</td><td>RDS / Aurora</td><td>Azure SQL / Azure Database for PostgreSQL/MySQL</td><td>Managed databases.</td></tr>
+        <tr><td>NoSQL</td><td>DynamoDB</td><td>Cosmos DB</td><td>Managed key‑value/JSON store.</td></tr>
+        <tr><td>Networking</td><td>VPC</td><td>Virtual Network (VNet)</td><td>Isolated virtual network.</td></tr>
+        <tr><td>Load Balancing</td><td>ALB / NLB</td><td>Application Gateway / Load Balancer</td><td>L7/L4 load balancing.</td></tr>
+        <tr><td>DNS</td><td>Route 53</td><td>Azure DNS</td><td>Authoritative DNS hosting.</td></tr>
+        <tr><td>CDN</td><td>CloudFront</td><td>Azure CDN / Front Door</td><td>Global content delivery.</td></tr>
+        <tr><td>IAM</td><td>AWS IAM</td><td>Microsoft Entra ID (Azure AD)</td><td>Identity and access control.</td></tr>
+        <tr><td>Keys & Secrets</td><td>KMS / Secrets Manager</td><td>Key Vault</td><td>Key management and secret storage.</td></tr>
+        <tr><td>Observability</td><td>CloudWatch / X‑Ray</td><td>Azure Monitor / Application Insights</td><td>Metrics, logs, traces.</td></tr>
+        <tr><td>Messaging</td><td>SQS / SNS / EventBridge</td><td>Service Bus / Event Grid</td><td>Queues, pub/sub, events.</td></tr>
+        <tr><td>Data Integration</td><td>Glue</td><td>Data Factory</td><td>ETL/ELT pipelines.</td></tr>
+        <tr><td>Analytics</td><td>Athena / EMR / Redshift</td><td>Synapse / HDInsight</td><td>Query & big‑data analytics.</td></tr>
+        <tr><td>Edge</td><td>CloudFront / Global Accelerator</td><td>Front Door / Azure CDN</td><td>Edge routing and acceleration.</td></tr>
+        <tr><td>IaC</td><td>CloudFormation / CDK</td><td>ARM / Bicep</td><td>Infrastructure as Code.</td></tr>
+        <tr><td>Policy</td><td>Organizations SCP / Config</td><td>Azure Policy / Blueprints</td><td>Governance and compliance.</td></tr>
+        <tr><td>Secrets Rotation</td><td>Secrets Manager Rotation</td><td>Key Vault Rotation</td><td>Automated credential rotation.</td></tr>
+        <tr><td>Private Connectivity</td><td>Direct Connect</td><td>ExpressRoute</td><td>Private WAN links to cloud.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 16. Quick Checklists -->
+  <section>
+    <h2>Quick Reference Checklists</h2>
+    <div class="grid">
+      <div>
+        <h3>Before You Deploy</h3>
+        <ul>
+          <li>Define <strong>owner</strong>, <strong>RTO/RPO</strong>, and <strong>data classification</strong>.</li>
+          <li>Plan VPC/VNet CIDRs, subnets, routing, and peering.</li>
+          <li>Decide tagging keys: <code>env</code>, <code>owner</code>, <code>cost-center</code>.</li>
+          <li>Pick logging strategy and retention.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Security Essentials</h3>
+        <ul>
+          <li>Least‑privilege IAM roles; short‑lived credentials.</li>
+          <li>TLS everywhere; managed certificates where possible.</li>
+          <li>Private subnets + NAT; bastion/SSM for admin access.</li>
+          <li>Automated patching and CVE/GHSA monitoring.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Cost Hygiene</h3>
+        <ul>
+          <li>Budgets and alerts per account/subscription.</li>
+          <li>Lifecycle rules for logs and data.</li>
+          <li>Turn off idle resources; watch egress and NAT gateways.</li>
+          <li>Rightsize and reserve/commit where stable.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  </main>
+</body>
+</html>

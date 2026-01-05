@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Docker Essentials Guide</title>
+<style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        /* removed header per request */
+        nav { background: #f8f9fa; padding: 20px; border-bottom: 2px solid #e9ecef; position: sticky; top: 0; z-index: 100; }
+        nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; }
+        nav a {
+            color: #2a5298; text-decoration: none; padding: 8px 15px; border-radius: 5px;
+            transition: all 0.3s; font-weight: 500;
+        }
+        nav a:hover { background: #2a5298; color: white; }
+        .content { padding: 40px; }
+        section { margin-bottom: 50px; scroll-margin-top: 80px; }
+        h1 { color: #1e3c72; font-size: 2.2em; margin-bottom: 10px; }
+        h2 {
+            color: #1e3c72; font-size: 1.8em; margin-bottom: 16px;
+            padding-bottom: 8px; border-bottom: 3px solid #667eea;
+        }
+        h3 { color: #2a5298; font-size: 1.4em; margin-top: 24px; margin-bottom: 12px; }
+        h4 { color: #444; font-size: 1.15em; margin-top: 16px; margin-bottom: 8px; }
+        p { margin-bottom: 12px; text-align: left; } /* no justification */
+        .highlight-box { background: #f0f4ff; border-left: 4px solid #667eea; padding: 16px; margin: 16px 0; border-radius: 5px; text-align: left; }
+        .benefit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin: 16px 0; }
+        .benefit-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white; padding: 20px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s; text-align: left;
+        }
+        .benefit-card:hover { transform: translateY(-5px); }
+        .benefit-card h4 { color: white; margin-top: 0; margin-bottom: 8px; }
+        code {
+            background: #f4f4f4; padding: 2px 6px; border-radius: 3px; font-family: 'Courier New', monospace; color: #e83e8c;
+        }
+        pre {
+            background: #282c34; color: #abb2bf; padding: 16px; border-radius: 5px; overflow-x: auto; margin: 16px 0; border-left: 4px solid #667eea;
+        }
+        pre code { background: none; color: #abb2bf; padding: 0; }
+        .comparison-table { width: 100%; border-collapse: collapse; margin: 16px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .comparison-table th { background: #2a5298; color: white; padding: 12px; text-align: left; }
+        .comparison-table td { padding: 10px 12px; border-bottom: 1px solid #e9ecef; }
+        .comparison-table tr:hover { background: #f8f9fa; }
+        .workflow-steps { display: flex; flex-direction: column; gap: 12px; margin: 16px 0; }
+        .step { display: flex; align-items: center; background: white; border: 2px solid #667eea; border-radius: 10px; padding: 16px; transition: all 0.3s; }
+        .step:hover { box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3); transform: translateX(10px); }
+        .step-number {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; width: 44px; height: 44px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3em; font-weight: bold;
+            margin-right: 16px; flex-shrink: 0;
+        }
+        .step-content h4 { margin-top: 0; color: #2a5298; }
+        .warning { background: #fff3cd; border-left: 4px solid #ffc107; padding: 12px; margin: 16px 0; border-radius: 5px; text-align: left; }
+        .success { background: #d4edda; border-left: 4px solid #28a745; padding: 12px; margin: 16px 0; border-radius: 5px; text-align: left; }
+        .info { background: #d1ecf1; border-left: 4px solid #17a2b8; padding: 12px; margin: 16px 0; border-radius: 5px; text-align: left; }
+        ul, ol { margin-left: 26px; margin-bottom: 12px; }
+        li { margin-bottom: 6px; }
+        /* footer removed */
+        .kbd { background:#eee;padding:2px 6px;border-radius:4px;border:1px solid #ccc; font-family: 'Courier New', monospace; }
+        @media (max-width: 768px) {
+            .content { padding: 20px; }
+            nav ul { flex-direction: column; }
+            .step { flex-direction: column; text-align: center; }
+            .step-number { margin-right: 0; margin-bottom: 12px; }
+        }
+
+.title-section {
+  text-align: center;
+  margin: -40px -40px 32px; /* bleed to container edges */
+  padding: 56px 24px;
+  background: linear-gradient(135deg, #213d77 0%, #3a57b3 100%);
+  color: #ffffff;
+  border-radius: 10px 10px 0 0;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+}
+
+.title-section h1 {
+  font-size: 2.6em;
+  color: #ffffff !important;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="content">
+<section id="title">
+<div class="title-section">
+<h1>Docker Essential Guide</h1>
+</div>
+</section>
+<!-- Essentials First (expanded and deduplicated) --><!-- Introduction -->
+<section id="intro">
+<h2>Introduction to Containers and Docker</h2>
+<p>Containers package an application and its runtime dependencies into a single, portable unit. They are lighter than virtual machines because they share the host OS kernel while isolating processes, filesystems, networking, and resources.</p>
+<div class="benefit-grid">
+<div class="benefit-card"><h4>Consistency</h4><p>Run the same artifact across dev, CI, and prod.</p></div>
+<div class="benefit-card"><h4>Speed</h4><p>Faster startup and lower overhead than VMs.</p></div>
+<div class="benefit-card"><h4>Portability</h4><p>Works on any OCI-compatible runtime.</p></div>
+<div class="benefit-card"><h4>Isolation</h4><p>Sandboxed processes and filesystems.</p></div>
+</div>
+<table class="comparison-table">
+<thead><tr><th>Aspect</th><th>Virtual Machines</th><th>Containers</th></tr></thead>
+<tbody>
+<tr><td>Kernel</td><td>Each VM has its own</td><td>Share host kernel</td></tr>
+<tr><td>Size</td><td>GBs</td><td>MBs–small GBs</td></tr>
+<tr><td>Boot Time</td><td>~minutes</td><td>~seconds</td></tr>
+<tr><td>Use Case</td><td>Strong isolation, legacy OS</td><td>Microservices, CI, portability</td></tr>
+</tbody>
+</table>
+
+<h3>Other Runtimes & Ecosystem</h3>
+<p>While this guide uses Docker, you will also see <strong>Podman</strong>, <strong>Rancher</strong> (and Rancher Desktop), and <strong>Kubernetes</strong> in the wild. They solve related but different problems:</p>
+<table class="comparison-table">
+<thead><tr><th>Tool</th><th>What it is</th><th>How you use it</th><th>Good for</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>Docker Engine + Compose</td><td>Daemon + CLI + local orchestrator</td><td><code>docker</code> / <code>docker compose</code></td><td>Local dev, small prod, CI</td><td>Most tutorials use this.</td></tr>
+<tr><td>Podman</td><td>Daemonless container engine</td><td><code>podman</code> (mostly Docker‑CLI compatible)</td><td>Rootless workflows, Linux</td><td><code>podman compose</code> works, but some features differ.</td></tr>
+<tr><td>Rancher Desktop</td><td>Desktop app bundling k8s/container tools</td><td>GUI toggles + <code>nerdctl</code>/<code>docker</code> shim</td><td>Easy k8s on laptops</td><td>Great if you want Kubernetes locally without hand‑wiring.</td></tr>
+<tr><td>Rancher (server)</td><td>Kubernetes fleet manager</td><td>Web UI + CRDs</td><td>Managing multiple k8s clusters</td><td>For teams operating many clusters.</td></tr>
+<tr><td>Kubernetes</td><td>Container orchestrator</td><td><code>kubectl</code>, YAML manifests/Helm</td><td>Production scale, HA</td><td>Steeper learning curve than Compose.</td></tr>
+</tbody>
+</table>
+<div class="highlight-box"><strong>Recommendations:</strong>
+<ul>
+<li><em>Local dev or small services:</em> start with Docker + Compose. It’s quickest.</li>
+<li><em>Linux + rootless preference:</em> Podman is excellent; most Docker commands translate 1:1.</li>
+<li><em>You want Kubernetes locally or to learn it:</em> Rancher Desktop (or kind/minikube) is smoother than DIY.</li>
+<li><em>Team needs multi‑cluster operations:</em> Use Rancher (server) on top of Kubernetes.</li>
+</ul>
+</div>
+</section>
+<!-- Essentials -->
+<section id="essentials">
+<h2>Essential Commands (Step-by-Step)</h2>
+<div class="workflow-steps">
+<div class="step">
+<div class="step-number">1</div>
+<div class="step-content">
+<h4>Discover</h4>
+<p>See your environment, images, and containers.</p>
+<pre><code>docker version                # client/server versions
+docker info                   # host, storage driver, CPUs, etc.
+docker images                 # local image cache
+docker ps                     # running containers
+docker ps -a                  # all containers (incl. exited)</code></pre>
+</div>
+</div>
+<div class="step">
+<div class="step-number">2</div>
+<div class="step-content">
+<h4>Build</h4>
+<p>Create an image from a Dockerfile (with useful variants).</p>
+<pre><code>docker build -t myimg:1.0 .               # tag image
+docker build --no-cache -t myimg:1.0 .    # ignore build cache
+docker build -f Dockerfile.ci -t myimg:ci . # use alternate Dockerfile</code></pre>
+</div>
+</div>
+<div class="step">
+<div class="step-number">3</div>
+<div class="step-content">
+<h4>Run</h4>
+<p>Start containers; map ports, mount volumes, and set name/env.</p>
+<pre><code>docker run -it --rm alpine:3.20 sh        # -i interactive, -t TTY, --rm auto-clean on exit
+docker run -d --name web -p 8080:80 nginx:alpine  # -d detached, -p host:container port
+docker run -d --name app -e NODE_ENV=prod -v appdata:/var/lib/app myimg:1.0  # -v named volume</code></pre>
+</div>
+</div>
+<div class="step">
+<div class="step-number">4</div>
+<div class="step-content">
+<h4>Interact</h4>
+<p>Operate containers without re-running them.</p>
+<pre><code>docker start &lt;container&gt;                  # start stopped container
+docker stop &lt;container&gt;                   # send SIGTERM then SIGKILL
+docker restart &lt;container&gt;
+docker exec -it &lt;container&gt; sh            # run a command inside
+docker logs -f &lt;container&gt;                # follow logs</code></pre>
+</div>
+</div>
+<div class="step">
+<div class="step-number">5</div>
+<div class="step-content">
+<h4>Inspect</h4>
+<p>Query details for debugging and automation.</p>
+<pre><code>docker inspect &lt;container-or-image&gt;       # JSON metadata
+docker stats                              # live resource usage
+docker cp &lt;container&gt;:/path/in /host/path # copy out
+docker cp /host/path &lt;container&gt;:/path/in  # copy in</code></pre>
+</div>
+</div>
+<div class="step">
+<div class="step-number">6</div>
+<div class="step-content">
+<h4>Images &amp; Registry</h4>
+<p>Pull/push images and manage local cache.</p>
+<pre><code>docker pull nginx:alpine
+docker tag myimg:1.0 myrepo/myimg:1.0
+docker push myrepo/myimg:1.0
+docker rmi &lt;image-id&gt;                      # remove image by id or name:tag
+docker login; docker logout
+docker search nginx</code></pre>
+</div>
+</div>
+<div class="step">
+<div class="step-number">7</div>
+<div class="step-content">
+<h4>Networks &amp; Volumes</h4>
+<p>Create and inspect connectivity and storage.</p>
+<pre><code>docker network create appnet
+docker network ls; docker network inspect appnet
+docker network connect appnet web          # attach container to network
+
+docker volume create appdata
+docker volume ls; docker volume inspect appdata
+docker volume rm appdata</code></pre>
+</div>
+</div>
+<div class="step">
+<div class="step-number">8</div>
+<div class="step-content">
+<h4>Clean Up</h4>
+<p>Remove unused resources safely or aggressively.</p>
+<pre><code>docker system prune              # prompt by default (containers, networks, build cache)
+docker container prune           # remove stopped containers
+docker image prune               # dangling/unused images
+docker volume prune              # unused volumes
+docker network prune             # unused networks</code></pre>
+</div>
+</div>
+<div class="step">
+<div class="step-number">9</div>
+<div class="step-content">
+<h4>Swarm (Optional)</h4>
+<p>Swarm is Docker’s built‑in orchestrator. It lets you join multiple hosts into a cluster (a “swarm”), run services with a desired number of replicas, roll out updates, and get built‑in load balancing. You only need it for multi‑host or high availability; plain Docker and Compose don’t use Swarm.</p>
+<pre><code>docker swarm init
+docker swarm join --token &lt;token&gt; &lt;manager-ip&gt;
+docker node ls
+docker service create --name web nginx:alpine
+docker service ls
+docker service scale web=3
+docker service logs web</code></pre>
+</div>
+</div>
+</div>
+<div class="highlight-box">
+<strong>Tip:</strong> The steps above cover the everyday Docker flow plus optional Swarm. Compose builds on these without repeating them.
+    </div>
+</section>
+<!-- Images & Containers -->
+<section id="images-containers">
+<h2>Images vs. Containers</h2>
+<p><strong>Images</strong> are read-only templates built from a <em>Dockerfile</em>. A <strong>container</strong> is a running (or stopped) instance of an image with a writable layer on top.</p>
+<h3>Layers &amp; Caching</h3>
+<ul>
+<li>Each <code>RUN</code>, <code>COPY</code>, and <code>ADD</code> creates a new layer.</li>
+<li>Cache hits depend on the order of instructions and file changes.</li>
+<li>Prefer small, stable base images (e.g., <code>alpine</code>, <code>debian:stable-slim</code>).</li>
+</ul>
+<h3>Pull by Tag vs. Digest</h3>
+<pre><code># pull by tag
+docker pull nginx:1.27-alpine
+# pull by digest (immutable)
+docker pull nginx@sha256:&lt;digest&gt;</code></pre>
+</section>
+<!-- Dockerfile -->
+<section id="dockerfile">
+<h2>Dockerfile</h2>
+<p>Keep images minimal, deterministic, and reproducible. Use multi-stage builds and run as a non-root user when possible.</p>
+<h3>Minimal Node.js API (Multi-Stage)</h3>
+<pre><code># syntax=docker/dockerfile:1
+ARG NODE_VERSION=22-alpine
+FROM node:${NODE_VERSION} AS base
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production
+
+FROM base AS build
+RUN npm ci
+COPY . .
+RUN npm run build
+
+FROM node:${NODE_VERSION} AS runtime
+ENV NODE_ENV=production
+WORKDIR /app
+COPY --from=build /app/dist ./dist
+COPY --from=base /app/node_modules ./node_modules
+EXPOSE 3000
+USER node
+CMD ["node", "dist/index.js"]
+</code></pre>
+<table class="comparison-table">
+<thead><tr><th>Instruction</th><th>Purpose</th><th>Example</th></tr></thead>
+<tbody>
+<tr><td><code>FROM</code></td><td>Defines the base image for your build stage. You can also name the stage using AS.</td><td><code>FROM node:22-alpine AS builder</code></td></tr>
+<tr><td><code>RUN</code></td><td>Runs a command while building the image. Each RUN adds a new layer.</td><td><code>RUN apk add --no-cache curl</code></td></tr>
+<tr><td><code>COPY</code>/<code>ADD</code></td><td>Copies files into the image. Use COPY for simple copies; ADD also supports remote URLs and auto‑extracting tar files.</td><td><code>COPY . /app</code></td></tr>
+<tr><td><code>EXPOSE</code></td><td>Lists the ports your container will use. It’s for documentation and doesn’t actually publish ports.</td><td><code>EXPOSE 8080</code></td></tr>
+<tr><td><code>ENV</code></td><td>Sets environment variables that stay available in later commands and at runtime.</td><td><code>ENV NODE_ENV=production</code></td></tr>
+<tr><td><code>USER</code></td><td>Specifies which user runs the next commands and the container’s default process.</td><td><code>USER appuser</code></td></tr>
+<tr><td><code>ENTRYPOINT</code>/<code>CMD</code></td><td>ENTRYPOINT sets the main command to run. CMD gives default arguments that can be overridden.</td><td><code>ENTRYPOINT ["python"]
+CMD ["app.py"]</code></td></tr>
+<tr><td><code>HEALTHCHECK</code></td><td>Defines how Docker checks if your container is still working properly.</td><td><code>HEALTHCHECK CMD curl -f http://localhost/health || exit 1</code></td></tr>
+</tbody>
+</table>
+<div class="info">
+<strong>.dockerignore essentials:</strong>
+<pre><code>node_modules
+.git
+dist
+.DS_Store
+*.log
+</code></pre>
+</div>
+</section>
+<!-- Compose -->
+<section id="compose">
+<h2>Docker Compose</h2>
+<p>Compose defines and runs multi-container apps using a declarative <code>compose.yaml</code>. You describe services, networks, and volumes in one file, and the CLI creates them as a project.</p>
+<div class="highlight-box">
+<strong>Compose today:</strong> Use <span class="kbd">docker compose</span> (Compose V2, built into Docker). In <code>compose.yaml</code> you usually omit <code>version:</code>. Use the old <span class="kbd">docker-compose</span> CLI or add a <code>version:</code> only for legacy environments.
+    </div>
+<h3>How Compose is structured</h3>
+<ul>
+  <li><strong>services:</strong> containers that make up your app (web, api, db).</li>
+  <li><strong>networks:</strong> optional isolated networks for service-to-service traffic.</li>
+  <li><strong>volumes:</strong> persistent data (named volumes) or bind mounts from the host.</li>
+  <li><strong>project name:</strong> derived from folder by default; use <code>-p</code> to override.</li>
+  <li><strong>env files:</strong> load <code>.env</code> automatically; you can also specify <code>env_file:</code>.</li>
+  <li><strong>depends_on:</strong> controls start order; with healthchecks you can wait for <em>healthy</em>.</li>
+  <li><strong>build:</strong> context, Dockerfile, target; great for dev flows.</li>
+  <li><strong>ports:</strong> publish container ports; format <code>host:container</code>.</li>
+  <li><strong>deploy:</strong> section is for Swarm/Kubernetes only; it’s ignored in plain Compose.</li>
+</ul>
+
+<h3>Web + API + Database</h3>
+<pre><code>services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: app
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: secret
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build: ./api
+    environment:
+      DATABASE_URL: postgres://app:secret@db:5432/app
+    depends_on:
+      db:
+        condition: service_healthy    # wait until db reports healthy
+    ports:
+      - "3000:3000"                   # expose API to host 3000
+
+  web:
+    build: ./web
+    ports:
+      - "8080:80"                     # map host 8080 to Nginx 80
+    depends_on:
+      - api                            # start web after api
+
+volumes:
+  dbdata:                               # named volume persists db data</code></pre>
+
+<h3>Compose Commands (with quick comments)</h3>
+<pre><code>docker compose up                # build (if needed) + start in foreground
+docker compose up -d             # start detached
+docker compose build             # (re)build services
+docker compose ps                # list project containers
+docker compose logs -f           # stream logs for all services
+docker compose exec api sh       # open a shell inside the api container
+docker compose down              # stop & remove containers, networks
+# legacy alias (older environments):
+# docker-compose up / down / ps / logs
+</code></pre>
+</section>
+<!-- Best Practices -->
+<section id="best-practices">
+<h2>Best Practices</h2>
+<div class="benefit-grid">
+<div class="benefit-card"><h4>Security</h4><p>Run as non-root; minimize packages; scan images (Trivy, Docker Scout); consider distroless.</p></div>
+<div class="benefit-card"><h4>Performance</h4><p>Leverage layer caching, <code>.dockerignore</code>, and multi-stage builds.</p></div>
+<div class="benefit-card"><h4>Observability</h4><p>Logs to stdout/stderr; healthchecks; metrics.</p></div>
+<div class="benefit-card"><h4>Reproducibility</h4><p>Pin base digests and tool versions; avoid mutable tags.</p></div>
+</div>
+</section>
+<!-- Troubleshooting -->
+<section id="troubleshooting">
+<h2>Troubleshooting</h2>
+<div class="warning"><strong>Gotcha:</strong> Containers exit when the PID 1 process ends. Ensure the main service stays in the foreground.</div>
+<pre><code># inspect metadata
+docker inspect &lt;container-or-image&gt;
+
+# view verbose build output (BuildKit)
+DOCKER_BUILDKIT=1 docker build . --target build --progress=plain
+
+# reclaim space
+docker system df
+docker system prune
+docker image prune
+docker volume prune
+docker network prune</code></pre>
+</section></div>
+</div>
+</body>
+</html>

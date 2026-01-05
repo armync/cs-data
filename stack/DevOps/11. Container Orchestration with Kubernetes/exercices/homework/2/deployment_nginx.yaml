@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-conf
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      type: nginx
+  template:
+    metadata:
+      name: nginx
+      labels:
+        type: nginx
+    spec:
+      containers:
+      - name: nginx-server
+        image: armync/nginx-custom:v1
+        env:
+          - name: MADE_BY
+            value: Armin
+        resources:
+          requests:
+            memory: "200Mi"
+            cpu: "200m"
+          limits:
+            cpu: "500m"
+        envFrom:
+          - configMapRef:
+              name: nginx-config
+        volumeMounts:
+          - name: html-volume
+            mountPath: /usr/share/nginx/html/index.html
+            subPath: index.html
+          - name: nginx-config-volume
+            mountPath: /etc/nginx/conf.d/default.conf
+            subPath: default.conf
+      serviceAccountName: sa-logs
+      imagePullSecrets:
+        - name: regcred
+      volumes:
+        - name: html-volume
+          configMap:
+            name: nginx-config
+            items:
+              - key: index.html
+                path: index.html
+        - name: nginx-config-volume
+          configMap:
+            name: nginx-config
+            items:
+              - key: default.conf
+                path: default.conf
+
+# Create the secret with your Docker Hub credentials
+# kubectl create secret docker-registry regcred \
+#  --docker-server=https://index.docker.io/v1/ \
+#  --docker-username=YOUR_DOCKERHUB_USERNAME \
+#  --docker-password=YOUR_DOCKERHUB_PASSWORD \
+#  --docker-email=YOUR_EMAIL \
+#  -n default

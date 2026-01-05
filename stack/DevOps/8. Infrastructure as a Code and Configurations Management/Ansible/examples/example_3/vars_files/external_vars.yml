@@ -1,0 +1,5 @@
+
+group: ansible
+httpd_version: 2.4.37
+mysql_url_rpm: https://dev.mysql.com/get/mysql80-community-release-el8-3.noarch.rpm
+mysql_package_name: mysql-server

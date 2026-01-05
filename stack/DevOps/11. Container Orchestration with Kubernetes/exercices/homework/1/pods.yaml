@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  namespace: playground
+  labels:
+    type: nginx
+spec:
+  containers:
+  - name: nginx-server
+    image: docker.io/library/nginx:trixie
+    command: ["bash", "-c"]
+    args:
+      - |
+        echo "Hello World"
+    env:
+      - name: MADE_BY
+        value: Armin
+  serviceAccountName: sa-logs

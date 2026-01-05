@@ -1,0 +1,14 @@
+<!doctype html>
+<html>
+  <head><meta charset="utf-8"><title>{{ page_title | default('Hello from Ansible!') }}</title></head>
+  <body>
+    <h1>{{ heading | default('Test') }}</h1>
+    <p>Host: {{ inventory_hostname }} | Groups: {{ group_names | join(', ') }}</p>
+    <ul>
+      {% for u in unix_users_list | default([]) %}
+        <li>{{ u.name }}{% if u.sudo %} (sudo){% endif %} — {{ (u.groups|default([]))|join(', ') }}</li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>
+

@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+  namespace: default
+data:
+  index.html: |
+    <html>
+      <head>Nginx</head>
+      <body>
+        <b>Hello World!</b>
+      </body>
+    </html>
+  default.conf: |
+    upstream echo_upstream {
+      server echo-service-nodeport.playground.svc.cluster.local:8080;
+    }
+
+    server {
+      listen 80;
+
+      location / {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_pass http://echo_upstream;
+      }
+    }

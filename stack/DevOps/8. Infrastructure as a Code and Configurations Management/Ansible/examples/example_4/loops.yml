@@ -1,0 +1,30 @@
+---
+- hosts: all
+  gather_facts: no
+  tasks:
+    - name: loop over a list
+      debug:
+        msg: "An item: {{ item }}"
+      with_items:
+        - 1
+        - [2,3]
+        - 4
+
+    - name: loop over a list of hashes
+      debug:
+        msg: "{{ item.name }} is {{ item.job }} with index {{ my_index }}"
+      loop:
+        - { name: Alice, job: Developer }
+        - { name: Jean, job: Devops }
+      loop_control:
+        index_var: my_index
+
+    - name: Show all the hosts in the inventory
+      ansible.builtin.debug:
+        msg: "{{ item }}"
+      loop: "{{ groups['all'] }}"
+
+    - name: Show all the hosts in the current play
+      ansible.builtin.debug:
+        msg: "{{ item }}"
+      loop: "{{ ansible_play_batch }}"

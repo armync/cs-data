@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  jenkinsmain:
+    image: docker.io/jenkins/jenkins:lts
+    container_name: jenkinsmain
+    hostname: jenkinsmain.local
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home:Z
+    mem_limit: 1536m
+    cpus: 2
+    restart: unless-stopped
+    networks:
+      - jenkins_net
+
+  jenkinsnode1:
+    image: docker.io/jenkins/ssh-agent:latest
+    container_name: jenkinsnode1
+    hostname: node1.local
+    environment:
+      - JENKINS_AGENT_SSH_PUBKEY=${SSH_PUBLIC_KEY}
+    mem_limit: 512m
+    cpus: 1
+    restart: unless-stopped
+    networks:
+      - jenkins_net
+
+networks:
+  jenkins_net:
+    driver: bridge
+
+volumes:
+  jenkins_home:

@@ -1,0 +1,201 @@
+<!DOCTYPE html> <html class=client-js lang=en dir=ltr style><!--
+ Page saved with SingleFile 
+ url: https://bash.cyberciti.biz/guide/While_loop 
+ saved date: Fri Oct 03 2025 20:05:21 GMT+0300 (Eastern European Summer Time)
+--><meta charset=utf-8>
+<title>While loop - Linux Bash Shell Scripting Tutorial Wiki</title>
+<style>pre{line-height:125%}.mw-highlight{background:#f8f8f8}.mw-highlight .k{color:#008000;font-weight:bold}.mw-highlight .o{color:#666666}.mw-highlight .ch{color:#3D7B7B;font-style:italic}.mw-highlight .c1{color:#3D7B7B;font-style:italic}.mw-highlight .m{color:#666666}.mw-highlight .nb{color:#008000}.mw-highlight .nv{color:#19177C}.mw-highlight .w{color:#bbbbbb}.mw-highlight .s2{color:#BA2121}.mw-highlight .s1{color:#BA2121}@media screen{}@media screen and (prefers-color-scheme:dark){}.mw-highlight{unicode-bidi:embed}div.mw-highlight{position:relative;display:flow-root;margin:1em 0}.mw-highlight pre{margin:0;-moz-tab-size:4;tab-size:4}@media (prefers-reduced-motion:reduce){*,::before,::after{animation-delay:-0.01ms!important;animation-duration:0.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:0ms!important}}body{margin:0}@supports (text-decoration:underline dotted){abbr[title]{border-bottom:0;text-decoration:underline dotted}}pre{font-family:monospace,monospace}input{margin:0}@media all and (max-width:calc(640px - 1px)){}.toctogglecheckbox:checked~ul{display:none}.tocnumber{padding-left:0;padding-right:0.5em;-webkit-padding-start:0;-webkit-padding-end:0.5em;padding-inline-start:0;padding-inline-end:0.5em}@media screen{@media all and (max-width:calc(640px - 1px)){}@media all and (max-width:calc(640px - 1px)){}.mw-parser-output a.external{color:#36b}.mw-parser-output a.extiw:visited,.mw-parser-output a.external:visited{color:#636}.mw-parser-output a.extiw:active,.mw-parser-output a.external:active{color:#b63}.mw-body-content::after{clear:both;content:"";display:block}@media all and (max-width:calc(640px - 1px)){}@media all and (max-width:calc(640px - 1px)){}.mw-indicators{float:right}#siteNotice{position:relative;text-align:center;margin:0}#mw-content-subtitle,#contentSub2{font-size:84%;line-height:1.2em;margin:0 0 1.4em 1em;color:var(--color-subtle,#54595d);width:auto}a{text-decoration:none;color:#0645ad;background:none}a:not([href]){cursor:pointer}a:visited{color:#0b0080}a:active{color:#faa700}a:hover,a:focus{text-decoration:underline}h1,h2,h3,h4{color:var(--color-emphasized,#101418);font-weight:bold;margin:0;padding-top:0.5em;padding-bottom:0.17em;display:flow-root;word-break:break-word}h1,h2{margin-bottom:0.6em;border-bottom:1px solid var(--border-color-base,#a2a9b1)}h3,h4{margin-bottom:0.3em}h1{font-size:188%;font-weight:normal}h2{font-size:150%;font-weight:normal}h3{font-size:128%}h4{font-size:116%}p{margin:0.4em 0 0.5em 0}ul{margin-top:0.3em;margin-bottom:0;margin-left:1.6em;margin-right:0;-webkit-margin-start:1.6em;-webkit-margin-end:0;margin-inline-start:1.6em;margin-inline-end:0}li{margin-bottom:0.1em}pre{font-family:monospace,monospace}pre{background-color:var(--background-color-neutral-subtle,#f8f9fa);color:var(--color-emphasized,#101418);border:1px solid var(--border-color-muted,#dadde3)}pre{padding:1em;white-space:pre-wrap;overflow-x:hidden;word-wrap:break-word}@counter-style meetei{system:numeric;symbols:"꯰""꯱""꯲""꯳""꯴""꯵""꯶""꯷""꯸""꯹";suffix:") "}@counter-style santali{system:numeric;symbols:"᱐""᱑""᱒""᱓""᱔""᱕""᱖""᱗""᱘""᱙"}@counter-style myanmar_with_period{system:numeric;symbols:"၀""၁""၂""၃""၄""၅""၆""၇""၈""၉";suffix:"။ "}.mw-heading1:lang(anp),.mw-heading1:lang(as),.mw-heading1:lang(awa),.mw-heading1:lang(bgc),.mw-heading1:lang(bh),.mw-heading1:lang(bho),.mw-heading1:lang(blk),.mw-heading1:lang(bn),.mw-heading1:lang(bo),.mw-heading1:lang(bpy),.mw-heading1:lang(ccp),.mw-heading1:lang(dty),.mw-heading1:lang(dz),.mw-heading1:lang(gom),.mw-heading1:lang(gu),.mw-heading1:lang(hi),.mw-heading1:lang(kjp),.mw-heading1:lang(km),.mw-heading1:lang(kn),.mw-heading1:lang(ks),.mw-heading1:lang(ksw),.mw-heading1:lang(mag),.mw-heading1:lang(mai),.mw-heading1:lang(ml),.mw-heading1:lang(mnw),.mw-heading1:lang(mr),.mw-heading1:lang(my),.mw-heading1:lang(new),.mw-heading1:lang(nit),.mw-heading1:lang(nod),.mw-heading1:lang(or),.mw-heading1:lang(pa),.mw-heading1:lang(pi),.mw-heading1:lang(rki),.mw-heading1:lang(sa),.mw-heading1:lang(shn),.mw-heading1:lang(si),.mw-heading1:lang(syl),.mw-heading1:lang(ta),.mw-heading1:lang(tcy),.mw-heading1:lang(tdd),.mw-heading1:lang(te),h1:lang(anp),h1:lang(as),h1:lang(awa),h1:lang(bgc),h1:lang(bh),h1:lang(bho),h1:lang(blk),h1:lang(bn),h1:lang(bo),h1:lang(bpy),h1:lang(ccp),h1:lang(dty),h1:lang(dz),h1:lang(gom),h1:lang(gu),h1:lang(hi),h1:lang(kjp),h1:lang(km),h1:lang(kn),h1:lang(ks),h1:lang(ksw),h1:lang(mag),h1:lang(mai),h1:lang(ml),h1:lang(mnw),h1:lang(mr),h1:lang(my),h1:lang(new),h1:lang(nit),h1:lang(nod),h1:lang(or),h1:lang(pa),h1:lang(pi),h1:lang(rki),h1:lang(sa),h1:lang(shn),h1:lang(si),h1:lang(syl),h1:lang(ta),h1:lang(tcy),h1:lang(tdd),h1:lang(te){line-height:1.6em!important}.mw-heading:lang(anp),.mw-heading:lang(as),.mw-heading:lang(awa),.mw-heading:lang(bgc),.mw-heading:lang(bh),.mw-heading:lang(bho),.mw-heading:lang(blk),.mw-heading:lang(bn),.mw-heading:lang(bo),.mw-heading:lang(bpy),.mw-heading:lang(ccp),.mw-heading:lang(dty),.mw-heading:lang(dz),.mw-heading:lang(gom),.mw-heading:lang(gu),.mw-heading:lang(hi),.mw-heading:lang(kjp),.mw-heading:lang(km),.mw-heading:lang(kn),.mw-heading:lang(ks),.mw-heading:lang(ksw),.mw-heading:lang(mag),.mw-heading:lang(mai),.mw-heading:lang(ml),.mw-heading:lang(mnw),.mw-heading:lang(mr),.mw-heading:lang(my),.mw-heading:lang(new),.mw-heading:lang(nit),.mw-heading:lang(nod),.mw-heading:lang(or),.mw-heading:lang(pa),.mw-heading:lang(pi),.mw-heading:lang(rki),.mw-heading:lang(sa),.mw-heading:lang(shn),.mw-heading:lang(si),.mw-heading:lang(syl),.mw-heading:lang(ta),.mw-heading:lang(tcy),.mw-heading:lang(tdd),.mw-heading:lang(te),h2:lang(anp),h2:lang(as),h2:lang(awa),h2:lang(bgc),h2:lang(bh),h2:lang(bho),h2:lang(blk),h2:lang(bn),h2:lang(bo),h2:lang(bpy),h2:lang(ccp),h2:lang(dty),h2:lang(dz),h2:lang(gom),h2:lang(gu),h2:lang(hi),h2:lang(kjp),h2:lang(km),h2:lang(kn),h2:lang(ks),h2:lang(ksw),h2:lang(mag),h2:lang(mai),h2:lang(ml),h2:lang(mnw),h2:lang(mr),h2:lang(my),h2:lang(new),h2:lang(nit),h2:lang(nod),h2:lang(or),h2:lang(pa),h2:lang(pi),h2:lang(rki),h2:lang(sa),h2:lang(shn),h2:lang(si),h2:lang(syl),h2:lang(ta),h2:lang(tcy),h2:lang(tdd),h2:lang(te),h3:lang(anp),h3:lang(as),h3:lang(awa),h3:lang(bgc),h3:lang(bh),h3:lang(bho),h3:lang(blk),h3:lang(bn),h3:lang(bo),h3:lang(bpy),h3:lang(ccp),h3:lang(dty),h3:lang(dz),h3:lang(gom),h3:lang(gu),h3:lang(hi),h3:lang(kjp),h3:lang(km),h3:lang(kn),h3:lang(ks),h3:lang(ksw),h3:lang(mag),h3:lang(mai),h3:lang(ml),h3:lang(mnw),h3:lang(mr),h3:lang(my),h3:lang(new),h3:lang(nit),h3:lang(nod),h3:lang(or),h3:lang(pa),h3:lang(pi),h3:lang(rki),h3:lang(sa),h3:lang(shn),h3:lang(si),h3:lang(syl),h3:lang(ta),h3:lang(tcy),h3:lang(tdd),h3:lang(te),h4:lang(anp),h4:lang(as),h4:lang(awa),h4:lang(bgc),h4:lang(bh),h4:lang(bho),h4:lang(blk),h4:lang(bn),h4:lang(bo),h4:lang(bpy),h4:lang(ccp),h4:lang(dty),h4:lang(dz),h4:lang(gom),h4:lang(gu),h4:lang(hi),h4:lang(kjp),h4:lang(km),h4:lang(kn),h4:lang(ks),h4:lang(ksw),h4:lang(mag),h4:lang(mai),h4:lang(ml),h4:lang(mnw),h4:lang(mr),h4:lang(my),h4:lang(new),h4:lang(nit),h4:lang(nod),h4:lang(or),h4:lang(pa),h4:lang(pi),h4:lang(rki),h4:lang(sa),h4:lang(shn),h4:lang(si),h4:lang(syl),h4:lang(ta),h4:lang(tcy),h4:lang(tdd),h4:lang(te),h5:lang(anp),h5:lang(as),h5:lang(awa),h5:lang(bgc),h5:lang(bh),h5:lang(bho),h5:lang(blk),h5:lang(bn),h5:lang(bo),h5:lang(bpy),h5:lang(ccp),h5:lang(dty),h5:lang(dz),h5:lang(gom),h5:lang(gu),h5:lang(hi),h5:lang(kjp),h5:lang(km),h5:lang(kn),h5:lang(ks),h5:lang(ksw),h5:lang(mag),h5:lang(mai),h5:lang(ml),h5:lang(mnw),h5:lang(mr),h5:lang(my),h5:lang(new),h5:lang(nit),h5:lang(nod),h5:lang(or),h5:lang(pa),h5:lang(pi),h5:lang(rki),h5:lang(sa),h5:lang(shn),h5:lang(si),h5:lang(syl),h5:lang(ta),h5:lang(tcy),h5:lang(tdd),h5:lang(te),h6:lang(anp),h6:lang(as),h6:lang(awa),h6:lang(bgc),h6:lang(bh),h6:lang(bho),h6:lang(blk),h6:lang(bn),h6:lang(bo),h6:lang(bpy),h6:lang(ccp),h6:lang(dty),h6:lang(dz),h6:lang(gom),h6:lang(gu),h6:lang(hi),h6:lang(kjp),h6:lang(km),h6:lang(kn),h6:lang(ks),h6:lang(ksw),h6:lang(mag),h6:lang(mai),h6:lang(ml),h6:lang(mnw),h6:lang(mr),h6:lang(my),h6:lang(new),h6:lang(nit),h6:lang(nod),h6:lang(or),h6:lang(pa),h6:lang(pi),h6:lang(rki),h6:lang(sa),h6:lang(shn),h6:lang(si),h6:lang(syl),h6:lang(ta),h6:lang(tcy),h6:lang(tdd),h6:lang(te){line-height:1.4em}.mw-heading1:lang(ne),h1:lang(ne){line-height:1.9}.mw-heading2:lang(th),.mw-heading2:lang(ne),h2:lang(th),h2:lang(ne){line-height:1.6}.toc{background-color:var(--background-color-neutral-subtle,#f8f9fa);border:1px solid var(--border-color-base,#a2a9b1);font-size:95%}.toc{display:table;padding:7px}.toc h2{display:inline;border:0;padding:0;font-size:100%;font-weight:bold}.toc .toctitle{text-align:center;direction:ltr}.toc ul{list-style:none;margin:0.3em 0;padding:0;text-align:start}.toc ul ul{margin:0;margin-left:2em;margin-right:0;-webkit-margin-start:2em;-webkit-margin-end:0;margin-inline-start:2em;margin-inline-end:0}.tocnumber,.toctext{display:table-cell;text-decoration:inherit}.tocnumber{color:var(--color-base,#202122)}.toctogglecheckbox{display:inline!important;position:absolute;opacity:0;z-index:-1}.toctogglespan{font-size:94%}.toctogglespan::before{content:" ["}.toctogglespan::after{content:"]"}.toctogglelabel{color:#0645ad;cursor:pointer}.toctogglelabel:hover{text-decoration:underline}.toctogglecheckbox:focus+.toctitle .toctogglelabel{text-decoration:underline;outline:auto}.toctogglecheckbox:checked+.toctitle .toctogglelabel::after{content:"show"}.toctogglecheckbox:not(:checked)+.toctitle .toctogglelabel::after{content:"hide"}}@media screen{html,body{height:100%}:focus{outline-color:var(--outline-color-progressive--focus,#36c)}html{font-size:100%}html,body{font-family:sans-serif}ul{list-style-image:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjEzIj4KCTxjaXJjbGUgY3g9IjIuNSIgY3k9IjkiIHI9IjIuNSIgZmlsbD0iIzIwMjEyMiIvPgo8L3N2Zz4K)}pre{line-height:1.3}.mw-jump-link:not(:focus){display:block;position:absolute!important;clip:rect(1px,1px,1px,1px);width:1px;height:1px;margin:-1px;border:0;padding:0;overflow:hidden;-webkit-user-select:none;-moz-user-select:none;user-select:none}.mw-body h1,.mw-body-content h2{margin-bottom:0.25em;padding:0;font-family:"Linux Libertine","Georgia","Times","Source Serif Pro",serif;line-height:1.375}.mw-body h1:lang(ja),.mw-body .mw-heading1:lang(ja),.mw-body-content h1:lang(ja),.mw-body-content .mw-heading1:lang(ja),.mw-body-content h2:lang(ja),.mw-body-content .mw-heading2:lang(ja),.mw-body h1:lang(he),.mw-body .mw-heading1:lang(he),.mw-body-content h1:lang(he),.mw-body-content .mw-heading1:lang(he),.mw-body-content h2:lang(he),.mw-body-content .mw-heading2:lang(he),.mw-body h1:lang(ko),.mw-body .mw-heading1:lang(ko),.mw-body-content h1:lang(ko),.mw-body-content .mw-heading1:lang(ko),.mw-body-content h2:lang(ko),.mw-body-content .mw-heading2:lang(ko){font-family:sans-serif}.mw-body h1:lang(ckb),.mw-body .mw-heading1:lang(ckb),.mw-body-content h1:lang(ckb),.mw-body-content .mw-heading1:lang(ckb),.mw-body-content h2:lang(ckb),.mw-body-content .mw-heading2:lang(ckb){font-family:"Scheherazade","Linux Libertine","Georgia","Times","Source Serif Pro",serif}.mw-body h1:lang(my),.mw-body .mw-heading1:lang(my),.mw-body-content h1:lang(my),.mw-body-content .mw-heading1:lang(my),.mw-body-content h2:lang(my),.mw-body-content .mw-heading2:lang(my){line-height:normal}.mw-body h1{font-size:1.8em}.vector-body{font-size:calc(1em*0.875);line-height:1.6}.vector-body h2{margin-top:1em;font-size:1.5em}.vector-body h3,.vector-body h4{margin-top:0.3em;margin-bottom:0;padding-bottom:0;line-height:1.6}.vector-body h3{font-size:1.2em}.vector-body h3,.vector-body h4{font-weight:bold}.vector-body h4{font-size:100%}.vector-body .toc h2{font-family:sans-serif;font-size:100%}.vector-body p{margin:0.5em 0}.mw-parser-output a{word-wrap:break-word}.mw-parser-output a.external{background-image:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMiIgaGVpZ2h0PSIxMiIgdmlld0JveD0iMCAwIDEyIDEyIj4KCTx0aXRsZT4KCQlleHRlcm5hbCBsaW5rCgk8L3RpdGxlPgoJPHBhdGggZmlsbD0iIzM2YyIgZD0iTTYgMWg1djVMOC44NiAzLjg1IDQuNyA4IDQgNy4zbDQuMTUtNC4xNnpNMiAzaDJ2MUgydjZoNlY4aDF2MmExIDEgMCAwIDEtMSAxSDJhMSAxIDAgMCAxLTEtMVY0YTEgMSAwIDAgMSAxLTEiLz4KPC9zdmc+Cg==);background-position:center right;background-repeat:no-repeat;background-size:0.857em;padding-right:1em}body{background-color:#f6f6f6;overflow-y:scroll}.mw-body{background-color:var(--background-color-base,#fff);color:var(--color-base,#202122);direction:ltr;padding:1em}.mw-body{margin-left:10em}.mw-body{margin-top:-1px;border:1px solid #a7d7f9;border-right-width:0}.mw-body .firstHeading{display:block}.mw-indicators{z-index:1}.vector-body{position:relative;z-index:0}.mw-content-ltr{direction:ltr}.mw-indicators{font-size:0.875rem;line-height:1.6;position:relative;float:right}#siteNotice{font-size:0.8em}@keyframes rotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}}@media screen and (min-width:982px){.mw-body{margin-left:11em}.mw-body{padding:1.25em 1.5em 1.5em 1.5em}}</style>
+<style>@media screen{}</style><meta name=ResourceLoaderDynamicStyles content>
+<meta name=generator content="MediaWiki 1.43.0">
+<meta name=robots content=max-image-preview:standard>
+<meta name=format-detection content="telephone=no">
+<meta name=viewport content="width=1120">
+<link rel=search type=application/opensearchdescription+xml href=https://bash.cyberciti.biz/wiki/rest.php/v1/search title="Linux Bash Shell Scripting Tutorial Wiki (en)">
+<link rel=EditURI type=application/rsd+xml href="https://bash.cyberciti.biz/wiki/api.php?action=rsd">
+<link rel=license href=https://creativecommons.org/licenses/by-nc-sa/3.0/>
+<link rel=alternate type=application/atom+xml title="Linux Bash Shell Scripting Tutorial Wiki Atom feed" href="https://bash.cyberciti.biz/wiki/index.php?title=Special:RecentChanges&amp;feed=atom">
+<meta name=referrer content=no-referrer><link type=image/x-icon rel="shortcut icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAABILAAASCwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAACGAAAAeAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4AAAA4QAAAJgAAAAhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAABQAAAAJAAAAAAAAAAAAAAAeAAAAvgAAAP8AAAB7AAAAVgAAAAoAAAAAAAAAAAAAAAAAAAAAAAAAAgAAADMAAACVAAAAmgAAAD0AAABHAAAAuwAAAP8AAAD6AAAAWAAAAGQAAABNAAAACwAAAAAAAAAAAAAAAAAAACwAAAA9AAAAggAAAP8AAAD0AAAA9QAAAP8AAAD/AAAA5gAAADEAAABDAAAAKwAAAEUAAAACAAAAAAAAAA4AAABMAAAABQAAAHAAAAD/AAAA/wAAAP8AAAD/AAAA/wAAALIAAAAVAAAARgAAAAEAAAA/AAAAJAAAAAAAAAAzAAAAMgAAAAAAAABJAAAA+AAAAP8AAAD/AAAA/wAAAPsAAABdAAAAGQAAAD4AAAAAAAAAFgAAAEUAAAAAAAAASwAAABcAAAAAAAAAIgAAAOIAAAD/AAAA/wAAAP8AAADJAAAAEwAAADQAAAAnAAAAAAAAAAQAAABJAAAACwAAAFAAAAANAAAAAAAAAA4AAADIAAAA/wAAAP8AAAD5AAAAYQAAAAAAAAAcAAAACAAAAAAAAAAAAAAARAAAABMAAABPAAAADwAAAAAAAAAGAAAAtwAAAP8AAAD/AAAAtwAAAA4AAAAAAAAAAQAAAAUAAAAAAAAAAQAAAEUAAAAQAAAARAAAAB8AAAAAAAAABQAAALMAAAD/AAAA/QAAAF4AAAAAAAAADwAAAAsAAACFAAAAPAAAAAYAAABKAAAABgAAACUAAAA/AAAAAAAAAAIAAACmAAAA/wAAAPoAAABLAAAABQAAAFYAAAAhAAAAgAAAACAAAAAjAAAAPAAAAAAAAAAEAAAASQAAABoAAAAAAAAAawAAAP0AAAD/AAAAkgAAAAkAAAAQAAAAbwAAAEQAAAAEAAAATAAAABQAAAAAAAAAAAAAABUAAABPAAAAEgAAABQAAACsAAAA/QAAAPcAAAC+AAAAugAAAJEAAAARAAAAQgAAAC4AAAAAAAAAAAAAAAAAAAAAAAAAGgAAAE0AAAApAAAAGQAAAF4AAACSAAAAmQAAAGkAAAAsAAAASAAAAC8AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANAAAAPwAAAFMAAABHAAAAQgAAAEcAAABPAAAASgAAABsAAAAAAAAAAAAAAAAAAAAA/w8AAP8PAADGBwAAgAMAAIABAAAAAQAAIAgAACAIAAAgTAAAIEAAACCAAAAgAQAAEAEAAIADAADAAwAA4AcAAA=="><style>.sf-hidden{display:none!important}</style><link rel=canonical href=https://bash.cyberciti.biz/guide/While_loop><meta http-equiv=content-security-policy content="default-src 'none'; font-src 'self' data:; img-src 'self' data:; style-src 'unsafe-inline'; media-src 'self' data:; script-src 'unsafe-inline' data:; object-src 'self' data:; frame-src 'self' data:;"></head>
+<body class="skin-vector-legacy mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-While_loop rootpage-While_loop skin-vector action-view"><div id=mw-page-base class=noprint style=display:none!important></div>
+<div id=mw-head-base class=noprint style=display:none!important></div>
+<div id=content class=mw-body role=main>
+ <a id=top></a>
+ <div id=siteNotice></div>
+ <div class=mw-indicators>
+ </div>
+ <h1 id=firstHeading class="firstHeading mw-first-heading"><span class=mw-page-title-main>While loop</span></h1>
+ <div id=bodyContent class=vector-body>
+ <div id=siteSub class="noprint sf-hidden">From Linux Bash Shell Scripting Tutorial Wiki</div>
+ <div id=contentSub><div id=mw-content-subtitle></div></div>
+ <div id=contentSub2></div>
+ 
+ <div id=jump-to-nav></div>
+ <a class=mw-jump-link href=#mw-head>Jump to navigation</a>
+ <a class=mw-jump-link href=#searchInput>Jump to search</a>
+ <div id=mw-content-text class=mw-body-content><div class="mw-content-ltr mw-parser-output" lang=en dir=ltr><p><span style=width:100%;background:#FAF5FF;border-color:#DDCEF2;border-style:solid;border-width:0.077em;padding:2px;line-height:1px class=sf-hidden> • • </span></p>
+<p>The <b>while statement</b> is used to execute a list of commands repeatedly. This page explains the while statement syntax and examples.
+</p>
+<div id=toc class=toc role=navigation aria-labelledby=mw-toc-heading><input type=checkbox role=button id=toctogglecheckbox class=toctogglecheckbox style=display:none aria-label="Hide the table of contents" value=on><div class=toctitle lang=en dir=ltr><h2 id=mw-toc-heading>Contents</h2><span class=toctogglespan><label class=toctogglelabel for=toctogglecheckbox></label></span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href=#The_while_loop_syntax><span class=tocnumber>1</span> <span class=toctext>The while loop syntax</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href=#while_loop_Example><span class=tocnumber>2</span> <span class=toctext>while loop Example</span></a>
+<ul>
+<li class="toclevel-2 tocsection-3"><a href=#Using_((expression))_Format_With_The_While_Loop><span class=tocnumber>2.1</span> <span class=toctext>Using ((expression)) Format With The While Loop</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href=#Reading_A_Text_File><span class=tocnumber>2.2</span> <span class=toctext>Reading A Text File</span></a>
+<ul>
+<li class="toclevel-3 tocsection-5"><a href=#Reading_A_Text_File_With_Separate_Fields><span class=tocnumber>2.2.1</span> <span class=toctext>Reading A Text File With Separate Fields</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-6"><a href=#External_Links><span class=tocnumber>3</span> <span class=toctext>External Links</span></a></li>
+</ul>
+</div>
+<h2><span class=mw-headline id=The_while_loop_syntax>The while loop syntax</span></h2>
+<p>The syntax is:
+</p>
+<pre>           while [ condition ]
+           do
+                 command1
+                 command2
+                 ..
+                 ....
+                 commandN
+           done
+</pre>
+<p>Command1..commandN will execute while a condition is true. To read a text file line-by-line, use the following syntax:
+</p>
+<pre>           while IFS= read -r line
+           do
+                 command1 on $line
+                 command2 on $line
+                 ..
+                 ....
+                 commandN
+           done &lt; "/path/to/filename"
+</pre>
+<p>OR
+</p>
+<pre>           while IFS= read -r field1 filed2 field3 ... fieldN
+           do
+                 command1 on $field1
+                 command2 on $field1 and $field3
+                 ..
+                 ....
+                 commandN on $field1 ... $fieldN
+           done &lt; "/path/to dir/file name with space"
+</pre>
+<p><a href=https://bash.cyberciti.biz/guide/$IFS title=$IFS>IFS</a> is used to set field separator (default is while space). The -r option to <a href=https://bash.cyberciti.biz/guide/Read_command title="Read command">read command</a> disables backslash escaping (e.g., \n, \t). This is failsafe while read loop for reading text files.
+</p>
+<h2><span class=mw-headline id=while_loop_Example>while loop Example</span></h2>
+<p>Create a shell script called while.sh:
+</p>
+<div class="mw-highlight mw-highlight-lang-bash mw-content-ltr" dir=ltr><pre><span></span><span class=ch>#!/bin/bash</span>
+<span class=c1># set n to 1</span>
+<span class=nv>n</span><span class=o>=</span><span class=m>1</span>
+
+<span class=c1># continue until $n equals 5</span>
+<span class=k>while</span><span class=w> </span><span class=o>[</span><span class=w> </span><span class=nv>$n</span><span class=w> </span>-le<span class=w> </span><span class=m>5</span><span class=w> </span><span class=o>]</span>
+<span class=k>do</span>
+<span class=w>	</span><span class=nb>echo</span><span class=w> </span><span class=s2>"Welcome </span><span class=nv>$n</span><span class=s2> times."</span>
+<span class=w>	</span><span class=nv>n</span><span class=o>=</span><span class=k>$((</span><span class=w> </span><span class=nv>n</span><span class=o>+</span><span class=m>1</span><span class=w> </span><span class=k>))</span><span class=w>	 </span><span class=c1># increments $n</span>
+<span class=k>done</span>
+</pre></div>
+<p>Save and close the file. Run it as follows:
+</p>
+<div class="mw-highlight mw-highlight-lang-bash mw-content-ltr" dir=ltr><pre><span></span>chmod<span class=w> </span>+x<span class=w> </span><span class=k>while</span>.sh
+./while.sh
+</pre></div>
+<p>Sample outputs:
+</p>
+<pre>Welcome 1 times.
+Welcome 2 times.
+Welcome 3 times.
+Welcome 4 times.
+Welcome 5 times.
+</pre>
+<p>The script initializes the variable n to 1, and then increments it by one. The while loop prints out the "Welcome $n times" until it equals 5 and exit the loop.
+</p>
+<h4><span id=Using_.28.28expression.29.29_Format_With_The_While_Loop></span><span class=mw-headline id=Using_((expression))_Format_With_The_While_Loop>Using ((expression)) Format With The While Loop</span></h4>
+<p>You can use ((expression)) syntax to test arithmetic evaluation (condition). If the value of the expression is non-zero, the return status is 0; otherwise the return status is 1. To replace while loop condition <b>while [ $n -le 5 ]</b> with <b>while (( num &lt;= 10 ))</b> to improve code readability: 
+</p>
+<div class="mw-highlight mw-highlight-lang-bash mw-content-ltr" dir=ltr><pre><span></span><span class=ch>#!/bin/bash</span>
+<span class=nv>n</span><span class=o>=</span><span class=m>1</span>
+<span class=k>while</span><span class=w> </span><span class=o>((</span><span class=w> </span><span class=nv>$n</span><span class=w> </span>&lt;<span class=o>=</span><span class=w> </span><span class=m>5</span><span class=w> </span><span class=o>))</span>
+<span class=k>do</span>
+<span class=w>	</span><span class=nb>echo</span><span class=w> </span><span class=s2>"Welcome </span><span class=nv>$n</span><span class=s2> times."</span>
+<span class=w>	</span><span class=nv>n</span><span class=o>=</span><span class=k>$((</span><span class=w> </span><span class=nv>n</span><span class=o>+</span><span class=m>1</span><span class=w> </span><span class=k>))</span><span class=w>	</span>
+<span class=k>done</span>
+</pre></div>
+<h3><span class=mw-headline id=Reading_A_Text_File>Reading A Text File</span></h3>
+<p>You can read a text file using <a href=https://bash.cyberciti.biz/guide/Read_command title="Read command">read command</a> and while loop as follows (whilereadfile.sh):
+</p>
+<div class="mw-highlight mw-highlight-lang-bash mw-content-ltr" dir=ltr><pre><span></span><span class=ch>#!/bin/bash</span>
+<span class=nv>file</span><span class=o>=</span>/etc/resolv.conf
+<span class=k>while</span><span class=w> </span><span class=nv>IFS</span><span class=o>=</span><span class=w> </span><span class=nb>read</span><span class=w> </span>-r<span class=w> </span>line
+<span class=k>do</span>
+<span class=w>        </span><span class=c1># echo line is stored in $line</span>
+<span class=w>	</span><span class=nb>echo</span><span class=w> </span><span class=nv>$line</span>
+<span class=k>done</span><span class=w> </span>&lt;<span class=w> </span><span class=s2>"</span><span class=nv>$file</span><span class=s2>"</span>
+</pre></div>
+<p>Save and close the file. Run it as follows:
+</p>
+<div class="mw-highlight mw-highlight-lang-bash mw-content-ltr" dir=ltr><pre><span></span>chmod<span class=w> </span>+x<span class=w> </span>whilereadfile.sh
+./whilereadfile.sh
+</pre></div>
+<p>Sample outputs:
+</p>
+<pre>nameserver 127.0.0.1
+nameserver 192.168.1.254
+nameserver 4.2.2.1</pre>
+<h4><span class=mw-headline id=Reading_A_Text_File_With_Separate_Fields>Reading A Text File With Separate Fields</span></h4>
+<p>You can store above output in two separate fields as follows (whilereadfields.sh):
+</p>
+<div class="mw-highlight mw-highlight-lang-bash mw-content-ltr" dir=ltr><pre><span></span><span class=ch>#!/bin/bash</span>
+<span class=nv>file</span><span class=o>=</span>/etc/resolv.conf
+<span class=c1># set field separator to a single white space </span>
+<span class=k>while</span><span class=w> </span><span class=nv>IFS</span><span class=o>=</span><span class=s1>' '</span><span class=w> </span><span class=nb>read</span><span class=w> </span>-r<span class=w> </span>f1<span class=w> </span>f2
+<span class=k>do</span>
+<span class=w>	</span><span class=nb>echo</span><span class=w> </span><span class=s2>"field # 1&nbsp;: </span><span class=nv>$f1</span><span class=s2> ==&gt; field #2&nbsp;: </span><span class=nv>$f2</span><span class=s2>"</span>
+<span class=k>done</span><span class=w> </span>&lt;<span class=w> </span><span class=s2>"</span><span class=nv>$file</span><span class=s2>"</span>
+</pre></div>
+<p>Run it as follows:
+</p>
+<div class="mw-highlight mw-highlight-lang-bash mw-content-ltr" dir=ltr><pre><span></span>chmod<span class=w> </span>+x<span class=w> </span>whilereadfields.sh
+./whilereadfields.sh
+</pre></div>
+<p>Sample outputs:
+</p>
+<pre>field # 1&nbsp;: nameserver ==&gt; field #2&nbsp;: 127.0.0.1
+field # 1&nbsp;: nameserver ==&gt; field #2&nbsp;: 192.168.1.254
+field # 1&nbsp;: nameserver ==&gt; field #2&nbsp;: 4.2.2.1</pre>
+<p>Another useful example for reading and phrasing <a class="external text" href=https://www.cyberciti.biz/faq/understanding-etcpasswd-file-format/>/etc/passwd</a> file using the while loop (readpasswd.sh):
+</p>
+<div class="mw-highlight mw-highlight-lang-bash mw-content-ltr" dir=ltr><pre><span></span><span class=ch>#!/bin/bash</span>
+<span class=nv>file</span><span class=o>=</span>/etc/passwd
+<span class=c1># set field delimiter to&nbsp;: </span>
+<span class=c1># read all 7 fields into 7 vars </span>
+<span class=k>while</span><span class=w> </span><span class=nv>IFS</span><span class=o>=</span>:<span class=w> </span><span class=nb>read</span><span class=w> </span>-r<span class=w> </span>user<span class=w> </span>enpass<span class=w> </span>uid<span class=w> </span>gid<span class=w> </span>desc<span class=w> </span>home<span class=w> </span>shell
+<span class=k>do</span>
+<span class=w>    </span><span class=c1># only display if UID &gt;= 500 </span>
+<span class=w>	</span><span class=o>[</span><span class=w> </span><span class=nv>$uid</span><span class=w> </span>-ge<span class=w> </span><span class=m>500</span><span class=w> </span><span class=o>]</span><span class=w> </span><span class=o>&amp;&amp;</span><span class=w> </span><span class=nb>echo</span><span class=w> </span><span class=s2>"User </span><span class=nv>$user</span><span class=s2> (</span><span class=nv>$uid</span><span class=s2>) assigned \"</span><span class=nv>$home</span><span class=s2>\" home directory with </span><span class=nv>$shell</span><span class=s2> shell."</span>
+<span class=k>done</span><span class=w> </span>&lt;<span class=w> </span><span class=s2>"</span><span class=nv>$file</span><span class=s2>"</span>
+</pre></div>
+<p>Save and close the file. Run it as follows:
+</p>
+<div class="mw-highlight mw-highlight-lang-bash mw-content-ltr" dir=ltr><pre><span></span>chmod<span class=w> </span>+x<span class=w> </span>readpasswd.sh
+./readpasswd.sh
+</pre></div>
+<p>Sample output:
+</p>
+<pre>User nobody (65534) assigned "/nonexistent" home directory with /bin/sh shell.
+User vivek (1000) assigned "/home/vivek" home directory with /bin/bash shell.
+User oracle (1004) assigned "/usr/lib/oracle/xe" home directory with /bin/bash shell.
+User simran (1001) assigned "/home/simran" home directory with /bin/bash shell.
+User t2 (1002) assigned "/home/t2" home directory with /usr/local/bin/t2.bot shell.
+</pre>
+<p><span style=width:100%;background:#FAF5FF;border-color:#DDCEF2;border-style:solid;border-width:0.077em;padding:2px;line-height:1px class=sf-hidden> • • </span></p>
+</div>
+<div class="printfooter sf-hidden" data-nosnippet>Retrieved from ""</div></div>
+ <div id=catlinks class="catlinks sf-hidden" data-mw=interface></div>
+ </div>
+</div>

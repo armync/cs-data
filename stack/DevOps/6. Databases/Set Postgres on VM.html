@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Setting up PostgreSQL on Fedora Server (VMware) with Windows Client Access</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg:#0b0d10; --panel:#12161b; --muted:#9aa4af; --text:#e7ecf2; --accent:#7cc4ff; --code:#111418; --border:#1e252c;
+    }
+    html,body{background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial}
+    main{max-width:920px;margin:48px auto;padding:0 24px}
+    h1,h2,h3{line-height:1.25}
+    h1{font-size:2rem;margin:.2rem 0 1rem}
+    h2{font-size:1.4rem;margin:2rem 0 .75rem}
+    h3{font-size:1.1rem;margin:1.25rem 0 .5rem}
+    p{margin:.6rem 0}
+    .panel{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:18px;margin:16px 0}
+    code,kbd{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,Monaco,"Liberation Mono","Courier New",monospace}
+    pre{background:var(--code);border:1px solid var(--border);border-radius:10px;padding:14px;overflow:auto}
+    pre code{color:#cfe6ff}
+    .tip{border-left:4px solid var(--accent);padding-left:12px}
+    ul,ol{margin:0 0 0 1.25rem}
+    .muted{color:var(--muted)}
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
+    hr{border:0;border-top:1px solid var(--border);margin:28px 0}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Setting up PostgreSQL on Fedora Server (VMware) with Windows Client Access</h1>
+    <p class="muted">A step-by-step guide for installing PostgreSQL on a Fedora Server VM, enabling network access, and connecting from a Windows client such as DataGrip.</p>
+  </header>
+
+  <section>
+    <h2>1) Install and start PostgreSQL on Fedora</h2>
+    <p>Install the server and client utilities:</p>
+    <pre><code>sudo dnf install -y postgresql-server postgresql-contrib
+sudo postgresql-setup --initdb
+sudo systemctl enable --now postgresql</code></pre>
+    <p>Verify that the service is running:</p>
+    <pre><code>sudo systemctl status postgresql</code></pre>
+  </section>
+
+  <section>
+    <h2>2) Verify local access</h2>
+    <p>Fedora uses <strong>peer</strong> authentication for local Unix socket access. The system user <code>postgres</code> can connect to the database without a password if the Linux username matches the PostgreSQL role.</p>
+    <pre><code>sudo -u postgres psql
+\conninfo
+\q</code></pre>
+  </section>
+
+  <section>
+    <h2>3) Enable network connections</h2>
+    <p>Edit <code>postgresql.conf</code> (usually in <code>/var/lib/pgsql/&lt;version&gt;/data/</code>) and allow PostgreSQL to listen for TCP connections:</p>
+    <pre><code>listen_addresses = '*'
+port = 5432</code></pre>
+    <p>Restart the service:</p>
+    <pre><code>sudo systemctl restart postgresql</code></pre>
+    <p>Check that it is listening externally:</p>
+    <pre><code>sudo ss -ltnp | grep 5432</code></pre>
+  </section>
+
+  <section>
+    <h2>4) Authentication: peer, ident, and scram-sha-256</h2>
+    <p><strong>Peer</strong> and <strong>ident</strong> authentication do not use passwords. They simply check if your operating system username matches the PostgreSQL user you are trying to log in as. This works only for local or same-machine logins.</p>
+    <p>When connecting from Windows or another system, PostgreSQL cannot verify your OS username. That is why password-based authentication is required. <strong>scram-sha-256</strong> is the secure, modern method that replaces older <code>md5</code>. It stores passwords in a hashed form and verifies them through a challenge-response process, so the real password is never sent over the network.</p>
+  </section>
+
+  <section>
+    <h2>5) Create a database user with a password</h2>
+    <p>Create a role for remote access:</p>
+    <pre><code>sudo -u postgres psql
+CREATE ROLE dg_user WITH LOGIN PASSWORD 'strong_password';
+-- Optionally:
+-- CREATE DATABASE mydb OWNER dg_user;
+\q</code></pre>
+  </section>
+
+  <section>
+    <h2>6) Configure pg_hba.conf for remote access</h2>
+    <p>Edit <code>/var/lib/pgsql/&lt;version&gt;/data/pg_hba.conf</code> and add your Windows machine’s IP address. This file controls who can connect and how.</p>
+    <pre><code># Allow Windows client at specific IP
+host    all     all     192.168.25.1/32     scram-sha-256
+
+# Local Unix socket
+local   all     all                          peer
+
+# Localhost
+host    all     all     127.0.0.1/32         ident
+host    all     all     ::1/128              ident</code></pre>
+    <p>Reload PostgreSQL:</p>
+    <pre><code>sudo systemctl reload postgresql</code></pre>
+    <p class="tip">If you see an error such as “no pg_hba.conf entry for host…”, add a rule matching the client IP shown in the message. Use a subnet like <code>192.168.25.0/24</code> while testing, then narrow to <code>/32</code>.</p>
+  </section>
+
+  <section>
+    <h2>7) Open the firewall</h2>
+    <p>Allow incoming connections on port 5432:</p>
+    <pre><code>sudo firewall-cmd --add-service=postgresql --permanent
+sudo firewall-cmd --reload</code></pre>
+  </section>
+
+  <section>
+    <h2>8) Find the correct IP addresses</h2>
+    <h3>On Fedora (server)</h3>
+    <pre><code>ip addr | grep 'inet '</code></pre>
+    <p>Use the IP address of the network adapter connected to VMware. Enter this IP as the host in your Windows client.</p>
+
+    <h3>On Windows (client)</h3>
+    <pre><code>ipconfig</code></pre>
+    <p>Locate your active adapter’s IPv4 address and ensure this address is listed in <code>pg_hba.conf</code>.</p>
+  </section>
+
+  <section>
+    <h2>9) Networking in VMware</h2>
+    <ul>
+      <li><strong>Bridged:</strong> VM and host share the same LAN. Other devices can connect.</li>
+      <li><strong>NAT:</strong> VM connects through the host’s network. The Windows host can reach the VM.</li>
+      <li><strong>Host-only:</strong> Only the host communicates with the VM.</li>
+    </ul>
+    <p>For most development setups, NAT or Bridged mode works fine.</p>
+  </section>
+
+  <section>
+    <h2>10) Connect from DataGrip on Windows</h2>
+    <ol>
+      <li>Open DataGrip and add a new PostgreSQL data source.</li>
+      <li>Set:
+        <ul>
+          <li><strong>Host:</strong> Fedora VM’s IP (not <code>localhost</code>)</li>
+          <li><strong>Port:</strong> 5432</li>
+          <li><strong>User:</strong> <code>dg_user</code> or <code>postgres</code></li>
+          <li><strong>Password:</strong> the password you created</li>
+          <li><strong>Database:</strong> <code>postgres</code> or your own</li>
+        </ul>
+      </li>
+      <li>Click “Test Connection” to verify access.</li>
+    </ol>
+    <div class="panel tip">
+      <strong>Note:</strong> “localhost” in DataGrip refers to your Windows PC, not the Fedora VM. Always use the VM’s IP address.
+    </div>
+  </section>
+
+  <section>
+    <h2>11) Troubleshooting in context</h2>
+    <h3>Connection refused</h3>
+    <pre><code>sudo systemctl status postgresql
+sudo ss -ltnp | grep 5432</code></pre>
+    <p>If it only shows <code>127.0.0.1:5432</code>, adjust <code>listen_addresses</code> in <code>postgresql.conf</code>.</p>
+
+    <h3>Ident or peer authentication failed</h3>
+    <p>This means PostgreSQL tried to match your OS username instead of checking a password. Make sure your remote rule uses <code>scram-sha-256</code>.</p>
+
+    <h3>No pg_hba.conf entry for host</h3>
+    <p>Check which IP address appears in the error, then add or adjust that address in <code>pg_hba.conf</code> and reload the service.</p>
+
+    <h3>See configuration and logs</h3>
+    <pre><code>sudo -u postgres psql -tAc "SHOW hba_file; SHOW config_file; SHOW data_directory; SHOW listen_addresses;"
+sudo journalctl -u postgresql -n 200 --no-pager</code></pre>
+  </section>
+
+  <hr />
+</main>
+</body>
+</html>

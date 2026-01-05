@@ -1,0 +1,14 @@
+all:
+  children:
+    web:
+      hosts:
+        web1: 
+          ansible_host: 192.168.25.130
+          ansible_user: ansible
+          ansible_ssh_private_key_file: ~/.ssh/ansible
+          ansible_python_interpreter: /usr/bin/python3
+        web2:
+          ansible_host: 192.168.25.131
+          ansible_user: ansible
+          ansible_ssh_private_key_file: ~/.ssh/ansible
+          ansible_python_interpreter: /usr/bin/python3

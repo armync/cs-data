@@ -1,0 +1,677 @@
+<!DOCTYPE html> <html lang=en class=dark style><!--
+ Page saved with SingleFile 
+ url: https://docs.fedoraproject.org/en-US/quick-docs/upgrading-fedora-offline/ 
+ saved date: Sun Sep 28 2025 18:24:50 GMT+0300 (Eastern European Summer Time)
+--><meta charset=utf-8>
+<meta name=viewport content="width=device-width, initial-scale=1.0">
+<title>Upgrading Fedora Linux Using DNF System Plugin :: Fedora Docs</title>
+<link rel=canonical href=https://docs.fedoraproject.org/en-US/quick-docs/upgrading-fedora-offline/>
+<meta name=description content="dnf system-upgrade command (embedded into DNF5 and a dnf-plugin-system-upgrade plugin for the DNF4 package manager ) is used to upgrade your system to the current release of Fedora Linux. For…">
+<meta name=generator content="Antora 3.1.10">
+<style>body,html{height:100%}*,::after,::before{-webkit-box-sizing:inherit;box-sizing:inherit}html{-webkit-box-sizing:border-box;box-sizing:border-box;font-size:1.1em;-moz-text-size-adjust:100%;-ms-text-size-adjust:100%;text-size-adjust:100%}@media (min-width:1024px){html{font-size:1.2em}}a:hover{text-decoration:underline}::-webkit-scrollbar{width:.6666rem;height:.6666rem}::-webkit-scrollbar-track{background-color:#f0f0f0}::-webkit-scrollbar-thumb{background-color:#c1c1c1}::-webkit-scrollbar-thumb:window-inactive{background:transparent}@media screen and (min-width:1024px){.body{display:-webkit-box;display:-ms-flexbox;display:flex}}@media screen and (max-width:1023.5px){aside.toc.sidebar{display:none}main>.content{overflow-x:auto}}@media screen and (min-width:1024px){main{-webkit-box-flex:1;-ms-flex:auto;flex:auto;min-width:0}main>.content{display:-webkit-box;display:-ms-flexbox;display:flex}aside.toc.sidebar{-webkit-box-flex:0;-ms-flex:0 0 9rem;flex:0 0 9rem;-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}}@media screen and (min-width:1216px){aside.toc.sidebar{-ms-flex-preferred-size:12rem;flex-basis:12rem}}@media screen and (min-width:769px){}@media screen and (min-width:1024px){}@media screen and (min-width:769px){}@media screen and (min-width:1024px){}@media screen and (min-width:1024px){}@media screen and (min-width:1024px){}@media (min-width:1024px){}@media (min-width:1024px){}@media (min-width:1024px){}.dark .toc-menu{--tw-text-opacity:1;color:rgb(197 199 204/var(--tw-text-opacity))}.toc-content{position:sticky;top:5.75rem}.toc.sidebar .toc-menu{margin-right:.75rem}.toc .toc-menu h3{font-weight:700}.dark .toc .toc-menu h3{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity))}.toc .toc-menu h3{font-size:.88889rem;line-height:1.3;margin:0-.5px;padding-bottom:.25rem}.toc.sidebar .toc-menu h3{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;height:2.5rem;-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end}.toc .toc-menu ul{font-size:.83333rem;line-height:1.2;list-style:none;margin:0;padding:0}.toc.sidebar .toc-menu ul{max-height:calc(100vh - 8.25rem);overflow-y:auto;-ms-scroll-chaining:none;overscroll-behavior:none;scrollbar-width:none}.toc .toc-menu ul::-webkit-scrollbar{width:0;height:0}@media screen and (min-width:1024px){.toc .toc-menu h3{font-size:.83333rem}.toc .toc-menu ul{font-size:.75rem}}.toc .toc-menu li{margin:0}.toc .toc-menu li[data-level="2"] a{padding-left:1.25rem}.toc .toc-menu a{border-left-width:2px}.dark .toc .toc-menu a{--tw-border-opacity:1;border-color:rgb(31 41 55/var(--tw-border-opacity))}.toc .toc-menu a{color:inherit;padding:.25rem 0 .25rem .5rem;text-decoration:none}.sidebar.toc .toc-menu a{display:block;outline:none}.toc .toc-menu a:hover{color:#1565c0}.sidebar.toc .toc-menu a:focus{background:#fafafa}.doc{margin:0 auto;max-width:40rem;padding:0 1rem 4rem}@media (min-width:1024px){.doc{margin:0 2rem;max-width:54rem;min-width:0}}.doc h1{line-height:1.3}.doc h2,.doc h3{font-weight:600;line-height:1.3;margin:1rem 0 0}article.doc h1{font-weight:600}.doc h3{font-family:Open sans,Helvetica,Arial}.doc h3{font-size:24px}.doc h2>a.anchor,.doc h3>a.anchor{position:absolute;text-decoration:none;width:1.75ex;margin-left:-1.5ex;visibility:hidden;font-size:.8em;font-weight:400;padding-top:.05em}.doc h1>a.anchor::before,.doc h2>a.anchor::before,.doc h3>a.anchor::before,.doc h4>a.anchor::before,.doc h5>a.anchor::before,.doc h6>a.anchor::before{content:"§"}.doc h1:hover>a.anchor,.doc h2:hover>a.anchor,.doc h3:hover>a.anchor,.doc h4:hover>a.anchor,.doc h5:hover>a.anchor,.doc h6:hover>a.anchor{visibility:visible}.doc a,.doc a:visited{--tw-text-opacity:1;color:rgb(60 110 180/var(--tw-text-opacity))}.dark .doc a,.dark .doc a:visited{--tw-text-opacity:1;color:rgb(81 162 218/var(--tw-text-opacity))}.doc a:hover{--tw-text-opacity:1;color:rgb(41 65 114/var(--tw-text-opacity))}.dark .doc a:hover{--tw-text-opacity:1;color:rgb(60 110 180/var(--tw-text-opacity))}.doc i.fa{font-style:normal}.doc p code{font-size:.9em;padding:.075rem .25rem .125rem;border-radius:.2rem}.doc pre{font-size:.9rem;line-height:1.5;margin:0}.doc .listingblock,.doc .olist,.doc .paragraph,.doc .ulist{margin:1rem 0 0}@media (min-width:1024px){}.doc .admonitionblock{margin:1.4rem 0 0}.doc .admonitionblock p,.doc .admonitionblock td.content{font-size:.9rem}.doc .admonitionblock td.content>.title+*,.doc .admonitionblock td.content>:not(.title):first-child{margin-top:0}.doc .admonitionblock>table{border-collapse:separate;table-layout:fixed;position:relative;width:100%}.doc .admonitionblock td.content{padding:3rem 1rem .75rem;width:100%}.doc .admonitionblock .icon{font-size:4.5rem;padding:0 .5rem;height:1.5rem;line-height:1;font-weight:500;-webkit-transform:translate(.8rem,-50%);transform:translate(.8rem,-50%)}.doc .admonitionblock .icon .fa{font-family:Montserrat,ui-sans-serif,system-ui,sans-serif;font-size:1.25rem;line-height:1.75rem;font-weight:700;background-position-y:center;background-repeat:no-repeat;padding-left:42px}.doc .admonitionblock.note .icon-note{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAMAAADzN3VRAAAAxlBMVEX///+AgP9Vqv9Av79VqtVJkttPntxVot1SpdZTpdpSpNlQodlQoNtTottRo9xQodlTotlSo9pRo9lQottQo9pQo9tQo9pQo9lRotpRo9pSotpRottRotpQottRo9pRotpQotpRo9pRotpRodpRotpRotlRotpRotpRotpRotpRotpRotpRotpSotpSo9pTo9pcqNxgqt1iqt1nrd5rr99vsuCAuuOHvuSJv+SRxOaYxuikzuqq0eu11u3G3/Dn8Pfp8vf4+fpnOY65AAAALHRSTlMAAgMEBgcdHh8iNTZGR0hJSkteY2Zpb5WXmJmaysvMzc7P5OXm5+jp6uv4+UmGHkYAAADVSURBVCjPdZLXEoIwEEWvBsResSugQSzE3rv5/5/yQUJAzX3akzPJZHYX+EQvd2zXd61OSUc0xHSZyKRBpEgPWDS2IURuzOLxssGNb8HYNAMAJHxqfzvPg9IhAOpCLF6cHwWYgB7+av7k/CCA6qjI13fXk4QiuhLW2+0yhBYcaR6cb0LoY6QwFL7CzOAqzBCWwvTQVpgmSgqTj/QgZqgGmH9NDQCxBV3u91VQWkkAMLyf+Xipz+iynmKmgOHEhJWSK5KoUtkwk8T2Siu2+9SnvVZBC07erqNXFL30bo8AAAAASUVORK5CYII=);color:#51a2da;background-position-x:3px}.doc .admonitionblock.warning .icon-warning{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAbCAMAAABcI88jAAAArlBMVEX/////VVW/QIDVK4DYO3bYMXbbLnbeMnrbNHjbMnrcMnjbMXnbM3jbMnrbM3nbMnjbMnnbMnnbMnnbMnncMnnbMXnbMnnbMnnbMnnbMnnbMnnbNHvdPYDeSYjeSojgUo7gU47hYJbhYJfiY5riZJrkbJ/kbaDleafleqflfKjlfKnnhrDnh7Dpj7bqk7nqlLnqnb7rocHrosHts83utM703+n16/H26/H49/n4+foiZJbbAAAAGnRSTlMAAwQMDRocLjFHSGNkgJydub3S1ebo9Pb8/Q3OIfwAAADTSURBVCjPfdHHFoIwEAVQ7NLB7oC9FxQLyvz/jwkBAh4mvM1k8k42N5L0F0WWKlLr9esVtQagitvGAGDYFNY6RNFFbWsU1+O2oDaBxaDbziSpp12ytiCNTbUK8MiUSHTvB4EfDcJGi589ER/xVCkRgDviLZ4lGyYCV8QLEDaJCBwRD0DYpCJ7xB1hk4msEVeETSayRFyUbbiI63luyYaJJJnP+JHbaPzqHIYnvqhFEZY34osvqY2e/8X2+9nkm14QSeI4hYXZmCCMkYtQiWwsqIj9A3BYLUkmUbpkAAAAAElFTkSuQmCC);color:#db3279}.doc .admonitionblock.note td.content{border-left:8px solid #51a2da;border-radius:8px}.doc .admonitionblock.warning td.content{border:1px solid #db3279;border-left-width:8px;border-bottom-left-radius:8px;border-top-left-radius:8px}.doc .admonitionblock .icon i{display:-webkit-inline-box;display:-ms-inline-flexbox;display:inline-flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.doc .admonitionblock .icon i::after{content:attr(title);-webkit-hyphens:none;-ms-hyphens:none;hyphens:none}.doc>h1{font-size:2rem}#preamble+.sect1,.doc .sect1+.sect1{margin-top:2.5rem}.doc h2:not(.discrete){border-bottom:1px solid #ddd;margin-left:-1rem;margin-right:-1rem;padding:.4rem 1.5rem .1rem;font-size:36px;font-weight:700}article.doc h2{border-bottom:solid #0275d8!important;padding:.4rem .9rem .1rem!important}.doc p{font-size:18px;margin:0}.doc .content,.doc p{-webkit-hyphens:auto;-ms-hyphens:auto;hyphens:auto}.doc .content pre{-webkit-hyphens:none;-ms-hyphens:none;hyphens:none}.doc ul{margin:0;padding:0 0 0 1.5rem}.doc ol{margin:0;padding:0 0 0 2rem;list-style:none;counter-reset:ordered-list}.doc ol>li{counter-increment:ordered-list}.doc ol>li::before{font-weight:500;font-size:.95em;display:inline-block;width:1em;direction:rtl;margin:-.025em .5em 0-1.5em;text-align:right;position:absolute}.doc ol.arabic>li::before{content:"."counter(ordered-list)}.doc .olist .ulist{margin-top:.5rem}.doc .olist li,.doc .ulist li{margin-bottom:.5rem}.doc .olist .listingblock{padding:0}.doc pre.highlight code,.doc pre:not(.highlight){display:block;overflow-x:auto;padding:.75rem}.doc .listingblock>.content{position:relative}.doc .source-toolbox{display:-webkit-box;display:-ms-flexbox;display:flex;visibility:hidden;position:absolute;top:.25rem;right:.5rem;font-size:.725rem;line-height:1;white-space:nowrap;z-index:1}.doc .listingblock:hover .source-toolbox{visibility:visible}.doc .source-toolbox>:not(:last-child)::after{content:"|";letter-spacing:0;padding:0 1ch}.doc .source-toolbox .copy-button{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-box-align:center;-ms-flex-align:center;align-items:center;background:none;border:none;color:inherit;outline:none;padding:0;font-size:inherit;line-height:inherit;width:1em;height:1em}.doc .source-toolbox .copy-icon{-webkit-box-flex:0;-ms-flex:none;flex:none;width:inherit;height:inherit}.doc .source-toolbox img.copy-icon{-webkit-filter:invert(50.2%);filter:invert(50.2%)}.doc .source-toolbox .copy-toast{-webkit-box-flex:0;-ms-flex:none;flex:none;position:relative;display:-webkit-inline-box;display:-ms-inline-flexbox;display:inline-flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;margin-top:1em}.dark .doc .source-toolbox .copy-toast{--tw-bg-opacity:1;background-color:rgb(223 224 227/var(--tw-bg-opacity))}.doc .source-toolbox .copy-toast{border-radius:.25em;padding:.5em}.dark .doc .source-toolbox .copy-toast{--tw-text-opacity:1;color:rgb(0 0 0/var(--tw-text-opacity))}.doc .source-toolbox .copy-toast{cursor:auto;opacity:0;-webkit-transition:opacity .5s ease .5s;transition:opacity .5s ease .5s}.doc .source-toolbox .copy-toast::after{content:"";position:absolute;top:0;width:1em;height:1em;border:.55em solid transparent;--tw-border-opacity:1;border-left-color:rgb(83 89 97/var(--tw-border-opacity))}.dark .doc .source-toolbox .copy-toast::after{--tw-border-opacity:1;border-left-color:rgb(223 224 227/var(--tw-border-opacity))}.doc .source-toolbox .copy-toast::after{-webkit-transform:rotate(-90deg) translateX(50%) translateY(50%);transform:rotate(-90deg) translateX(50%) translateY(50%);-webkit-transform-origin:left;transform-origin:left}body{padding-top:3.25rem}@media screen and (max-width:768.5px){}@media screen and (max-width:1023.5px){}@media screen and (min-width:1024px){}/*! GitHub style for highlight.js (c) Vasily Polovnyov <vast@whiteants.net> */.hljs-keyword{color:#333;font-weight:500}.hljs-variable{color:teal}.hljs-string{color:#d14}.hljs-built_in{color:#0086b3}.hljs-meta{color:#999;font-weight:500}@-webkit-keyframes datatables-loader-1{0%{-webkit-transform:scale(0);transform:scale(0)}to{-webkit-transform:scale(1);transform:scale(1)}}@keyframes datatables-loader-1{0%{-webkit-transform:scale(0);transform:scale(0)}to{-webkit-transform:scale(1);transform:scale(1)}}@-webkit-keyframes datatables-loader-3{0%{-webkit-transform:scale(1);transform:scale(1)}to{-webkit-transform:scale(0);transform:scale(0)}}@keyframes datatables-loader-3{0%{-webkit-transform:scale(1);transform:scale(1)}to{-webkit-transform:scale(0);transform:scale(0)}}@-webkit-keyframes datatables-loader-2{0%{-webkit-transform:translate(0);transform:translate(0)}to{-webkit-transform:translate(24px);transform:translate(24px)}}@keyframes datatables-loader-2{0%{-webkit-transform:translate(0);transform:translate(0)}to{-webkit-transform:translate(24px);transform:translate(24px)}}@media screen and (max-width:767px){}@media screen and (max-width:640px){}/*! tailwindcss v3.2.4 | MIT License | https://tailwindcss.com*/*,::after,::before{-webkit-box-sizing:border-box;box-sizing:border-box;border:0 solid #e5e7eb}::after,::before{--tw-content:""}html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;-o-tab-size:4;tab-size:4;font-family:Open Sans,ui-sans-serif,system-ui,sans-serif;-webkit-font-feature-settings:normal;font-feature-settings:normal}body{margin:0;line-height:inherit}a{text-decoration:inherit}strong{font-weight:bolder}code{font-size:1em}table{text-indent:0;border-color:inherit}button{font-weight:inherit;margin:0}button{text-transform:none}button{-webkit-appearance:button;background-color:transparent;background-image:none}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}h1{margin:0}ul{list-style:none}button{cursor:pointer}:disabled{cursor:default}img,svg{display:block;vertical-align:middle}img{max-width:100%}button,h1,h2,h3{font-family:Montserrat,ui-sans-serif,system-ui,sans-serif}a,li,ol,p,ul{font-family:Open Sans,ui-sans-serif,system-ui,sans-serif}pre{font-family:Source Code Pro,ui-monospace,monospace}@media (min-width:1024px){h1{font-size:3rem;line-height:1}}@media (min-width:1280px){h1{font-size:4.5rem;line-height:1}}.dark h1{--tw-text-opacity:1;color:rgb(81 162 218/var(--tw-text-opacity))}h2{font-size:1.875rem}@media (min-width:1024px){h2{font-size:2.25rem;line-height:2.5rem}}@media (min-width:1024px){h3{font-size:1.875rem;line-height:2.25rem}}@media (min-width:1024px){}@media (min-width:1024px){}code{border-radius:.25rem;font-family:Source Code Pro,ui-monospace,monospace}.dark code{--tw-bg-opacity:1;background-color:rgb(12 20 32/var(--tw-bg-opacity));--tw-text-opacity:1;color:rgb(156 163 175/var(--tw-text-opacity))}ul{list-style-type:disc}ol{list-style-position:inside;list-style-type:decimal}pre{border-radius:.25rem;border-width:1px;padding-left:.5rem;padding-right:.5rem}@media (min-width:640px){pre{font-size:1.125rem;line-height:1.75rem}}.dark pre{--tw-border-opacity:1;border-color:rgb(55 65 81/var(--tw-border-opacity));--tw-bg-opacity:1;background-color:rgb(12 20 32/var(--tw-bg-opacity));--tw-text-opacity:1;color:rgb(156 163 175/var(--tw-text-opacity))}*,::after,::before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,0.5);--tw-ring-offset-shadow:0 0 transparent;--tw-ring-shadow:0 0 transparent;--tw-shadow:0 0 transparent;--tw-shadow-colored:0 0 transparent;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: }::-webkit-backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,0.5);--tw-ring-offset-shadow:0 0 transparent;--tw-ring-shadow:0 0 transparent;--tw-shadow:0 0 transparent;--tw-shadow-colored:0 0 transparent;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: }@media (min-width:640px){}@media (min-width:768px){}@media (min-width:1024px){}@media (min-width:1280px){}@media (min-width:1536px){}.absolute{position:absolute}.left-6{left:1.5rem}.mt-8{margin-top:2rem}.mb-1{margin-bottom:.25rem}.mb-6{margin-bottom:1.5rem}.h-6{height:1.5rem}.h-3{height:.75rem}.h-4{height:1rem}.w-6{width:1.5rem}.w-4{width:1rem}.border-b{border-bottom-width:1px}.border-gray-300{--tw-border-opacity:1;border-color:rgb(209 213 219/var(--tw-border-opacity))}.pb-1{padding-bottom:.25rem}.text-xs{font-size:.75rem;line-height:1rem}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175/var(--tw-text-opacity))}.dark .dark\:bg-fp-blue-darkest{--tw-bg-opacity:1;background-color:rgb(8 13 21/var(--tw-bg-opacity))}.dark .dark\:fill-gray-400{fill:#9ca3af}.dark .dark\:text-white{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity))}.dark .dark\:text-gray-100{--tw-text-opacity:1;color:rgb(243 244 246/var(--tw-text-opacity))}.dark .dark\:text-fp-gray-light{--tw-text-opacity:1;color:rgb(197 199 204/var(--tw-text-opacity))}@media (min-width:640px){}@media (min-width:768px){}@media (min-width:1024px){}@media (min-width:1280px){}@media (min-width:1536px){}</style>
+<style>.fa{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-variant:normal;text-rendering:auto}@keyframes fa-spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}</style>
+<style>/*! Asciidoctor Tabs | Copyright (c) 2018-present Dan Allen | MIT License */</style>
+<meta property=og:type content=website>
+<meta property=og:site_name content="Fedora Docs">
+<meta property=og:title content="Upgrading Fedora Linux Using DNF System Plugin">
+<meta property=og:description content="dnf system-upgrade command (embedded into DNF5 and a dnf-plugin-system-upgrade plugin for the DNF4 package manager ) is used to upgrade your system to the current release of Fedora Linux. For…">
+<meta property=og:image content=https://docs.fedoraproject.org/en-US/_/img/docs_logo.png>
+<style>@media screen and (max-width:768px){}</style><meta name=referrer content=no-referrer><link type=image/x-icon rel="shortcut icon" href="data:image/vnd.microsoft.icon;base64,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Uf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/ZolDi3aFQJgAAAAAAAAAAAAAAAAAAAADaolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/5cCK//r07P//////////////////////+PDj/+K4e//aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolDh15xOGgAAAAAAAAAAAAAAANqiUf/aolH/2qJR/9qiUf/aolH/2qJR/+nJmv/+/v7//////////////////////////////////v37/+S9hf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/ZoFDFv38/BAAAAAAAAAAA2qJR/9qiUf/aolH/2qJR/9qiUf/gsm///v38///////+/fz/7tWy/+K5fP/jun//79m4//7+/f///////Pn0/92pX//aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aoE93AAAAAAAAAADaolH/2qJR/9qiUf/aolH/2qJR//Dcvf///////////+fDj//aolH/2qJR/9qiUf/aolH/6sue////////////68+m/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qhUPPdm00XAAAAANqiUf/aolH/2qJR/9qiUf/aolH/+vPq///////48OP/2qJR/9qiUf/aolH/2qJR/9qiUf/ao1T//Pjz///////16NT/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9miT4cAAAAA2qJR/9qiUf/aolH/2qJR/9qiUf/8+vf///////Piyf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/37d3///////jv4f/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qFQ6f+/PwTaolH/2qJR/9qiUf/aolH/2qJR//nw5P//////+fLn/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR//fs3f//////+fDk/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2J9PQ9qiUf/aolH/2qJR/9qiUf/aolH/7tay////////////6cqd/9qiUf/aolH/2qJR/9qiUf/aolH/9+zd///////58OP/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aok+E2qJR/9qiUf/aolH/2qJR/9qiUf/erGX//fr3///////+/v7/8t/E/+W/if/iuHr/4rd5/9qiUf/37N3///////rz6f/it3n/4rd4/9+wbP/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qhULTaolH/2qJR/9qiUf/aolH/2qJR/9qiUf/lwIr//v38////////////////////////////2qRV//fs3f///////////////////////v7+/+XAif/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qFQ09qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/iuHv/+O7g///////////////////////apFX/9+3d////////////////////////////6ciZ/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolDk2qJQ+tqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/4bRz/+fFkv/pyJj/6cia/9qiUv/37d3///////v27v/pyZr/6cmb/+fEkf/ao1T/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUOTZolDq2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR//ft3f//////+fDj/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2aFQ09qhUMraolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/9+3d///////58OT/2qJR/9qiUf/aolH/2qJR/9qiUf/mwYz/6MWT/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aoVC02qFPmdqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/37d3///////nw5P/aolH/2qJR/9qiUf/aolH/4bR0//7+/v//////5L2F/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qhT4PZok5Y2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR//fs3P//////+fHl/9qiUf/aolH/2qJR/9qiUf/iuHv////////////oxpb/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/26BOQdqRSA7ZoVD12qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/8+PL///////+/fz/369q/9qiUf/aolH/2qJR/+vNo////////////+S9hP/aolH/2qJR/9qiUf/aolH/2qJR/9qhUOi/fz8EAAAAANmhUJzaolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/nw4/////////////68+r/6MWT/+S7gf/t0qz//vz7///////79u//26VX/9qiUf/aolH/2qJR/9qiUf/aolH/2KFOhQAAAAAAAAAA1Z5LJdmhUPraolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUv/05c///////////////////////////////////v39/+W+hv/aolH/2qJR/9qiUf/aolH/2qJR/9qhUPLanUgVAAAAAAAAAAAAAAAA2qFOi9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9ulV//w2rr//v79//////////////////ny6P/ku4L/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2aJPdAAAAAAAAAAAAAAAAAAAAADiqVQJ2aFP09qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/erGT/58OP/+jG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9//+/v7////////////////////////////+/v7//Pn1//DdwP/cp1v/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2aFQ89ifT1AAAAAAAAAAAAAAAAAAAAAAAAAAANqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/96sZP/159P//v7+//////////////////////////////////////////////////7+/f/w3L7/3Kle/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9mgT+bYoE0uAAAAAAAAAAAAAAAAAAAAANqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/26VX//LfxP/+/v7//////////////////Pn1//bq2P/05M7/9uva//379//////////////////+/Pv/7dKt/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9mhUP3ZoE+k359PEAAAAAAAAAAAAAAAANqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/6cqd//7+/f////////////7+/f/z4sn/4LFv/9yoXf/bp1r/3Khd/9+ycP/15tL//v7+/////////////fz6/+O5fv/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/ZoVD4159OWwAAAAAAAAAAAAAAANqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/cqV7/+O7g//////////////////Tl0P/cqF3/2qJR/9qiUf/aolH/2qJR/9qiUf/drGT/9unW//////////////////Tm0v/ao1P/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR39+fPxAAAAAAAAAAANqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/ku4H/+/fw/////////////Pjy/9+vav/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/4rd6//79/P////////////v27//fr2v/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9ihToUAAAAAAAAAANqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/pyJj//fv5////////////8d7B/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJS//ft3/////////////z69f/kvIL/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9mhUOLXn08gAAAAANqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/qzKD//v38////////////68+m/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR//Lgxf////////////369//lwIn/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qhUPbZok9gAAAAANqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/pyZr//fz6////////////7te1/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR//Hew/////////////37+P/mwYz/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9mhUP7aolGa5ZlMCtqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/lvob//Pjy////////////+fPp/9qjU//aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR//Hew/////////////37+P/mwo3/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aoVDQ3aFMHtqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/erWf/+fDk/////////////////+vPp//bpFb/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR//Hew/////////////37+P/mwYz/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aoVD216BLM9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolL/7dSx//////////////////z69f/qzaP/3apg/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR//Hew/////////////37+P/mwYz/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH+2qJOYdqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/26db//nx5/////////////7+/v/9/Pr/+vTq//Dcvv/qy5//6MiZ/+jHmP/htXX/2qJR//Hew/////////////78+v/w2rv/6MeX/+jGlv/oxZT/4bV2/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2aBPlNqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/+G1df/69ez//v7+///////////////////////////////////////t0qz/2qJS//Hew////////////////////////////////////////v7+/+nJnP/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2aFQstqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qjU//lwIn/+O/i///////////////////////////////////////t0qz/2qJS//Hfw/////////////////////////////////////////////ft3v/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2aFPytqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolL/3api/+3Ur//8+vb////////////////////////////t0qz/2qJS//Hfw/////////////////////////////////////////////Dbvv/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJP1tqhT/naolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/drGT/58aU/+/Yt//x3sP/8uDF//Lgx//nwo//2qJS//Hfw/////////////79/P/369r/8+LJ//Piyv/z4sr/7dSw/9umWv/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2aJQ1dqhUOvaolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR//Hfw/////////////37+P/mwYz/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJPydmiT9TaolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR//Hfw/////////////37+P/mwYz/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qBPsNqgT63aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR//Hfw/////////////37+P/mwo3/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/92qYf/gsm//3q1m/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2aFPkNmgUHzaolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR//Hfw/////////////37+P/mwo3/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/3qxk//Xn0//9/Pn/+O7g/+G1df/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/ZoVD+2Z9PYNidTDzZoVD+2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR//HfxP////////////37+P/mwo3/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/6MeX//7+/v////////////DavP/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/ZoVD12aRPMN+fShjZoU/j2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR//Hfw/////////////37+P/mwYz/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/58aV//////////////////Piy//aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolDM055PHdSUPwzZoE+w2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/+/au/////////////79+//pyZv/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/68+l//////////////////Hewv/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9mhUP7aoU+ZzJlMCgAAAADYoU5y2aFQ+NqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/+jHl/////////////7+/v/05tH/3apg/9qiUf/aolH/2qJR/9qiUf/dqWD/9+zc/////////////////+nKnf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUfXYoE1cAAAAAAAAAADZoksv2qFQ3tqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/96tZv/79/H////////////+/v7/8uHI/+CycP/dq2P/3axj/+Czcf/y4MX//v38/////////////Pn0/92rYv/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9mgT97RmkgcAAAAAAAAAAD/qlUD2qFQmNqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9ulVv/v2Lf//v38//////////////////z48v/26tj/9uva//v38f/+/v7////////////+/fv/68+l/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9mgT4EAAAAAAAAAAAAAAAAAAAAA359KGNmiUO/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/erWX/9uvb//////////////////////////////////////////////////7+/v/x3L//3Khc/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2aFP2syZMwoAAAAAAAAAAAAAAAAAAAAAAAAAANqhTmjaoVD52qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/3ati//Tlz//9+vb//v7+///////////////////////+/v7//Pjy//Hewv/cqV//2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aoVD03KRNUgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN2ZRA/ZoVC32qJQ/dqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9umWf/oxpT/8t/D//ju4f/79e7/+vTr//br2f/v2Lf/5b6G/9qjVP/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qhUPzaoE+g3ZlEDwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADbnk862aFP49qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/26VY/9ypX//dq2L/3aph/9yoXf/apFX/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9mhUOLcpVIlAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA1qFNX9mhUPHaolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/ZoVD+2qFQ692hTkQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAdihT2rZoVDt2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/ZoVDi2aBQWQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAL9/PwTYok5r2aFQ8dqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9mhT/Dan09TqqpVAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/AAAB2aJPYNmhT+PaolD92qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/ZoVD82KFP3dmeT0oAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANyfTTvZoU+52qFQ+dqiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qhT/nZoFCo2Z9PMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADPnz8Q2Z9NbdmhUPHaolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2aBP5tmgTVnnokULAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANmgSxvZoVCc2qFQ4NqhUPnaolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/ZoVD+2aFQ9tmhT9zZoVCJ2p1IFQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/vz8E26NMMtmhTnXZoE+z2qFP5tmhUP7aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2qJR/9qiUf/aolH/2aFQ/dmhUN/aoFCo2aFPbdqdTir//wABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHXnE4N4KNRGdujS0DZoU+A2KBPs9qhT9faoVDu2aFQ+9qhUPPaoVDl2qFQz9qiT6bboU9z2aBQNtSfShjMmUwKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="><style>.sf-hidden{display:none!important}</style><meta http-equiv=content-security-policy content="default-src 'none'; font-src 'self' data:; img-src 'self' data:; style-src 'unsafe-inline'; media-src 'self' data:; script-src 'unsafe-inline' data:; object-src 'self' data:; frame-src 'self' data:;"></head>
+ <body class="article dark:bg-fp-blue-darkest text-black dark:text-white">
+<header class=header role=banner style=display:none!important>
+ <nav class="fixed z-50 top-0 w-full bg-gradient-to-l from-fp-blue to-fp-blue-light dark:bg-none dark:bg-fp-blue-dark" style=display:none!important>
+ <div class="mx-auto px-2 sm:px-6 lg:px-8" style=display:none!important>
+ <div class="relative flex h-14 items-center justify-between" style=display:none!important>
+ <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start" style=display:none!important>
+ 
+ <div class="hidden sm:ml-auto sm:block" style=display:none!important>
+ <div class="flex space-x-4" style=display:none!important>
+ <div id=search-field class="relative inline-flex cursor-pointer items-center rounded px-4 text-xs text-gray-500 dark:text-gray-200" style=display:none!important>
+ <svg class="absolute left-6 fill-gray-400 dark:fill-gray-400 h-3" xmlns=http://www.w3.org/2000/svg viewBox="0 0 512 512"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"></path></svg>
+ 
+ 
+ </div>
+ </div>
+ </div>
+ <button type=button id=themeSwitch class="hidden sm:block stroke-slate-400 fill-slate-400" style=display:none!important>
+ <span class=dark:hidden style=display:none!important>
+ <svg viewBox="0 0 24 24" fill=none stroke-width=2 stroke-linecap=round stroke-linejoin=round class="w-6 h-6">
+ <path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"></path>
+ <path d="M12 4v1M17.66 6.344l-.828.828M20.005 12.004h-1M17.66 17.664l-.828-.828M12 20.01V19M6.34 17.664l.835-.836M3.995 12.004h1.01M6 6l.835.836"></path>
+ </svg>
+ </span>
+ <span class="hidden dark:inline" style=display:none!important>
+ <svg viewBox="0 0 512 512" class="w-4 h-4">
+ <path d="M421.6 379.9c-.6641 0-1.35 .0625-2.049 .1953c-11.24 2.143-22.37 3.17-33.32 3.17c-94.81 0-174.1-77.14-174.1-175.5c0-63.19 33.79-121.3 88.73-152.6c8.467-4.812 6.339-17.66-3.279-19.44c-11.2-2.078-29.53-3.746-40.9-3.746C132.3 31.1 32 132.2 32 256c0 123.6 100.1 224 223.8 224c69.04 0 132.1-31.45 173.8-82.93C435.3 389.1 429.1 379.9 421.6 379.9zM255.8 432C158.9 432 80 353 80 256c0-76.32 48.77-141.4 116.7-165.8C175.2 125 163.2 165.6 163.2 207.8c0 99.44 65.13 183.9 154.9 212.8C298.5 428.1 277.4 432 255.8 432z"></path>
+ </svg>
+ </span>
+ </button>
+ </div>
+ </div>
+ </div>
+ </nav>
+</header>
+<div class=body>
+<div class="nav-container dark:text-gray-300 bg-fp-gray-lightest dark:bg-fp-blue-darker dark:border-r dark:border-gray-800" data-component=quick-docs data-version=master style=display:none!important>
+ 
+</div>
+<main class=article>
+ <div class=content>
+<aside class="toc sidebar dark:text-fp-gray-light" data-title=Contents data-levels=2>
+ <div class=toc-content>
+ <div class=toc-menu><h3>Contents</h3><ul><li data-level=1><a href=#sect-performing-system-upgrade>Performing system upgrade</a><li data-level=1><a href=#sect-optional-post-upgrade-tasks>Optional post-upgrade tasks</a><li data-level=2><a href=#sect-update-system-configuration-files>Update system configuration files</a><li data-level=2><a href=#sect-update-grub-bootloader-on-bios>Update GRUB bootloader on BIOS systems</a><li data-level=2><a href=#sect-clean-up-retired-packages>Clean-up retired packages</a><li data-level=2><a href=#sect-clean-up-old-packages>Clean-up old packages</a><li data-level=2><a href=#sect-clean-up-old-kernels>Clean-up old kernels</a><li data-level=2><a href=#sect-clean-up-old-keys>Clean-up old keys trusted for RPM package signing</a><li data-level=2><a href=#sect-clean-up-old-symlinks>Clean-up old symlinks</a><li data-level=2><a href=#sect-update-rescue-kernel>Update rescue kernel</a><li data-level=1><a href=#sect-resolving-post-upgrade-issues>Resolving post-upgrade issues</a><li data-level=2><a href=#sect-rebuilding-rpm-database>Rebuilding the RPM database</a><li data-level=2><a href=#sect-using-distro-sync-to-resolve-dependency-issues>Using distro-sync to resolve dependency issues</a><li data-level=2><a href=#sect-relabel-files-with-the-latest-selinux-policy>Relabel files with the latest SELinux policy</a><li data-level=1><a href=#sect-frequently-asked-questions>Frequently Asked Questions</a><li data-level=2><a href=#sect-how-do-i-report-issues-with-the-upgrades>How do I report issues with the upgrade?</a><li data-level=2><a href=#sect-does-dnf-system-upgrade-verify-the-software-it-runs-or-installs-during-an-upgrade>Does DNF System Upgrade verify the software it runs or installs during an upgrade?</a><li data-level=2><a href=#sect-will-packages-in-third-party-repositories-be-upgraded>Will packages in third-party repositories be upgraded?</a><li data-level=2><a href=#sect-can-i-upgrade-from-an-end-of-life-release>Can I upgrade from an End-of-Life (EOL) release?</a><li data-level=2><a href=#sect-how-many-releases-can-i-upgrade-across-at-once>Can I do a single upgrade across many releases (i.e. 30→34)?</a><li data-level=2><a href=#sect-can-i-use-dnf-system-upgrade-to-upgrade-to-a-pre-release>Can I use DNF System Upgrade to upgrade to a pre-release (e.g. a Beta)?</a></ul></div>
+ 
+ </div>
+</aside>
+<article class="doc dark:text-gray-100">
+<h1 class="page mt-8 mb-1">Upgrading Fedora Linux Using DNF System Plugin</h1>
+<div class="is-before-toc text-xs text-gray-400 border-b border-gray-300 mb-6 pb-1">
+</div>
+<aside class="toc embedded sf-hidden"></aside><div id=preamble>
+<div class=sectionbody>
+<div class=paragraph>
+<p><code>dnf system-upgrade</code> command (embedded into <a href=https://github.com/rpm-software-management/dnf5>DNF5</a> and a <a href=https://github.com/rpm-software-management/dnf-plugins-extras><code>dnf-plugin-system-upgrade</code></a> plugin for the <a href=https://docs.fedoraproject.org/en-US/quick-docs/dnf/ class="xref page">DNF4</a> package manager ) is used to upgrade your system to the current release of Fedora Linux.
+For Fedora Silverblue and Fedora CoreOS, which use rpm-ostree, you may refer to <a href=https://coreos.github.io/rpm-ostree/administrator-handbook/>rpm-ostree documentation</a> for details.</p>
+</div>
+<div class=paragraph>
+<p>This is the recommended command-line upgrade method.
+It works as follows:</p>
+</div>
+<div class="olist arabic">
+<ol class=arabic>
+<li>
+<p>Packages are downloaded while the system is running normally</p>
+</li>
+<li>
+<p>The system reboots into a special environment (implemented as a systemd target) to install them</p>
+</li>
+<li>
+<p>Upon completion, the system reboots into the new Fedora Linux release</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class=sect1>
+<h2 id=sect-performing-system-upgrade><a class=anchor href=#sect-performing-system-upgrade></a>Performing system upgrade</h2>
+<div class=sectionbody>
+<div class="admonitionblock warning">
+<table>
+<tbody><tr>
+<td class=icon>
+<i class="fa icon-warning" title=Warning></i>
+</td>
+<td class=content>
+<div class=paragraph>
+<p><strong>Back up your data</strong> before performing a system-wide upgrade as every system upgrade is potentially risky.
+As a precaution, download the <a href=https://getfedora.org/en/workstation/download/>Fedora Workstation Live image</a> in the event something goes wrong.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<ol class=arabic>
+<li>
+<p>To update your Fedora Linux release from the command-line do:</p>
+<div class=listingblock>
+<div class=content>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang=bash>sudo dnf upgrade --refresh</code></pre>
+<div class=source-toolbox><span class=source-lang>bash</span><button class=copy-button title="Copy to clipboard"><img src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgMTYgMTYiIHdpZHRoPSIxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNyAwYy0uNTU1IDAtMSAuNDQ1LTEgMUg0QzIuMzU1IDEgMSAyLjM1NSAxIDR2OWMwIDEuNjQ1IDEuMzU1IDMgMyAzaDhjMS42NDUgMCAzLTEuMzU1IDMtM1Y0YzAtMS42NDUtMS4zNTUtMy0zLTNoLTJjMC0uNTU1LS40NDUtMS0xLTF6TTQgM2gxdjFjMCAuNTU1LjQ0NSAxIDEgMWg0Yy41NTUgMCAxLS40NDUgMS0xVjNoMWMuNTcgMCAxIC40MyAxIDF2OWMwIC41Ny0uNDMgMS0xIDFINGMtLjU3IDAtMS0uNDMtMS0xVjRjMC0uNTcuNDMtMSAxLTF6bTAgMCIgZmlsbD0iIzJlMzQzNiIvPjwvc3ZnPg==" alt="copy icon" class=copy-icon><span class=copy-toast>Copied!</span></button></div></div>
+</div>
+<div class=paragraph>
+<p>and reboot your computer.</p>
+</div>
+<div class=paragraph>
+<p><strong>Important:</strong> Do not skip this step. System updates are required to receive signing keys of higher-versioned releases, and they often fix problems related to the upgrade process.</p>
+</div>
+</li>
+<li>
+<p>Download the updated packages:</p>
+<div class=listingblock>
+<div class=content>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang=bash>sudo dnf system-upgrade download --releasever=42</code></pre>
+<div class=source-toolbox><span class=source-lang>bash</span><button class=copy-button title="Copy to clipboard"><img src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgMTYgMTYiIHdpZHRoPSIxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNyAwYy0uNTU1IDAtMSAuNDQ1LTEgMUg0QzIuMzU1IDEgMSAyLjM1NSAxIDR2OWMwIDEuNjQ1IDEuMzU1IDMgMyAzaDhjMS42NDUgMCAzLTEuMzU1IDMtM1Y0YzAtMS42NDUtMS4zNTUtMy0zLTNoLTJjMC0uNTU1LS40NDUtMS0xLTF6TTQgM2gxdjFjMCAuNTU1LjQ0NSAxIDEgMWg0Yy41NTUgMCAxLS40NDUgMS0xVjNoMWMuNTcgMCAxIC40MyAxIDF2OWMwIC41Ny0uNDMgMS0xIDFINGMtLjU3IDAtMS0uNDMtMS0xVjRjMC0uNTcuNDMtMSAxLTF6bTAgMCIgZmlsbD0iIzJlMzQzNiIvPjwvc3ZnPg==" alt="copy icon" class=copy-icon><span class=copy-toast>Copied!</span></button></div></div>
+</div>
+<div class=paragraph>
+<p>Change the <code>--releasever=</code> number if you want to upgrade to a different release.
+Most people will want to upgrade to the latest stable release, which is <code>42</code>, but in some cases, such as when you’re currently running an older release than <code>41</code>, you may want to upgrade just to Fedora Linux <code>41</code>. System upgrade is only officially supported and tested over 2 releases at most (e.g. from <code>40</code> to <code>42</code>). If you need to upgrade over more releases, it is recommended to do it in several smaller steps (<a href=#sect-how-many-releases-can-i-upgrade-across-at-once>read more</a>).</p>
+</div>
+<div class=paragraph>
+<p>You can also use <code>43</code> to upgrade to a <a href=https://fedoraproject.org/wiki/Releases/Branched>Branched</a> release, or <code>rawhide</code> to upgrade to <a href=https://fedoraproject.org/wiki/Releases/Rawhide>Rawhide</a>. Note that neither of these two are stable releases. For details about the upgrade process and common issues related to those two releases, please look at appropriate sections on aforelinked pages.</p>
+</div>
+</li>
+<li>
+<p>If some of your packages have unsatisfied dependencies, the upgrade will refuse to continue until you run it again with an extra <code>--allowerasing</code> option.
+This often happens with packages installed from third-party repositories for which an updated repository hasn’t been yet published.
+Study the output very carefully and examine which packages are going to be removed.
+None of them should be essential for system functionality, but some of them might be important for your productivity.</p>
+<div class=ulist>
+<ul>
+<li>
+<p>In case of unsatisfied dependencies, you can sometimes see more details if you add <code>--best</code> option to the command line.</p>
+</li>
+<li>
+<p>If you want to remove/install some packages manually before running <code>dnf system-upgrade download</code> again, it is advisable to perform those operations with <code>--setopt=keepcache=1</code> dnf command line option.
+Otherwise the whole package cache will be removed after your operation, and you will need to download all the packages once again.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>When the new GPG key is imported, you are asked to verify the key’s fingerprint. Refer to <a href=https://fedoraproject.org/security>https://fedoraproject.org/security</a> to do so.</p>
+</li>
+<li>
+<p>Trigger the upgrade process, based on which version of DNF your system uses:</p>
+</li>
+</ol>
+</div>
+<div class=paragraph>
+<p><strong>If you’re using DNF 4 (default in older Fedora releases):</strong><br></p>
+</div>
+<div class=listingblock>
+<div class=content>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang=bash>sudo dnf system-upgrade reboot</code></pre>
+<div class=source-toolbox><span class=source-lang>bash</span><button class=copy-button title="Copy to clipboard"><img src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgMTYgMTYiIHdpZHRoPSIxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNyAwYy0uNTU1IDAtMSAuNDQ1LTEgMUg0QzIuMzU1IDEgMSAyLjM1NSAxIDR2OWMwIDEuNjQ1IDEuMzU1IDMgMyAzaDhjMS42NDUgMCAzLTEuMzU1IDMtM1Y0YzAtMS42NDUtMS4zNTUtMy0zLTNoLTJjMC0uNTU1LS40NDUtMS0xLTF6TTQgM2gxdjFjMCAuNTU1LjQ0NSAxIDEgMWg0Yy41NTUgMCAxLS40NDUgMS0xVjNoMWMuNTcgMCAxIC40MyAxIDF2OWMwIC41Ny0uNDMgMS0xIDFINGMtLjU3IDAtMS0uNDMtMS0xVjRjMC0uNTcuNDMtMSAxLTF6bTAgMCIgZmlsbD0iIzJlMzQzNiIvPjwvc3ZnPg==" alt="copy icon" class=copy-icon><span class=copy-toast>Copied!</span></button></div></div>
+</div>
+<div class=paragraph>
+<p>This will reboot your machine <strong>immediately</strong> into a special upgrade environment.
+<strong>Close all programs and save your work first.</strong>
+No countdown or confirmation is given.</p>
+</div>
+<div class=paragraph>
+<p><strong>If you’re using DNF 5 (starting from Fedora 41+):</strong><br></p>
+</div>
+<div class=listingblock>
+<div class=content>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang=bash>sudo dnf5 offline reboot</code></pre>
+<div class=source-toolbox><span class=source-lang>bash</span><button class=copy-button title="Copy to clipboard"><img src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgMTYgMTYiIHdpZHRoPSIxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNyAwYy0uNTU1IDAtMSAuNDQ1LTEgMUg0QzIuMzU1IDEgMSAyLjM1NSAxIDR2OWMwIDEuNjQ1IDEuMzU1IDMgMyAzaDhjMS42NDUgMCAzLTEuMzU1IDMtM1Y0YzAtMS42NDUtMS4zNTUtMy0zLTNoLTJjMC0uNTU1LS40NDUtMS0xLTF6TTQgM2gxdjFjMCAuNTU1LjQ0NSAxIDEgMWg0Yy41NTUgMCAxLS40NDUgMS0xVjNoMWMuNTcgMCAxIC40MyAxIDF2OWMwIC41Ny0uNDMgMS0xIDFINGMtLjU3IDAtMS0uNDMtMS0xVjRjMC0uNTcuNDMtMSAxLTF6bTAgMCIgZmlsbD0iIzJlMzQzNiIvPjwvc3ZnPg==" alt="copy icon" class=copy-icon><span class=copy-toast>Copied!</span></button></div></div>
+</div>
+<div class=paragraph>
+<p>This performs the upgrade <strong>offline</strong> during the next boot. To cancel the upgrade and delete downloaded files:</p>
+</div>
+<div class=listingblock>
+<div class=content>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang=bash>sudo dnf5 offline clean</code></pre>
+<div class=source-toolbox><span class=source-lang>bash</span><button class=copy-button title="Copy to clipboard"><img src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgMTYgMTYiIHdpZHRoPSIxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNyAwYy0uNTU1IDAtMSAuNDQ1LTEgMUg0QzIuMzU1IDEgMSAyLjM1NSAxIDR2OWMwIDEuNjQ1IDEuMzU1IDMgMyAzaDhjMS42NDUgMCAzLTEuMzU1IDMtM1Y0YzAtMS42NDUtMS4zNTUtMy0zLTNoLTJjMC0uNTU1LS40NDUtMS0xLTF6TTQgM2gxdjFjMCAuNTU1LjQ0NSAxIDEgMWg0Yy41NTUgMCAxLS40NDUgMS0xVjNoMWMuNTcgMCAxIC40MyAxIDF2OWMwIC41Ny0uNDMgMS0xIDFINGMtLjU3IDAtMS0uNDMtMS0xVjRjMC0uNTcuNDMtMSAxLTF6bTAgMCIgZmlsbD0iIzJlMzQzNiIvPjwvc3ZnPg==" alt="copy icon" class=copy-icon><span class=copy-toast>Copied!</span></button></div></div>
+</div>
+<div class="olist arabic">
+<ol class=arabic>
+<li>
+<p>Once the upgrade process completes, your system will reboot a second time into the updated Fedora Linux release.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class=sect1>
+<h2 id=sect-optional-post-upgrade-tasks><a class=anchor href=#sect-optional-post-upgrade-tasks></a>Optional post-upgrade tasks</h2>
+<div class=sectionbody>
+<div class=paragraph>
+<p>These are some of the tasks you can do after a successful upgrade.</p>
+</div>
+<div class=sect2>
+<h3 id=sect-update-system-configuration-files><a class=anchor href=#sect-update-system-configuration-files></a>Update system configuration files</h3>
+<div class=paragraph>
+<p>Most configuration files are stored in the <code>/etc</code> folder.
+If you have changed the package’s configuration files, RPM creates new files with either <code>.rpmnew</code> (the new default config file), or <code>.rpmsave</code> (your old config file backed up).
+You can search for these files, or use the <code>rpmconf</code> tool that simplifies this process. To install rpmconf, enter:</p>
+</div>
+<div class=listingblock>
+<div class=content>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang=bash>sudo dnf install rpmconf</code></pre>
+<div class=source-toolbox><span class=source-lang>bash</span><button class=copy-button title="Copy to clipboard"><img src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgMTYgMTYiIHdpZHRoPSIxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNyAwYy0uNTU1IDAtMSAuNDQ1LTEgMUg0QzIuMzU1IDEgMSAyLjM1NSAxIDR2OWMwIDEuNjQ1IDEuMzU1IDMgMyAzaDhjMS42NDUgMCAzLTEuMzU1IDMtM1Y0YzAtMS42NDUtMS4zNTUtMy0zLTNoLTJjMC0uNTU1LS40NDUtMS0xLTF6TTQgM2gxdjFjMCAuNTU1LjQ0NSAxIDEgMWg0Yy41NTUgMCAxLS40NDUgMS0xVjNoMWMuNTcgMCAxIC40MyAxIDF2OWMwIC41Ny0uNDMgMS0xIDFINGMtLjU3IDAtMS0uNDMtMS0xVjRjMC0uNTcuNDMtMSAxLTF6bTAgMCIgZmlsbD0iIzJlMzQzNiIvPjwvc3ZnPg==" alt="copy icon" class=copy-icon><span class=copy-toast>Copied!</span></button></div></div>
+</div>
+<div class=paragraph>
+<p>Once the install is complete enter:</p>
+</div>
+<div class=listingblock>
+<div class=content>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang=bash>sudo rpmconf -a</code></pre>
+<div class=source-toolbox><span class=source-lang>bash</span><button class=copy-button title="Copy to clipboard"><img src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgMTYgMTYiIHdpZHRoPSIxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNyAwYy0uNTU1IDAtMSAuNDQ1LTEgMUg0QzIuMzU1IDEgMSAyLjM1NSAxIDR2OWMwIDEuNjQ1IDEuMzU1IDMgMyAzaDhjMS42NDUgMCAzLTEuMzU1IDMtM1Y0YzAtMS42NDUtMS4zNTUtMy0zLTNoLTJjMC0uNTU1LS40NDUtMS0xLTF6TTQgM2gxdjFjMCAuNTU1LjQ0NSAxIDEgMWg0Yy41NTUgMCAxLS40NDUgMS0xVjNoMWMuNTcgMCAxIC40MyAxIDF2OWMwIC41Ny0uNDMgMS0xIDFINGMtLjU3IDAtMS0uNDMtMS0xVjRjMC0uNTcuNDMtMSAxLTF6bTAgMCIgZmlsbD0iIzJlMzQzNiIvPjwvc3ZnPg==" alt="copy icon" class=copy-icon><span class=copy-toast>Copied!</span></button></div></div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class=icon>
+<i class="fa icon-note" title=Note></i>
+</td>
+<td class=content>
+<div class=paragraph>
+<p>Some third-party packages drop edited configuration files in <code>/etc/yum.repos.d/</code> and reverting these files to their original versions may disable updates for the software.
+Please remember to review configuration files in this directory carefully.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class=paragraph>
+<p>For more information you can refer to the man pages (<code>man rpmconf</code>).</p>
+</div>
+<div class=paragraph>
+<p>If you use <code>rpmconf</code> to upgrade the system configuration files supplied with the upgraded packages then some configuration files may change. After the upgrade you should verify <code>/etc/ssh/sshd_config</code>, <code>/etc/nsswitch.conf</code>, <code>/etc/ntp.conf</code> and others are expected. For example, if OpenSSH is upgraded then <code>sshd_config</code> reverts to the default package configuration. The default package configuration <strong>does not</strong> enable public key authentication, and allows password authentication.</p>
+</div>
+</div>
+<div class=sect2>
+<h3 id=sect-update-grub-bootloader-on-bios><a class=anchor href=#sect-update-grub-bootloader-on-bios></a>Update GRUB bootloader on BIOS systems</h3>
+<div class=paragraph>
+<p>Systems with the <a href=https://docs.fedoraproject.org/en-US/quick-docs/installing-grub2/#installing-grub-2-on-a-bios-system>BIOS firmware</a> have the GRUB RPM packages updated. However, the installed or embedded bootloader is never updated automatically. It is a good idea to update it between Fedora Linux release versions.</p>
+</div>
+<div class=paragraph>
+<p>Find the device node the <code>/boot/</code> directory is located on:</p>
+</div>
+<div class=listingblock>
+<div class=content>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang=bash>sudo mount | grep <span class=hljs-string>"/boot "</span>
+/dev/sda4 on /boot <span class=hljs-built_in>type</span> ext4 (rw,relatime,seclabel)</code></pre>
+<div class=source-toolbox><span class=source-lang>bash</span><button class=copy-button title="Copy to clipboard"><img src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgMTYgMTYiIHdpZHRoPSIxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNyAwYy0uNTU1IDAtMSAuNDQ1LTEgMUg0QzIuMzU1IDEgMSAyLjM1NSAxIDR2OWMwIDEuNjQ1IDEuMzU1IDMgMyAzaDhjMS42NDUgMCAzLTEuMzU1IDMtM1Y0YzAtMS42NDUtMS4zNTUtMy0zLTNoLTJjMC0uNTU1LS40NDUtMS0xLTF6TTQgM2gxdjFjMCAuNTU1LjQ0NSAxIDEgMWg0Yy41NTUgMCAxLS40NDUgMS0xVjNoMWMuNTcgMCAxIC40MyAxIDF2OWMwIC41Ny0uNDMgMS0xIDFINGMtLjU3IDAtMS0uNDMtMS0xVjRjMC0uNTcuNDMtMSAxLTF6bTAgMCIgZmlsbD0iIzJlMzQzNiIvPjwvc3ZnPg==" alt="copy icon" class=copy-icon><span class=copy-toast>Copied!</span></button></div></div>
+</div>
+<div class=paragraph>
+<p>The device node is <code>/dev/sda4</code>. Reinstall the bootloader while specifying the device node without the number:</p>
+</div>
+<div class=listingblock>
+<div class=content>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang=bash>sudo grub2-install /dev/sda</code></pre>
+<div class=source-toolbox><span class=source-lang>bash</span><button class=copy-button title="Copy to clipboard"><img src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgMTYgMTYiIHdpZHRoPSIxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNyAwYy0uNTU1IDAtMSAuNDQ1LTEgMUg0QzIuMzU1IDEgMSAyLjM1NSAxIDR2OWMwIDEuNjQ1IDEuMzU1IDMgMyAzaDhjMS42NDUgMCAzLTEuMzU1IDMtM1Y0YzAtMS42NDUtMS4zNTUtMy0zLTNoLTJjMC0uNTU1LS40NDUtMS0xLTF6TTQgM2gxdjFjMCAuNTU1LjQ0NSAxIDEgMWg0Yy41NTUgMCAxLS40NDUgMS0xVjNoMWMuNTcgMCAxIC40MyAxIDF2OWMwIC41Ny0uNDMgMS0xIDFINGMtLjU3IDAtMS0uNDMtMS0xVjRjMC0uNTcuNDMtMSAxLTF6bTAgMCIgZmlsbD0iIzJlMzQzNiIvPjwvc3ZnPg==" alt="copy icon" class=copy-icon><span class=copy-toast>Copied!</span></button></div></div>
+</div>
+<div class=paragraph>
+<p>The correct output should be:</p>
+</div>
+<div class=listingblock>
+<div class=content>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang=bash>Installing <span class=hljs-keyword>for</span> i386-pc platform.
+Installation finished. No error reported.</code></pre>
+<div class=source-toolbox><span class=source-lang>bash</span><button class=copy-button title="Copy to clipboard"><img src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgMTYgMTYiIHdpZHRoPSIxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNyAwYy0uNTU1IDAtMSAuNDQ1LTEgMUg0QzIuMzU1IDEgMSAyLjM1NSAxIDR2OWMwIDEuNjQ1IDEuMzU1IDMgMyAzaDhjMS42NDUgMCAzLTEuMzU1IDMtM1Y0YzAtMS42NDUtMS4zNTUtMy0zLTNoLTJjMC0uNTU1LS40NDUtMS0xLTF6TTQgM2gxdjFjMCAuNTU1LjQ0NSAxIDEgMWg0Yy41NTUgMCAxLS40NDUgMS0xVjNoMWMuNTcgMCAxIC40MyAxIDF2OWMwIC41Ny0uNDMgMS0xIDFINGMtLjU3IDAtMS0uNDMtMS0xVjRjMC0uNTcuNDMtMSAxLTF6bTAgMCIgZmlsbD0iIzJlMzQzNiIvPjwvc3ZnPg==" alt="copy icon" class=copy-icon><span class=copy-toast>Copied!</span></button></div></div>
+</div>
+</div>
+<div class=sect2>
+<h3 id=sect-clean-up-retired-packages><a class=anchor href=#sect-clean-up-retired-packages></a>Clean-up retired packages</h3>
+<div class=paragraph>
+<p>With every release, Fedora retires a few packages. There are various reasons;
+the packages become obsolete, they have a dead upstream, or the maintainer
+steps down. Fedora no longer distributes these packages; however, they are
+still on your system. These packages will not receive upgrades. It is highly
+recommended to remove them.</p>
+</div>
+<div class=paragraph>
+<p>If you upgrade across one release (e.g. Fedora Linux 41 to 42), run the following commands:</p>
+</div>
+<div class=listingblock>
+<div class=content>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang=bash>sudo dnf install remove-retired-packages
+remove-retired-packages</code></pre>
+<div class=source-toolbox><span class=source-lang>bash</span><button class=copy-button title="Copy to clipboard"><img src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgMTYgMTYiIHdpZHRoPSIxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNyAwYy0uNTU1IDAtMSAuNDQ1LTEgMUg0QzIuMzU1IDEgMSAyLjM1NSAxIDR2OWMwIDEuNjQ1IDEuMzU1IDMgMyAzaDhjMS42NDUgMCAzLTEuMzU1IDMtM1Y0YzAtMS42NDUtMS4zNTUtMy0zLTNoLTJjMC0uNTU1LS40NDUtMS0xLTF6TTQgM2gxdjFjMCAuNTU1LjQ0NSAxIDEgMWg0Yy41NTUgMCAxLS40NDUgMS0xVjNoMWMuNTcgMCAxIC40MyAxIDF2OWMwIC41Ny0uNDMgMS0xIDFINGMtLjU3IDAtMS0uNDMtMS0xVjRjMC0uNTcuNDMtMSAxLTF6bTAgMCIgZmlsbD0iIzJlMzQzNiIvPjwvc3ZnPg==" alt="copy icon" class=copy-icon><span class=copy-toast>Copied!</span></button></div></div>
+</div>
+<div class=paragraph>
+<p>If you upgrade across two releases (e.g. Fedora Linux 40 to 42), you must supply the old release version to <code>remove-retired-packages</code>:</p>
+</div>
+<div class=listingblock>
+<div class=content>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang=bash>sudo dnf install remove-retired-packages
+remove-retired-packages 40</code></pre>
+<div class=source-toolbox><span class=source-lang>bash</span><button class=copy-button title="Copy to clipboard"><img src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgMTYgMTYiIHdpZHRoPSIxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNyAwYy0uNTU1IDAtMSAuNDQ1LTEgMUg0QzIuMzU1IDEgMSAyLjM1NSAxIDR2OWMwIDEuNjQ1IDEuMzU1IDMgMyAzaDhjMS42NDUgMCAzLTEuMzU1IDMtM1Y0YzAtMS42NDUtMS4zNTUtMy0zLTNoLTJjMC0uNTU1LS40NDUtMS0xLTF6TTQgM2gxdjFjMCAuNTU1LjQ0NSAxIDEgMWg0Yy41NTUgMCAxLS40NDUgMS0xVjNoMWMuNTcgMCAxIC40MyAxIDF2OWMwIC41Ny0uNDMgMS0xIDFINGMtLjU3IDAtMS0uNDMtMS0xVjRjMC0uNTcuNDMtMSAxLTF6bTAgMCIgZmlsbD0iIzJlMzQzNiIvPjwvc3ZnPg==" alt="copy icon" class=copy-icon><span class=copy-toast>Copied!</span></button></div></div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class=icon>
+<i class="fa icon-note" title=Note></i>
+</td>
+<td class=content>
+Upgrades across <strong>more</strong> than two releases are not supported.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class=sect2>
+<h3 id=sect-clean-up-old-packages><a class=anchor href=#sect-clean-up-old-packages></a>Clean-up old packages</h3>
+<div class=paragraph>
+<p>You can see duplicate packages (packages with multiple versions installed) with:</p>
+</div>
+<div class=listingblock>
+<div class=content>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang=bash>sudo dnf repoquery --duplicates</code></pre>
+<div class=source-toolbox><span class=source-lang>bash</span><button class=copy-button title="Copy to clipboard"><img src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgMTYgMTYiIHdpZHRoPSIxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNyAwYy0uNTU1IDAtMSAuNDQ1LTEgMUg0QzIuMzU1IDEgMSAyLjM1NSAxIDR2OWMwIDEuNjQ1IDEuMzU1IDMgMyAzaDhjMS42NDUgMCAzLTEuMzU1IDMtM1Y0YzAtMS42NDUtMS4zNTUtMy0zLTNoLTJjMC0uNTU1LS40NDUtMS0xLTF6TTQgM2gxdjFjMCAuNTU1LjQ0NSAxIDEgMWg0Yy41NTUgMCAxLS40NDUgMS0xVjNoMWMuNTcgMCAxIC40MyAxIDF2OWMwIC41Ny0uNDMgMS0xIDFINGMtLjU3IDAtMS0uNDMtMS0xVjRjMC0uNTcuNDMtMSAxLTF6bTAgMCIgZmlsbD0iIzJlMzQzNiIvPjwvc3ZnPg==" alt="copy icon" class=copy-icon><span class=copy-toast>Copied!</span></button></div></div>
+</div>
+<div class=paragraph>
+<p>And you can remove them with:</p>
+</div>
+<div class=listingblock>
+<div class=content>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang=bash>sudo dnf remove --duplicates</code></pre>
+<div class=source-toolbox><span class=source-lang>bash</span><button class=copy-button title="Copy to clipboard"><img src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgMTYgMTYiIHdpZHRoPSIxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNyAwYy0uNTU1IDAtMSAuNDQ1LTEgMUg0QzIuMzU1IDEgMSAyLjM1NSAxIDR2OWMwIDEuNjQ1IDEuMzU1IDMgMyAzaDhjMS42NDUgMCAzLTEuMzU1IDMtM1Y0YzAtMS42NDUtMS4zNTUtMy0zLTNoLTJjMC0uNTU1LS40NDUtMS0xLTF6TTQgM2gxdjFjMCAuNTU1LjQ0NSAxIDEgMWg0Yy41NTUgMCAxLS40NDUgMS0xVjNoMWMuNTcgMCAxIC40MyAxIDF2OWMwIC41Ny0uNDMgMS0xIDFINGMtLjU3IDAtMS0uNDMtMS0xVjRjMC0uNTcuNDMtMSAxLTF6bTAgMCIgZmlsbD0iIzJlMzQzNiIvPjwvc3ZnPg==" alt="copy icon" class=copy-icon><span class=copy-toast>Copied!</span></button></div></div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class=icon>
+<i class="fa icon-note" title=Note></i>
+</td>
+<td class=content>
+<div class=paragraph>
+<p>This command uses your system’s default <code>dnf</code> binary:
+* On Fedora 38: Points to DNF4
+* On Fedora 39+: Points to DNF5</p>
+</div>
+<div class=paragraph>
+<p>The older DNF4 is available as <code>dnf4</code> if needed, but the default <code>dnf</code>
+command is recommended for general use.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class=icon>
+<i class="fa icon-note" title=Note></i>
+</td>
+<td class=content>
+<div class=paragraph>
+<p>Run <code>sudo dnf upgrade</code> first, as this list is only valid if you have a fully updated system.
+Otherwise, you will see a list of installed packages that are no longer in the repositories because an update is available.
+This list may also contain packages installed from third-party repositories who may not have updated their repositories.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class=paragraph>
+<p>For packages from the official repositories, the latest version should be installed.
+However, some packages that are still on your system may no longer be in the repositories.
+To see a list of these packages do:</p>
+</div>
+<div class=listingblock>
+<div class=content>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang=bash>sudo dnf list --extras</code></pre>
+<div class=source-toolbox><span class=source-lang>bash</span><button class=copy-button title="Copy to clipboard"><img src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgMTYgMTYiIHdpZHRoPSIxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNyAwYy0uNTU1IDAtMSAuNDQ1LTEgMUg0QzIuMzU1IDEgMSAyLjM1NSAxIDR2OWMwIDEuNjQ1IDEuMzU1IDMgMyAzaDhjMS42NDUgMCAzLTEuMzU1IDMtM1Y0YzAtMS42NDUtMS4zNTUtMy0zLTNoLTJjMC0uNTU1LS40NDUtMS0xLTF6TTQgM2gxdjFjMCAuNTU1LjQ0NSAxIDEgMWg0Yy41NTUgMCAxLS40NDUgMS0xVjNoMWMuNTcgMCAxIC40MyAxIDF2OWMwIC41Ny0uNDMgMS0xIDFINGMtLjU3IDAtMS0uNDMtMS0xVjRjMC0uNTcuNDMtMSAxLTF6bTAgMCIgZmlsbD0iIzJlMzQzNiIvPjwvc3ZnPg==" alt="copy icon" class=copy-icon><span class=copy-toast>Copied!</span></button></div></div>
+</div>
+<div class=paragraph>
+<p>If you see a package you do not need, or use, you can remove it with:</p>
+</div>
+<div class=listingblock>
+<div class=content>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang=bash>sudo dnf remove $(sudo dnf repoquery --extras --exclude=kernel,kernel-\*,kmod-\*)</code></pre>
+<div class=source-toolbox><span class=source-lang>bash</span><button class=copy-button title="Copy to clipboard"><img src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgMTYgMTYiIHdpZHRoPSIxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNyAwYy0uNTU1IDAtMSAuNDQ1LTEgMUg0QzIuMzU1IDEgMSAyLjM1NSAxIDR2OWMwIDEuNjQ1IDEuMzU1IDMgMyAzaDhjMS42NDUgMCAzLTEuMzU1IDMtM1Y0YzAtMS42NDUtMS4zNTUtMy0zLTNoLTJjMC0uNTU1LS40NDUtMS0xLTF6TTQgM2gxdjFjMCAuNTU1LjQ0NSAxIDEgMWg0Yy41NTUgMCAxLS40NDUgMS0xVjNoMWMuNTcgMCAxIC40MyAxIDF2OWMwIC41Ny0uNDMgMS0xIDFINGMtLjU3IDAtMS0uNDMtMS0xVjRjMC0uNTcuNDMtMSAxLTF6bTAgMCIgZmlsbD0iIzJlMzQzNiIvPjwvc3ZnPg==" alt="copy icon" class=copy-icon><span class=copy-toast>Copied!</span></button></div></div>
+</div>
+<div class=paragraph>
+<p>You can safely remove packages no longer in use with:</p>
+</div>
+<div class=listingblock>
+<div class=content>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang=bash>sudo dnf autoremove</code></pre>
+<div class=source-toolbox><span class=source-lang>bash</span><button class=copy-button title="Copy to clipboard"><img src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgMTYgMTYiIHdpZHRoPSIxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNyAwYy0uNTU1IDAtMSAuNDQ1LTEgMUg0QzIuMzU1IDEgMSAyLjM1NSAxIDR2OWMwIDEuNjQ1IDEuMzU1IDMgMyAzaDhjMS42NDUgMCAzLTEuMzU1IDMtM1Y0YzAtMS42NDUtMS4zNTUtMy0zLTNoLTJjMC0uNTU1LS40NDUtMS0xLTF6TTQgM2gxdjFjMCAuNTU1LjQ0NSAxIDEgMWg0Yy41NTUgMCAxLS40NDUgMS0xVjNoMWMuNTcgMCAxIC40MyAxIDF2OWMwIC41Ny0uNDMgMS0xIDFINGMtLjU3IDAtMS0uNDMtMS0xVjRjMC0uNTcuNDMtMSAxLTF6bTAgMCIgZmlsbD0iIzJlMzQzNiIvPjwvc3ZnPg==" alt="copy icon" class=copy-icon><span class=copy-toast>Copied!</span></button></div></div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tbody><tr>
+<td class=icon>
+<i class="fa icon-warning" title=Warning></i>
+</td>
+<td class=content>
+<div class=paragraph>
+<p>DNF decides that a package is no longer needed if you haven’t explicitly asked to install it and nothing else requires it.
+However, that doesn’t mean that the package is not useful or that you don’t use it.
+<strong>Only remove what you are sure you don’t need</strong>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class=sect2>
+<h3 id=sect-clean-up-old-kernels><a class=anchor href=#sect-clean-up-old-kernels></a>Clean-up old kernels</h3>
+<div class=paragraph>
+<p>After you boot into the latest kernel and test the system you can remove previous kernels. Old kernels remain even after <code>dnf autoremove</code> to avoid unintentional removals.</p>
+</div>
+<div class=paragraph>
+<p>One of the easier ways to remove old kernels is with a script that retains the latest kernel. The script below works whenever Fedora updates a kernel, and does not depend upon a system upgrade.</p>
+</div>
+<div class=listingblock>
+<div class=content>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang=bash><span class=hljs-meta>#!/usr/bin/env bash
+</span>
+old_kernels=($(dnf repoquery --installonly --latest-limit=-1 -q))
+<span class=hljs-keyword>if</span> [ <span class=hljs-string>"<span class=hljs-variable>${#old_kernels[@]}</span>"</span> -eq 0 ]; <span class=hljs-keyword>then</span>
+    <span class=hljs-built_in>echo</span> <span class=hljs-string>"No old kernels found"</span>
+    <span class=hljs-built_in>exit</span> 0
+<span class=hljs-keyword>fi</span>
+
+<span class=hljs-keyword>if</span> ! dnf remove <span class=hljs-string>"<span class=hljs-variable>${old_kernels[@]}</span>"</span>; <span class=hljs-keyword>then</span>
+    <span class=hljs-built_in>echo</span> <span class=hljs-string>"Failed to remove old kernels"</span>
+    <span class=hljs-built_in>exit</span> 1
+<span class=hljs-keyword>fi</span>
+
+<span class=hljs-built_in>echo</span> <span class=hljs-string>"Removed old kernels"</span>
+<span class=hljs-built_in>exit</span> 0</code></pre>
+<div class=source-toolbox><span class=source-lang>bash</span><button class=copy-button title="Copy to clipboard"><img src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgMTYgMTYiIHdpZHRoPSIxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNyAwYy0uNTU1IDAtMSAuNDQ1LTEgMUg0QzIuMzU1IDEgMSAyLjM1NSAxIDR2OWMwIDEuNjQ1IDEuMzU1IDMgMyAzaDhjMS42NDUgMCAzLTEuMzU1IDMtM1Y0YzAtMS42NDUtMS4zNTUtMy0zLTNoLTJjMC0uNTU1LS40NDUtMS0xLTF6TTQgM2gxdjFjMCAuNTU1LjQ0NSAxIDEgMWg0Yy41NTUgMCAxLS40NDUgMS0xVjNoMWMuNTcgMCAxIC40MyAxIDF2OWMwIC41Ny0uNDMgMS0xIDFINGMtLjU3IDAtMS0uNDMtMS0xVjRjMC0uNTcuNDMtMSAxLTF6bTAgMCIgZmlsbD0iIzJlMzQzNiIvPjwvc3ZnPg==" alt="copy icon" class=copy-icon><span class=copy-toast>Copied!</span></button></div></div>
+</div>
+</div>
+<div class=sect2>
+<h3 id=sect-clean-up-old-keys><a class=anchor href=#sect-clean-up-old-keys></a>Clean-up old keys trusted for RPM package signing</h3>
+<div class=paragraph>
+<p>Keys from older Fedora releases and third-party repositories will accumulate in the RPM database over time. You can remove keys no-longer referenced from <code>/etc/yum.repos.d/</code> with:</p>
+</div>
+<div class=listingblock>
+<div class=content>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang=bash>sudo dnf install clean-rpm-gpg-pubkey
+sudo clean-rpm-gpg-pubkey</code></pre>
+<div class=source-toolbox><span class=source-lang>bash</span><button class=copy-button title="Copy to clipboard"><img src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgMTYgMTYiIHdpZHRoPSIxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNyAwYy0uNTU1IDAtMSAuNDQ1LTEgMUg0QzIuMzU1IDEgMSAyLjM1NSAxIDR2OWMwIDEuNjQ1IDEuMzU1IDMgMyAzaDhjMS42NDUgMCAzLTEuMzU1IDMtM1Y0YzAtMS42NDUtMS4zNTUtMy0zLTNoLTJjMC0uNTU1LS40NDUtMS0xLTF6TTQgM2gxdjFjMCAuNTU1LjQ0NSAxIDEgMWg0Yy41NTUgMCAxLS40NDUgMS0xVjNoMWMuNTcgMCAxIC40MyAxIDF2OWMwIC41Ny0uNDMgMS0xIDFINGMtLjU3IDAtMS0uNDMtMS0xVjRjMC0uNTcuNDMtMSAxLTF6bTAgMCIgZmlsbD0iIzJlMzQzNiIvPjwvc3ZnPg==" alt="copy icon" class=copy-icon><span class=copy-toast>Copied!</span></button></div></div>
+</div>
+</div>
+<div class=sect2>
+<h3 id=sect-clean-up-old-symlinks><a class=anchor href=#sect-clean-up-old-symlinks></a>Clean-up old symlinks</h3>
+<div class=paragraph>
+<p>There may be some dangling symlinks in the filesystem after an upgrade. You can clean the dangling links by installing the symlinks utility and deleteing the old links.</p>
+</div>
+<div class=listingblock>
+<div class=content>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang=bash>sudo dnf install symlinks</code></pre>
+<div class=source-toolbox><span class=source-lang>bash</span><button class=copy-button title="Copy to clipboard"><img src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgMTYgMTYiIHdpZHRoPSIxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNyAwYy0uNTU1IDAtMSAuNDQ1LTEgMUg0QzIuMzU1IDEgMSAyLjM1NSAxIDR2OWMwIDEuNjQ1IDEuMzU1IDMgMyAzaDhjMS42NDUgMCAzLTEuMzU1IDMtM1Y0YzAtMS42NDUtMS4zNTUtMy0zLTNoLTJjMC0uNTU1LS40NDUtMS0xLTF6TTQgM2gxdjFjMCAuNTU1LjQ0NSAxIDEgMWg0Yy41NTUgMCAxLS40NDUgMS0xVjNoMWMuNTcgMCAxIC40MyAxIDF2OWMwIC41Ny0uNDMgMS0xIDFINGMtLjU3IDAtMS0uNDMtMS0xVjRjMC0uNTcuNDMtMSAxLTF6bTAgMCIgZmlsbD0iIzJlMzQzNiIvPjwvc3ZnPg==" alt="copy icon" class=copy-icon><span class=copy-toast>Copied!</span></button></div></div>
+</div>
+<div class=paragraph>
+<p>Once the utility is installed you can audit for broken symlinks like shown below. <code>-r</code> means recursive.</p>
+</div>
+<div class=listingblock>
+<div class=content>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang=bash>sudo symlinks -r /usr | grep dangling</code></pre>
+<div class=source-toolbox><span class=source-lang>bash</span><button class=copy-button title="Copy to clipboard"><img src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgMTYgMTYiIHdpZHRoPSIxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNyAwYy0uNTU1IDAtMSAuNDQ1LTEgMUg0QzIuMzU1IDEgMSAyLjM1NSAxIDR2OWMwIDEuNjQ1IDEuMzU1IDMgMyAzaDhjMS42NDUgMCAzLTEuMzU1IDMtM1Y0YzAtMS42NDUtMS4zNTUtMy0zLTNoLTJjMC0uNTU1LS40NDUtMS0xLTF6TTQgM2gxdjFjMCAuNTU1LjQ0NSAxIDEgMWg0Yy41NTUgMCAxLS40NDUgMS0xVjNoMWMuNTcgMCAxIC40MyAxIDF2OWMwIC41Ny0uNDMgMS0xIDFINGMtLjU3IDAtMS0uNDMtMS0xVjRjMC0uNTcuNDMtMSAxLTF6bTAgMCIgZmlsbD0iIzJlMzQzNiIvPjwvc3ZnPg==" alt="copy icon" class=copy-icon><span class=copy-toast>Copied!</span></button></div></div>
+</div>
+<div class=paragraph>
+<p>After you verify the list of broken symlinks you can delete them like shown below. <code>-d</code> means delete.</p>
+</div>
+<div class=listingblock>
+<div class=content>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang=bash>sudo symlinks -r -d /usr</code></pre>
+<div class=source-toolbox><span class=source-lang>bash</span><button class=copy-button title="Copy to clipboard"><img src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgMTYgMTYiIHdpZHRoPSIxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNyAwYy0uNTU1IDAtMSAuNDQ1LTEgMUg0QzIuMzU1IDEgMSAyLjM1NSAxIDR2OWMwIDEuNjQ1IDEuMzU1IDMgMyAzaDhjMS42NDUgMCAzLTEuMzU1IDMtM1Y0YzAtMS42NDUtMS4zNTUtMy0zLTNoLTJjMC0uNTU1LS40NDUtMS0xLTF6TTQgM2gxdjFjMCAuNTU1LjQ0NSAxIDEgMWg0Yy41NTUgMCAxLS40NDUgMS0xVjNoMWMuNTcgMCAxIC40MyAxIDF2OWMwIC41Ny0uNDMgMS0xIDFINGMtLjU3IDAtMS0uNDMtMS0xVjRjMC0uNTcuNDMtMSAxLTF6bTAgMCIgZmlsbD0iIzJlMzQzNiIvPjwvc3ZnPg==" alt="copy icon" class=copy-icon><span class=copy-toast>Copied!</span></button></div></div>
+</div>
+</div>
+<div class=sect2>
+<h3 id=sect-update-rescue-kernel><a class=anchor href=#sect-update-rescue-kernel></a>Update rescue kernel</h3>
+<div class=paragraph>
+<p>The rescue kernel and initramfs are generated by Anaconda during system install.
+initramfs will be updated when the kernel is updated, but the rescue kernel may not be.
+Whether the rescue kernel is updated depends on the system configuration.</p>
+</div>
+<div class=paragraph>
+<p>If the rescue kernel is out-of-date, then issue the following commands to regenerate it.</p>
+</div>
+<div class=listingblock>
+<div class=content>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang=bash>sudo rm /boot/*rescue*
+sudo kernel-install add <span class=hljs-string>"<span class=hljs-variable>$(uname -r)</span>"</span> <span class=hljs-string>"/lib/modules/<span class=hljs-variable>$(uname -r)</span>/vmlinuz"</span></code></pre>
+<div class=source-toolbox><span class=source-lang>bash</span><button class=copy-button title="Copy to clipboard"><img src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgMTYgMTYiIHdpZHRoPSIxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNyAwYy0uNTU1IDAtMSAuNDQ1LTEgMUg0QzIuMzU1IDEgMSAyLjM1NSAxIDR2OWMwIDEuNjQ1IDEuMzU1IDMgMyAzaDhjMS42NDUgMCAzLTEuMzU1IDMtM1Y0YzAtMS42NDUtMS4zNTUtMy0zLTNoLTJjMC0uNTU1LS40NDUtMS0xLTF6TTQgM2gxdjFjMCAuNTU1LjQ0NSAxIDEgMWg0Yy41NTUgMCAxLS40NDUgMS0xVjNoMWMuNTcgMCAxIC40MyAxIDF2OWMwIC41Ny0uNDMgMS0xIDFINGMtLjU3IDAtMS0uNDMtMS0xVjRjMC0uNTcuNDMtMSAxLTF6bTAgMCIgZmlsbD0iIzJlMzQzNiIvPjwvc3ZnPg==" alt="copy icon" class=copy-icon><span class=copy-toast>Copied!</span></button></div></div>
+</div>
+<div class=paragraph>
+<p>The rescue kernel regeneration process can be automated by installing the <code>dracut-config-rescue</code> package.</p>
+</div>
+<div class=listingblock>
+<div class=content>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang=bash>sudo dnf install dracut-config-rescue</code></pre>
+<div class=source-toolbox><span class=source-lang>bash</span><button class=copy-button title="Copy to clipboard"><img src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgMTYgMTYiIHdpZHRoPSIxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNyAwYy0uNTU1IDAtMSAuNDQ1LTEgMUg0QzIuMzU1IDEgMSAyLjM1NSAxIDR2OWMwIDEuNjQ1IDEuMzU1IDMgMyAzaDhjMS42NDUgMCAzLTEuMzU1IDMtM1Y0YzAtMS42NDUtMS4zNTUtMy0zLTNoLTJjMC0uNTU1LS40NDUtMS0xLTF6TTQgM2gxdjFjMCAuNTU1LjQ0NSAxIDEgMWg0Yy41NTUgMCAxLS40NDUgMS0xVjNoMWMuNTcgMCAxIC40MyAxIDF2OWMwIC41Ny0uNDMgMS0xIDFINGMtLjU3IDAtMS0uNDMtMS0xVjRjMC0uNTcuNDMtMSAxLTF6bTAgMCIgZmlsbD0iIzJlMzQzNiIvPjwvc3ZnPg==" alt="copy icon" class=copy-icon><span class=copy-toast>Copied!</span></button></div></div>
+</div>
+<div class=paragraph>
+<p>Once installed, the rescue kernel will be regenerated as long as dracut is the initrd generator.
+See <code>/usr/lib/kernel/install.d/51-dracut-rescue.install</code> for details.</p>
+</div>
+</div>
+</div>
+</div>
+<div class=sect1>
+<h2 id=sect-resolving-post-upgrade-issues><a class=anchor href=#sect-resolving-post-upgrade-issues></a>Resolving post-upgrade issues</h2>
+<div class=sectionbody>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class=icon>
+<i class="fa icon-note" title=Note></i>
+</td>
+<td class=content>
+<div class=paragraph>
+<p>Only follow these steps if you encounter problems with your upgraded system.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class=sect2>
+<h3 id=sect-rebuilding-rpm-database><a class=anchor href=#sect-rebuilding-rpm-database></a>Rebuilding the RPM database</h3>
+<div class=paragraph>
+<p>If you see warnings when working with RPM/DNF tools, your database might be corrupt.
+It is possible to rebuild it to see if resolves your issues. Always back up <code>/usr/lib/sysimage/rpm</code> first.
+To rebuild the database, run:</p>
+</div>
+<div class=listingblock>
+<div class=content>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang=bash>sudo rpm --rebuilddb</code></pre>
+<div class=source-toolbox><span class=source-lang>bash</span><button class=copy-button title="Copy to clipboard"><img src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgMTYgMTYiIHdpZHRoPSIxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNyAwYy0uNTU1IDAtMSAuNDQ1LTEgMUg0QzIuMzU1IDEgMSAyLjM1NSAxIDR2OWMwIDEuNjQ1IDEuMzU1IDMgMyAzaDhjMS42NDUgMCAzLTEuMzU1IDMtM1Y0YzAtMS42NDUtMS4zNTUtMy0zLTNoLTJjMC0uNTU1LS40NDUtMS0xLTF6TTQgM2gxdjFjMCAuNTU1LjQ0NSAxIDEgMWg0Yy41NTUgMCAxLS40NDUgMS0xVjNoMWMuNTcgMCAxIC40MyAxIDF2OWMwIC41Ny0uNDMgMS0xIDFINGMtLjU3IDAtMS0uNDMtMS0xVjRjMC0uNTcuNDMtMSAxLTF6bTAgMCIgZmlsbD0iIzJlMzQzNiIvPjwvc3ZnPg==" alt="copy icon" class=copy-icon><span class=copy-toast>Copied!</span></button></div></div>
+</div>
+</div>
+<div class=sect2>
+<h3 id=sect-using-distro-sync-to-resolve-dependency-issues><a class=anchor href=#sect-using-distro-sync-to-resolve-dependency-issues></a>Using distro-sync to resolve dependency issues</h3>
+<div class=paragraph>
+<p>The system upgrade tool uses <code>dnf distro-sync</code> by default.
+If your system is partly upgraded or you see some package dependency issues, try running another distro-sync manually to see if this fixes the problem.
+This will attempt to make your installed packages the same version in your currently enabled repositories, even if it must downgrade some packages:</p>
+</div>
+<div class=listingblock>
+<div class=content>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang=bash>sudo dnf distro-sync</code></pre>
+<div class=source-toolbox><span class=source-lang>bash</span><button class=copy-button title="Copy to clipboard"><img src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgMTYgMTYiIHdpZHRoPSIxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNyAwYy0uNTU1IDAtMSAuNDQ1LTEgMUg0QzIuMzU1IDEgMSAyLjM1NSAxIDR2OWMwIDEuNjQ1IDEuMzU1IDMgMyAzaDhjMS42NDUgMCAzLTEuMzU1IDMtM1Y0YzAtMS42NDUtMS4zNTUtMy0zLTNoLTJjMC0uNTU1LS40NDUtMS0xLTF6TTQgM2gxdjFjMCAuNTU1LjQ0NSAxIDEgMWg0Yy41NTUgMCAxLS40NDUgMS0xVjNoMWMuNTcgMCAxIC40MyAxIDF2OWMwIC41Ny0uNDMgMS0xIDFINGMtLjU3IDAtMS0uNDMtMS0xVjRjMC0uNTcuNDMtMSAxLTF6bTAgMCIgZmlsbD0iIzJlMzQzNiIvPjwvc3ZnPg==" alt="copy icon" class=copy-icon><span class=copy-toast>Copied!</span></button></div></div>
+</div>
+<div class=paragraph>
+<p>You can also use the <code>--allowerasing</code> option will remove packages with dependencies that can not be satisfied.
+Always review which packages will be removed before confirming this:</p>
+</div>
+<div class=listingblock>
+<div class=content>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang=bash>sudo dnf distro-sync --allowerasing</code></pre>
+<div class=source-toolbox><span class=source-lang>bash</span><button class=copy-button title="Copy to clipboard"><img src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgMTYgMTYiIHdpZHRoPSIxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNyAwYy0uNTU1IDAtMSAuNDQ1LTEgMUg0QzIuMzU1IDEgMSAyLjM1NSAxIDR2OWMwIDEuNjQ1IDEuMzU1IDMgMyAzaDhjMS42NDUgMCAzLTEuMzU1IDMtM1Y0YzAtMS42NDUtMS4zNTUtMy0zLTNoLTJjMC0uNTU1LS40NDUtMS0xLTF6TTQgM2gxdjFjMCAuNTU1LjQ0NSAxIDEgMWg0Yy41NTUgMCAxLS40NDUgMS0xVjNoMWMuNTcgMCAxIC40MyAxIDF2OWMwIC41Ny0uNDMgMS0xIDFINGMtLjU3IDAtMS0uNDMtMS0xVjRjMC0uNTcuNDMtMSAxLTF6bTAgMCIgZmlsbD0iIzJlMzQzNiIvPjwvc3ZnPg==" alt="copy icon" class=copy-icon><span class=copy-toast>Copied!</span></button></div></div>
+</div>
+</div>
+<div class=sect2>
+<h3 id=sect-relabel-files-with-the-latest-selinux-policy><a class=anchor href=#sect-relabel-files-with-the-latest-selinux-policy></a>Relabel files with the latest SELinux policy</h3>
+<div class=paragraph>
+<p>If you encounter any warnings regarding policies with SELinux, some files may have incorrect SELinux permissions.
+This may happen if SELinux was disabled in the past.
+To relabel SELinux on the system, run the following command and then reboot:</p>
+</div>
+<div class=listingblock>
+<div class=content>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang=bash>sudo fixfiles -B onboot</code></pre>
+<div class=source-toolbox><span class=source-lang>bash</span><button class=copy-button title="Copy to clipboard"><img src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgMTYgMTYiIHdpZHRoPSIxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNyAwYy0uNTU1IDAtMSAuNDQ1LTEgMUg0QzIuMzU1IDEgMSAyLjM1NSAxIDR2OWMwIDEuNjQ1IDEuMzU1IDMgMyAzaDhjMS42NDUgMCAzLTEuMzU1IDMtM1Y0YzAtMS42NDUtMS4zNTUtMy0zLTNoLTJjMC0uNTU1LS40NDUtMS0xLTF6TTQgM2gxdjFjMCAuNTU1LjQ0NSAxIDEgMWg0Yy41NTUgMCAxLS40NDUgMS0xVjNoMWMuNTcgMCAxIC40MyAxIDF2OWMwIC41Ny0uNDMgMS0xIDFINGMtLjU3IDAtMS0uNDMtMS0xVjRjMC0uNTcuNDMtMSAxLTF6bTAgMCIgZmlsbD0iIzJlMzQzNiIvPjwvc3ZnPg==" alt="copy icon" class=copy-icon><span class=copy-toast>Copied!</span></button></div></div>
+</div>
+<div class=paragraph>
+<p>The boot process will likely take a long time, as it checks and fixes SELinux permission labels on all files in your system.</p>
+</div>
+</div>
+</div>
+</div>
+<div class=sect1>
+<h2 id=sect-frequently-asked-questions><a class=anchor href=#sect-frequently-asked-questions></a>Frequently Asked Questions</h2>
+<div class=sectionbody>
+<div class=sect2>
+<h3 id=sect-how-do-i-report-issues-with-the-upgrades><a class=anchor href=#sect-how-do-i-report-issues-with-the-upgrades></a>How do I report issues with the upgrade?</h3>
+<div class="olist arabic">
+<ol class=arabic>
+<li>
+<p>See <a href=https://fedoraproject.org/wiki/Bugs/Common>Common bugs</a> to check if it is a known problem the community is already aware of.</p>
+</li>
+<li>
+<p>Search Bugzilla for an existing bug report filed against <a href="https://bugzilla.redhat.com/buglist.cgi?component=dnf5&amp;product=Fedora&amp;resolution=---">DNF5</a>, resp. <a href="https://bugzilla.redhat.com/buglist.cgi?component=dnf-plugins-core&amp;list_id=13370526&amp;product=Fedora&amp;resolution=---">DNF4 plug-in</a>.</p>
+</li>
+</ol>
+</div>
+<div class=paragraph>
+<p>If you do not see a report that matches your symptoms, you can file a new report from the search page.
+Please follow the bug reporting instructions mentioned in the <a href=https://github.com/rpm-software-management/dnf-plugin-system-upgrade/blob/master/README.md>README from the GitHub repo</a>.</p>
+</div>
+<div class=paragraph>
+<p>If you encounter any issues after the upgrade with a specific package, file a bug against the package with which you are having issues.</p>
+</div>
+</div>
+<div class=sect2>
+<h3 id=sect-does-dnf-system-upgrade-verify-the-software-it-runs-or-installs-during-an-upgrade><a class=anchor href=#sect-does-dnf-system-upgrade-verify-the-software-it-runs-or-installs-during-an-upgrade></a>Does DNF System Upgrade verify the software it runs or installs during an upgrade?</h3>
+<div class=paragraph>
+<p>Yes.
+The package signing keys for the newer Fedora Linux release are sent to older releases to allow DNF to verify the integrity of the downloaded packages.
+You can disable this function if needed, but is not recommended as you will be open to attacks from malicious software.</p>
+</div>
+</div>
+<div class=sect2>
+<h3 id=sect-will-packages-in-third-party-repositories-be-upgraded><a class=anchor href=#sect-will-packages-in-third-party-repositories-be-upgraded></a>Will packages in third-party repositories be upgraded?</h3>
+<div class=paragraph>
+<p>Yes, if they are configured like regular DNF repositories and the version numbers are not hard-coded in the repository file (usually found in <code>/etc/yum.repos.d/</code>).
+Commonly used third-party repositories like RPM Fusion should work.
+However, if attempting to upgrade prior to, or soon after, an official Fedora Linux release, they may not have updated their repository paths, and DNF may be unable to find their packages.
+Usually, this should not prevent the upgrade from running successfully.
+Also, you can update packages from the third-party repository later.</p>
+</div>
+</div>
+<div class=sect2>
+<h3 id=sect-can-i-upgrade-from-an-end-of-life-release><a class=anchor href=#sect-can-i-upgrade-from-an-end-of-life-release></a>Can I upgrade from an End-of-Life (EOL) release?</h3>
+<div class=paragraph>
+<p>It is strongly recommended to upgrade an EOL release on any production system, or any system connected to the public internet.</p>
+</div>
+<div class=paragraph>
+<p>Any upgrade from Fedora Linux 20 or earlier is done <strong>at your own risk</strong> as DNF was not the default package management tool.
+However, if you do have a release newer than Fedora Linux 20 that is EOL, you can attempt to do an upgrade, but this method is <strong>not supported</strong>.
+You may try to upgrade through intermediate releases until you reach a currently-supported release, or try to upgrade to a currently-supported release in a single operation.
+Again this is unsupported and is <strong>at your own risk</strong>.</p>
+</div>
+</div>
+<div class=sect2>
+<h3 id=sect-how-many-releases-can-i-upgrade-across-at-once><a class=anchor href=#sect-how-many-releases-can-i-upgrade-across-at-once></a>Can I do a single upgrade across many releases (i.e. 30→34)?</h3>
+<div class=paragraph>
+<p>Upgrades to the very next release (e.g. <code>41</code> to <code>42</code>) as well as upgrades skipping one release (e.g. <code>40</code> to <code>42</code>) are both supported. However, it is highly recommended to perform the upgrade before your release reaches End of Life (EOL). That happens roughly a month after N+2 release has been released (when you’re currently on release N). The <a href=https://fedoraproject.org/wiki/Fedora_Release_Life_Cycle>Fedora Release Life Cycle</a> is specifically designed to provide this approximate one month "grace period" to allow users the choice to upgrade their systems on a yearly basis, i.e. once every two releases. You can study <a href=https://fedoraproject.org/wiki/Releases>Releases</a> to see the current release status and schedule. Around a month after the new release comes out, the last-but-one release becomes End of Life (EOL). The upgrade is likely to work successfully after the release goes EOL, but the time period after the new release may be uncertain.</p>
+</div>
+<div class=paragraph>
+<p>Upgrades across more than two releases are <strong>not supported</strong>, and issues encountered with such upgrades may not be considered significant bugs.</p>
+</div>
+<div class=paragraph>
+<p>When upgrading across more than two releases, you may need to import the GPG key for the release you want to update to. You can do this with:</p>
+</div>
+<div class=listingblock>
+<div class=content>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang=bash>sudo rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-N-primary</code></pre>
+<div class=source-toolbox><span class=source-lang>bash</span><button class=copy-button title="Copy to clipboard"><img src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgMTYgMTYiIHdpZHRoPSIxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNyAwYy0uNTU1IDAtMSAuNDQ1LTEgMUg0QzIuMzU1IDEgMSAyLjM1NSAxIDR2OWMwIDEuNjQ1IDEuMzU1IDMgMyAzaDhjMS42NDUgMCAzLTEuMzU1IDMtM1Y0YzAtMS42NDUtMS4zNTUtMy0zLTNoLTJjMC0uNTU1LS40NDUtMS0xLTF6TTQgM2gxdjFjMCAuNTU1LjQ0NSAxIDEgMWg0Yy41NTUgMCAxLS40NDUgMS0xVjNoMWMuNTcgMCAxIC40MyAxIDF2OWMwIC41Ny0uNDMgMS0xIDFINGMtLjU3IDAtMS0uNDMtMS0xVjRjMC0uNTcuNDMtMSAxLTF6bTAgMCIgZmlsbD0iIzJlMzQzNiIvPjwvc3ZnPg==" alt="copy icon" class=copy-icon><span class=copy-toast>Copied!</span></button></div></div>
+</div>
+<div class=paragraph>
+<p>(where <code>N</code> is the Fedora Linux version.)</p>
+</div>
+</div>
+<div class=sect2>
+<h3 id=sect-can-i-use-dnf-system-upgrade-to-upgrade-to-a-pre-release><a class=anchor href=#sect-can-i-use-dnf-system-upgrade-to-upgrade-to-a-pre-release></a>Can I use DNF System Upgrade to upgrade to a pre-release (e.g. a Beta)?</h3>
+<div class=paragraph>
+<p>Yes, but this is subject to temporary breakage as with any other aspect of a pre-release.</p>
+</div>
+</div>
+</div>
+</div>
+</article>
+ </div>
+</main>
+</div>
+ 

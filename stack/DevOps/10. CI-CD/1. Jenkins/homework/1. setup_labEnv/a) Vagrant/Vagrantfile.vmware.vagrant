@@ -1,0 +1,53 @@
+# Vagrantfile - Fedora Server host, libvirt/KVM provider
+
+HOSTS = {
+  :jenkinsmain => { :hostname => 'jenkinsmain.local', :ip => '192.168.10.10', :memory => '1536', :cpu => '2', :autostart => true },
+  :jenkinsnode1 => { :hostname => 'node1.local',      :ip => '192.168.20.20', :memory => '512',  :cpu => '1', :autostart => true }
+}
+
+# Install plugins on Fedora + libvirt
+required_plugins = %w( vagrant-libvirt vagrant-hosts )
+required_plugins.each do |plugin|
+  system "vagrant plugin install #{plugin}" unless Vagrant.has_plugin?(plugin)
+end
+
+Vagrant.configure("2") do |config|
+  # Use a box that publishes libvirt images; Ubuntu LTS is fine for the guests
+  config.vm.box = "generic/ubuntu2204"
+  config.vm.box_check_update = true
+
+  # Synced folder: rsync is reliable under libvirt
+  config.vm.synced_folder ".", "/vagrant", type: "rsync"
+
+  HOSTS.each do |name, host|
+    config.vm.define name, autostart: host[:autostart] do |d|
+      d.vm.hostname = host[:hostname]
+
+      # ---- Networking (static private IP) ----
+      #
+      # For libvirt, we’ll create a host-only style network per subnet with DHCP off.
+      # Vagrant/libvirt will auto-create the network if it doesn’t exist.
+      ip_octets       = host[:ip].split('.').map(&:to_i)
+      network_cidr    = "#{ip_octets[0]}.#{ip_octets[1]}.#{ip_octets[2]}.0/24"
+      network_name    = "vagrant-libvirt-#{ip_octets[0]}-#{ip_octets[1]}-#{ip_octets[2]}"
+
+      d.vm.network "private_network",
+        ip: host[:ip],
+        libvirt__network_name: network_name,
+        libvirt__network_address: network_cidr,
+        libvirt__dhcp_enabled: false,
+        libvirt__forward_mode: "none"  # host-only style; no NAT forwarding
+
+      # Keep hosts file entries in sync on guest & (optionally) host
+      d.vm.provision :hosts, sync_host: true
+
+      # ---- Provider: libvirt (FREE) ----
+      d.vm.provider :libvirt do |lv|
+        lv.memory = host[:memory].to_i
+        lv.cpus   = host[:cpu].to_i
+        # Optional: best CPU perf if nested virt is enabled on VMware:
+        # lv.cpu_mode = "host-passthrough"
+      end
+    end
+  end
+end

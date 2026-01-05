@@ -1,0 +1,24 @@
+git config --global credential.https://gitlab.endava.com.gitLabDevClientId <APP_ID_FROM_GITLAB>
+
+git config --global credential.https://gitlab.endava.com.gitLabDevClientSecret <<APP_SECRET_FROM_GITLAB>>
+
+git config --global credential.https://gitlab.endava.com.provider gitlab
+
+git config --global --get-urlmatch credential https://gitlab.endava.com
+
+-- CLEAR --
+
+git config --global --unset-all credential.https://gitlab.example.com.gitLabDevClientId
+git config --global --unset-all credential.https://gitlab.example.com.gitLabDevClientSecret
+git config --global --unset-all credential.https://gitlab.example.com.provider
+
+-- set auth mode --
+
+(unset): Automatically detect modes
+browser: OAuth authentication via a web browser (requires a GUI)
+basic: Basic authentication using username and password
+pat	Personal Access Token (pat): based authentication
+
+git config --global credential.gitLabAuthModes "browser"
+
+# https://docs.gitlab.com/integration/oauth_provider/#create-a-user-owned-application

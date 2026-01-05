@@ -1,0 +1,269 @@
+<!DOCTYPE html> <html lang=en itemscope itemtype=https://schema.org/WebPage style><!--
+ Page saved with SingleFile 
+ url: https://www.computerhope.com/unix/bash/shopt.htm 
+ saved date: Mon Oct 06 2025 15:31:51 GMT+0300 (Eastern European Summer Time)
+--><meta charset=utf-8>
+<title>Bash Shopt Builtin Command</title>
+<link rel=canonical href=https://www.computerhope.com/unix/bash/shopt.htm>
+<style>html,body{margin:0;padding:0}h1,h2,p,pre,img,li,ol,ul,tbody,tr,th,td{margin:0;padding:0;border:0;font-weight:400;font-style:normal;font-size:100%}*,*::before,*::after{box-sizing:border-box}html{font-size:100%;-webkit-text-size-adjust:100%;scroll-behavior:smooth}a:focus{background-color:#2f8fff;color:#fff;outline:2px solid #2f8fff;outline-offset:2px}a:focus-visible{background-color:#2f8fff;color:#fff;outline:2px solid #2f8fff;outline-offset:2px}article{display:block}article{position:relative}img{border:0}body{background:#fff;font:1.00625em Verdana,sans-serif;color:#454545}a{color:#2572cb;text-decoration:none}a:visited{color:#609}.container{max-width:58.75em;background:#fff;padding:1em 2.5em;margin:0 auto;word-wrap:break-word}article p{line-height:1.7em;word-spacing:.05em;margin:0 14rem 2rem 0;font-size:1.12rem}article pre{font-size:1.16em;font-family:Fixed,monospace;margin-bottom:2em;line-height:1.7em;overflow-wrap:break-word;white-space:pre-wrap;overflow-y:hidden}.intro{font-size:1.25rem;line-height:1.5em}article li{font-size:1.12rem;margin-bottom:1.4rem}a:hover,a:active{color:#454545;border-bottom:1px solid #454545}article h1{display:block;border-bottom:1px solid #757575;font-size:2.44rem;padding-bottom:.16em;line-height:1.1;font-family:arial,helvetica,sans-serif;margin-right:-1.7em}article h1,h2{color:#000;font-weight:600}.tab{margin-left:2.5rem}.dtab{margin-left:4.2rem}.contents{background-color:#f5faff;border:1px solid #454545;padding:1em;display:table}.contents:before{content:"Page contents";font-weight:600;font-size:1.1em}.pagenav ul{margin:1em 0 1em 0}.pagenav ul li{padding-left:0;margin-left:1rem;margin-bottom:.3rem;line-height:2.2rem}table{margin-bottom:2em;clear:left}.floatRight{float:right;margin:.9rem -4.3rem 4rem 4rem}article h2{font-size:2rem;font-family:arial,helvetica,sans-serif;margin-bottom:1.4rem;clear:left;margin-top:4rem;display:block}article ol li{line-height:1.5625;margin:0 0 1.1em 3.85em}article ol{margin:0 14rem 2rem 0}article table ol{margin-right:1em}.mtable3,.mtable4{background-color:#e5e5e5;border-spacing:2px 1px;width:100%;font-size:1.1em}table.mtable3 td,table.mtable4 td{border-spacing:5px 10px;padding:12px;line-height:1.7em}table.mtable4 th{background:#005cb9;color:#fff;font-size:1.5rem;padding:.4em}table.mtable3 a,table.mtable4 a{border-bottom:0}table.mtable3 tr:hover td,table.mtable4 tr:hover td{background-color:#eee}td{vertical-align:top}.tcw{background-color:#fff}.tcy{border:1px solid #005cb9;background-color:#f1f5f9;overflow:auto;padding:1em;overflow-y:hidden}@media (prefers-color-scheme:dark){article h1{color:#FFF}a{color:#449aff}a:hover,a:active{color:#b7dbff;border-bottom:1px solid #b7dbff}a:visited{color:#93b0d2}body,.container,.tcw,.contents{color:#eee;background:#282828}.contents{border:1px solid #eee}h2{color:#fff}.tcy{background-color:#313030;color:#eee;border:1px solid #93b0d2}table.mtable tr:hover td,table.mtable3 tr:hover td,table.mtable4 tr:hover td{background-color:#313030}article h1{border-bottom:1px solid #93b0d2}.mtable3,.mtable4{background-color:#93b0d2}}@media (min-width:1500px){.container{max-width:67.2em}}@media only screen and (min-width:1366px){html{font-size:18px}}@media only screen and (max-width:1160px){.floatRight{margin-right:0}article h1{margin-right:0}}@media only screen and (max-width:1035px){article{margin:0}article p,h2,.dtab,.tab,.contents{margin-right:0}}@media only screen and (max-width:1080px){}@media only screen and (max-width:900px){article ul{margin-right:0}}@media only screen and (max-width:820px){article p,h2,.dtab,.tab,.contents{margin-left:0;text-indent:0}.pagenav{margin-right:0}.pagenav ul li{margin-left:1em}article ol li{margin-left:4px;list-style-position:inside}}@media only screen and (max-width:761px){article ol{margin:0 0 2em 0}}@media only screen and (max-width:764px){}@media only screen and (max-width:700px){}@media only screen and (max-width:680px){}@media only screen and (max-width:640px){}@media only screen and (max-width:630px){}@media only screen and (max-width:600px){}@media only screen and (max-width:580px){.floatRight{float:none;margin:0;width:100%;height:auto;padding-bottom:1em}.mtable4{width:100%}.mtable4 td,.mtable4 th{display:block;width:auto!important}}@media only screen and (max-width:560px){}@media only screen and (max-width:530px){}@media only screen and (max-width:480px){article p{hyphens:auto}article ul{margin:0 0 2em .5rem}.mtable3,.mtable4{width:96%}}@media only screen and (max-width:460px){article ul li{margin-left:.5rem}}@media only screen and (max-width:430px){}@media only screen and (max-width:420px){}@media only screen and (max-width:400px){}@media only screen and (max-width:390px){.pagenav ul li{margin-left:1.5em}}@media only screen and (max-width:350px){}@media only screen and (max-width:349px){}@media only screen and (max-width:320px){}@media only screen and (max-width:300px){img{width:100%}article h1{font-size:1.3em}article h2{font-size:1.2em}.contents{padding:0.3em}}@media only screen and (max-width:280px){}@media only screen and (max-width:250px){.container{word-wrap:normal}}</style>
+<meta content="width=device-width, initial-scale=1.0" name=viewport>
+<meta content="Bash shopt builtin command help and information with shopt examples, syntax, related commands, and how to use the shopt command from the command line." name=description>
+<meta content="Bash shopt builtin command help and information with shopt examples, syntax, related commands, and how to use the shopt command from the command line." itemprop=description>
+<meta property=og:url content=https://www.computerhope.com/unix/bash/shopt.htm>
+<meta property=og:description content="Bash shopt builtin command help and information with shopt examples, syntax, related commands, and how to use the shopt command from the command line.">
+<meta property=og:title content="Bash Shopt Builtin Command">
+<meta property=og:type content=article>
+<meta property=og:site_name content="Computer Hope">
+<meta name=twitter:card content=summary>
+<meta name=twitter:creator content=@computerhope>
+<meta content=https://www.computerhope.com/cdn/linux/shopt.gif property=og:image>
+<meta content=https://www.computerhope.com/cdn/linux/shopt.gif itemprop=image>
+<link href=https://www.computerhope.com/cdn/linux/shopt.gif rel=image_src>
+<link href=https://feeds.feedburner.com/LatestNewPagesOnComputerHope rel=alternate title=RSS-Feed type=application/rss+xml>
+<meta name=referrer content=no-referrer><link href="data:image/x-icon;base64,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AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKAAAADAAAABgAAAAAQAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAICAAALfeAAg4ngDV+N3An7heQOY4ngDn+F4A6TjeQOc4XgChuF3A17heAAiAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/wAAAeR5ABPfdgA44XcCieN5AtnieAP/4ngD/+J4A//ieAP/4ngD/+J4A//ieAP/4ngD/+J4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AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOqAAAziewA05HkDVON4AmzidwJ84XgCgOF4AoDidwJ65HgCaOJ2A1DiegAs34AACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==" rel="shortcut icon" type=image/x-icon><meta http-equiv=content-security-policy content="default-src 'none'; font-src 'self' data:; img-src 'self' data:; style-src 'unsafe-inline'; media-src 'self' data:; script-src 'unsafe-inline' data:; object-src 'self' data:; frame-src 'self' data:;"></head>
+<body>
+<noscript style=display:none!important><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5F9B8P4" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<div class=skip style=display:none!important></div>
+<div class=wrapper>
+<div class="container ad" style=display:none!important>
+ 
+</div>
+<div class="container content" id=main-content role=main>
+ <article>
+ <h1 itemprop=headline>Bash shopt builtin command</h1>
+ 
+ <img src="data:image/gif;base64,R0lGODlhLAEsAfMMAM7O0MrKzMXFx8HBw9vb3NfX2NPT1ADbAACzAACFAABbAAAAAAAAAAAAAAAAAAAAACH/C1hNUCBEYXRhWE1QPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNi4wLWMwMDMgNzkuMTY0NTI3LCAyMDIwLzEwLzE1LTE3OjQ4OjMyICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgMjIuMSAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6M0NBMDk2RTE1NDVFMTFFQkI0RUFCNEY0MDVBNzc5RUEiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6M0NBMDk2RTI1NDVFMTFFQkI0RUFCNEY0MDVBNzc5RUEiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDozQ0EwOTZERjU0NUUxMUVCQjRFQUI0RjQwNUE3NzlFQSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDozQ0EwOTZFMDU0NUUxMUVCQjRFQUI0RjQwNUE3NzlFQSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PgH//v38+/r5+Pf29fTz8vHw7+7t7Ovq6ejn5uXk4+Lh4N/e3dzb2tnY19bV1NPS0dDPzs3My8rJyMfGxcTDwsHAv769vLu6ubi3trW0s7KxsK+urayrqqmop6alpKOioaCfnp2cm5qZmJeWlZSTkpGQj46NjIuKiYiHhoWEg4KBgH9+fXx7enl4d3Z1dHNycXBvbm1sa2ppaGdmZWRjYmFgX15dXFtaWVhXVlVUU1JRUE9OTUxLSklIR0ZFRENCQUA/Pj08Ozo5ODc2NTQzMjEwLy4tLCsqKSgnJiUkIyIhIB8eHRwbGhkYFxYVFBMSERAPDg0MCwoJCAcGBQQDAgEAACH5BAUAAAwALAAAAAAsASwBAAT/cMlJq7046827/2AojmRpnmiqrmzrvnAsz3Rt33iu73zv/8CgcEgsGo/IpHLJbDqf0Kh0Sq1ar9isdsvter/gsHhMLpvP6LR6zW673/C4fE6v2+/4vH7P7/v/gIGCg4SFhoeIiYqLjI2Oj5CRkpOUlZaXmJmam5ydnp+goaKjpKWmp6ipqqusra6vsLGys7S1tre4ubq7vL2+v8DBwsPExcbHyMnKy8zNzs/Q0dLT1NXW19jZ2tvc3d7f4OHi4+Tl5ufo6err7O3u7/Dx8vP09fb3+Pn6+/z9/v8AAwocSLCgwYMIEypcyLChw4cQI0qcSLGixYsYM2rcyLGjx48g/0OKHEmyZMUEB1KqTJlABcqVKltqeClTB81nL2EeqHkiJ0yeF27uEDpEQYIECiz5XAm0xNKYG4jmkBqEaiSrGHxSwLqVZVadXnFw7TG2UdkJCRDsVIt0QdqdSWeGrfAWLIKmMs7anDtJ7wKVbr0C5oAVLEyxfKsmvrqYLl+mHgqnDLyTh1/ElSudNdoW7dHOhBsDvhz5s2m8N0/jncBZdVzWqk+/lsBZ7YG7nyWR7il68m4Ohg8EFXw4w9PExyF3Da678QvJhld/SA51eXC8wQdLoL7SOtjmmWlgravzromXuF07jvnZtnnY7E3HjIs+9nzaR92bBi+9BVfu5zlngf9WaHVXoHYTKAddeNsJaJaDLJx1E4IiADhgb8IduJpQ/yEH4SK/OQXhhJOVYNR1s1GGXYkNMricTB26GCIhM44gIXEZmpAdUNC9+FVmMfL4oSI1Voghcy5Q1aOGP8JoIAXKManZkCmMZ1t5/YkoI4bLvbeVbU7G99l9Pk7pYgwx6pSllkKe+ReLlMEpgYLZUdjimkRG55KecrlpY51trphjgnX6CNaGfDqSHJ4dLBoVlRycGF2KS35pmJcquqXeBZL+BImjVSbaJAtIrifocIeaOkKqHBU5kqsiwWrSrLTWauutuOaq66689urrr8AGK+ywxBZr7LHIJqvsssw26+z/s9BGK+201FZr7bXYZqvtttx26+234IYr7rjklmvuueimq+667Lbr7rvwxivvvPTWa++9+Oar77789uvvvwAHLPDABBds8MEIJ6zwwgw37PDDEEcs8cQUV2zxxRhnrPHGHHfs8ccghyzyyCSXbPLJKCehwAAsDxBDihi4zJrM/rAcF8swFNABzQusDBDPCwxwM849C22zzT2vTDTNQitNG9JFuwy0zErfXPUELV+QtQRbr1w11M/4rLXUZBvddNlBJ8V00ASoLYACCgjQswBCL9A23E5/XXbcXJ9dAc6Akx300X5DI/bfa4tNs86HBxA01moXjbXRE9DdMuCvST35v+E8E5104jIvHs3hFHDuNddxOV63BKpDvoDjCgAggOxmY/132rbL/XTLAvT+Gumrp7366o5HE7zwr8mtuMywr810UgBwbcHaMw9ue/Fpk05B8JRLoHzooUvjudgGqC3449IjjXMASTkdvfWDc166y8tbr3j7BFRQvvVvW7+07eK73NDoJj3UeS9qBBxcAJZWt8tJroB961sCBShBnIlNAQVYYN/+Z8AF6G4acCPB8WoAtIVojwYlVMgIUZiygUQAADs=" width=300 height=300 alt="shopt command" class=floatRight><p class=intro>On <a href=https://www.computerhope.com/jargon/u/unix-like.htm>Unix-like</a> operating systems, <b>shopt</b> is a <a href=https://www.computerhope.com/jargon/b/builtin.htm>builtin</a> command of the <a href=https://www.computerhope.com/unix/ubash.htm>Bash</a> shell that enables or disables options for the current shell session.</p>
+ <div class="pagenav contents" role=navigation aria-label=contents>
+ <ul>
+ <li><a href=#desc>Description</a></li>
+ <li><a href=#syntax>Syntax</a></li>
+ <li><a href=#bash-options>Options</a></li>
+ <li><a href=#examples>Examples</a></li>
+ <li><a href=#commands>Related commands</a></li>
+<li><a href=#related>Related information</a></li>
+ </ul>
+ </div>
+ <h2 id=desc>Description</h2>
+ <p class=tab>Use <b>shopt</b> to change any of the <a href=#bash-options>Options</a> listed below.</p>
+ <p class=tab><b>shopt</b> is similar to, but different than, the <b>set</b> builtin. To change the behavior of <b>bash</b> as if it had been invoked with <i>different command line options</i>, use <a href=https://www.computerhope.com/unix/uset.htm><b>set</b></a>.</p>
+ <h2 id=syntax>Syntax</h2>
+ <pre class="tcy tab"><b>shopt</b> [<b>-o</b>] [<b>-p</b>] [<b>-q</b>] [<b>-s</b>] [<b>-u</b>] [<i>optname</i>...]</pre>
+ <p class=tab>The <b>shopt</b> builtin command takes the following options and arguments:</p>
+ <table class="mtable3 tab">
+ <tbody><tr class=tcw>
+ <td style=width:100px><i>optname</i></td>
+ <td>The name of a bash option. Multiple option names can be given, separated by a space. For a list and description of all bash options, see <a href=#bash-options>Options</a>, below.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>-o</b></td>
+ <td>Restrict the values of <i>optname</i> to those known by the <b>set</b> builtin command.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>-p</b></td>
+ <td>Print all shell options, and their current values. This is the default behavior if no options are given.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>-q</b></td>
+ <td>Quiet mode. Provide no output, but return an error status.<br><br>For a single <i>optname</i>, the error status is <b>TRUE</b> (<b>0</b>) if the option is set, otherwise the error status is <b>FALSE</b> (non-zero).<br><br>For multiple <i>optnames</i>, the error status is <b>TRUE</b> if all options are set, and <b>FALSE</b> if any of the options are not set.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>-s</b></td>
+ <td>If <i>optnames</i> are specified, set those options. If no <i>optnames</i> are specified, list all options that are currently set.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>-u</b></td>
+ <td>Unset <i>optnames</i>.</td>
+ </tr>
+ </table>
+ <h2 id=bash-options>Options</h2>
+ <p class=tab>The following options modify the behavior of bash, and can be set or unset using <b>shopt</b>.</p>
+ <table class="tab mtable4">
+ <tbody><tr class=tcw>
+ <th width=300>Option name</th>
+ <th>Description</th>
+ </tr>
+ <tr class=tcw>
+ <td><b>autocd</b></td>
+ <td>If set, a command name that is a directory name is executed as if it were the <b>cd</b> command's argument. This option is only used by interactive shells. For more information about interactive shells, see <a href=https://www.computerhope.com/unix/ubash.htm>invoking the bash shell</a>.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>cdable_vars</b></td>
+ <td>If set, a <b>cd</b> command's argument that is not a directory is assumed to be the variable's name whose value is the directory to change to.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>cdspell</b></td>
+ <td>If set, minor errors in the spelling of a directory component in a <b>cd</b> command are corrected. The errors checked for are transposed characters, a missing character, and one character too many. If a correction is found, the corrected file name is printed, and the command proceeds. This option is only used by interactive shells.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>checkhash</b></td>
+ <td>If set, bash checks that a command found in the hash table of remembered commands exists before trying to execute it. If a hashed command no longer exists, a normal path search is performed. For more information about the hash table maintained by bash, see the <a href=https://www.computerhope.com/unix/uunhash.htm>hash builtin command</a>.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>checkjobs</b></td>
+ <td>If set, bash lists the status of any stopped and running jobs before exiting an interactive shell. If any jobs are running, this causes the exit to be deferred until a second exit is attempted without an intervening command. The shell always postpones exiting if any jobs are stopped. For more information about jobs, see <a href=https://www.computerhope.com/unix/ubash.htm>bash job control</a>.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>checkwinsize</b></td>
+ <td>If set, bash checks the window size of the current terminal window after each command, and, if necessary, updates the values of the <b>LINES</b> and <b>COLUMNS</b> shell variables.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>cmdhist</b></td>
+ <td>If set, bash attempts to save all lines of a multiple-line command in the same history entry. This allows easy re-editing of multi-line commands. For more information about how the bash command history works, see <a href=https://www.computerhope.com/unix/ubash.htm>history in bash</a>.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>compat31</b></td>
+ <td>If set, bash changes its behavior to that of bash version 3.1 with respect to quoted arguments to <b>[[</b> conditional command's <b>=~</b> operator.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>compat32</b></td>
+ <td>If set, bash changes its behavior to that of bash version 3.2 with respect to locale-specific string comparison when using <b>[[</b> conditional command's <b>&lt;</b> and <b>&gt;</b> operators. Bash versions before bash-4.1 use <a href=https://www.computerhope.com/jargon/a/ascii.htm>ASCII</a> (American Standard Code for Information Interchange) collation and <b>strcmp</b>; bash-4.1 and later use the current locale's collation sequence and <b>strcoll</b>.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>compat40</b></td>
+ <td>If set, bash changes its behavior to that of bash version 4.0 with respect to locale-specific string comparison when using <b>[[</b> conditional command's <b>&lt;</b> and <b>&gt;</b> operators (see previous item) and the effect of interrupting a command list.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>compat41</b></td>
+ <td>If set, bash, when in <a href=https://www.computerhope.com/jargon/p/posix.htm>POSIX</a> mode, treats a single quote in a double-quoted parameter expansion as a special character. The single quotes must match (an even number) and the characters between the single quotes are considered quoted. This is the behavior of POSIX mode through bash version 4.1. The default bash behavior remains as in previous versions. For more information about using bash in POSIX mode, see <a href=https://www.computerhope.com/unix/ubash.htm>invoking bash</a>.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>direxpand</b></td>
+ <td>If set, bash replaces directory names with the results of word expansion when performing file name completion. This changes the contents of the readline editing buffer. If not set, bash attempts to preserve what the user typed.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>dirspell</b></td>
+ <td>If set, bash attempts spelling correction on directory names during word completion if the directory name initially supplied does not exist.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>dotglob</b></td>
+ <td>If set, bash includes file names beginning with a '<b>.</b>' in the results of path name <a href=https://www.computerhope.com/jargon/g/glob.htm>globbing</a>.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>execfail</b></td>
+ <td>If set, a non-interactive shell does not exit if it cannot execute the file specified as an argument to the <a href=https://www.computerhope.com/unix/bash/exec.htm><b>exec</b></a> builtin command. An interactive shell does not exit if <b>exec</b> fails.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>expand_aliases</b></td>
+ <td>If set, aliases are expanded as described in <a href=https://www.computerhope.com/unix/ubash.htm>bash aliases</a>. This option is enabled by default for interactive shells.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>extdebug</b></td>
+ <td>If set, behavior intended for use by <a href=https://www.computerhope.com/jargon/d/debug.htm>debuggers</a> is enabled:<br><br><ol><li>The <b>-F</b> option to the <b>declare</b> builtin displays the source file name and line number corresponding to each function name supplied as an argument.<li>If the command run by the DEBUG <a href=https://www.computerhope.com/unix/utrap.htm>trap</a> returns a non-zero value, the next command is skipped and not executed.<li>If the DEBUG trap's command returns a value of 2, and the shell is executing in a <a href=https://www.computerhope.com/jargon/r/routine.htm>subroutine</a>, a call to <b>return</b> is simulated.<li><b>BASH_ARGC</b> and <b>BASH_ARGV</b> are updated as described in their <a href=https://www.computerhope.com/unix/ubash.htm>descriptions</a>.<li>Function tracing is enabled: command substitution, shell functions, and subshells invoked with ( <i>command</i> ) inherit the DEBUG and RETURN traps.<li>Error tracing is enabled: command substitution, shell functions, and subshells invoked with ( <i>command</i> ) inherit the ERR trap.</ol></td>
+ </tr>
+ <tr class=tcw>
+ <td><b>extglob</b></td>
+ <td>If set, the extended pattern matching features offered by <a href=https://www.computerhope.com/unix/ubash.htm>bash path name expansion</a> are enabled.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>extquote</b></td>
+ <td>If set, <b>$'</b><i>string</i><b>'</b> and <b>$"</b><i>string</i><b>"</b> quoting is performed within <b>${</b><i>parameter</i><b>}</b> expansions enclosed in double quotes. This option is enabled by default.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>failglob</b></td>
+ <td>If set, patterns which fail to match file names during path name expansion result in an expansion error.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>force_fignore</b></td>
+ <td>If set, the <a href=https://www.computerhope.com/jargon/s/suffix.htm>suffixes</a> specified by the <b>FIGNORE</b> shell variable cause words to be ignored when performing word completion even if the ignored words are the only possible completions. See <a href=https://www.computerhope.com/unix/ubash.htm>bash shell variables</a> for a description of <b>FIGNORE</b>. This option is enabled by default.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>globstar</b></td>
+ <td>If set, the pattern <b>**</b> used in a path name expansion context matches all files and zero or more directories and subdirectories. If the pattern is followed by a <b>/</b>, only directories and subdirectories match.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>gnu_errfmt</b></td>
+ <td>If set, shell error messages are written in the standard <a href=https://www.computerhope.com/jargon/g/gnu.htm>GNU</a> error message format.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>histappend</b></td>
+ <td>If set, the history list is appended to the file named by the <b>HISTFILE</b> variable's value when the shell exits, rather than overwriting the file.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>histreedit</b></td>
+ <td>If set, and readline is used, a user is given the opportunity to re-edit a failed history substitution. For more information about history substitution, see <a href=https://www.computerhope.com/unix/ubash.htm>bash event designators</a>.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>histverify</b></td>
+ <td>If set, and readline is used, the results of history substitution are not immediately passed to the shell parser. Instead, the resulting line is loaded into the readline editing buffer, allowing further modification.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>hostcomplete</b></td>
+ <td>If set, and readline is used, bash attempts to perform <a href=https://www.computerhope.com/jargon/h/hostname.htm>hostname</a> completion when a word containing a <b>@</b> is completed. This is enabled by default. (see <a href=https://www.computerhope.com/unix/ubash.htm>bash readline completion</a> for more information.)</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>huponexit</b></td>
+ <td>If set, bash sends the <b>SIGHUP</b> <a href=https://www.computerhope.com/unix/signals.htm>signal</a> to all jobs when an interactive login shell exits.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>interactive_comments</b></td>
+ <td>If set, allow a word beginning with <b>#</b> to cause that word and all remaining characters on that line to be ignored in an interactive shell. This option is enabled by default. (See <a href=https://www.computerhope.com/unix/ubash.htm>bash comments</a> for more information.)</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>lastpipe</b></td>
+ <td>If set, and job control is not active, the shell runs the last command of a <a href=https://www.computerhope.com/jargon/p/pipe.htm>pipeline</a> not executed in the background in the current shell environment.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>lithist</b></td>
+ <td>If set, and the <b>cmdhist</b> option is enabled, multi-line commands are saved to the history with embedded newlines rather than using semicolon separators where possible.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>mailwarn</b></td>
+ <td>If set, and a file that bash is checking for mail was accessed after last checked, the message "The mail in mailfile has been read" is displayed.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>no_empty_cmd_completion</b></td>
+ <td>If set, and readline is used, bash does not attempt to search the <b>PATH</b> for possible completions when completion is attempted on an empty line.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>nocaseglob</b></td>
+ <td>If set, bash matches file names in a case-insensitive fashion when performing path name expansion.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>nocasematch</b></td>
+ <td>If set, bash matches patterns in a case-insensitive fashion when performing matching while executing <a href=https://www.computerhope.com/jargon/c/case.htm><b>case</b></a> or <b>[[</b> conditional commands.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>nullglob</b></td>
+ <td>If set, bash allows patterns which match no files to expand to a null string, rather than themselves.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>progcomp</b></td>
+ <td>If set, the programmable completion facilities are enabled. For more information, see <a href=https://www.computerhope.com/unix/ubash.htm>programmable completion in bash</a>. This option is enabled by default.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>promptvars</b></td>
+ <td>If set, prompt strings undergo parameter expansion, command substitution, arithmetic expansion, and quote removal after being expanded. For more information, see <a href=https://www.computerhope.com/unix/ubash.htm>bash prompting</a>. This option is enabled by default.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>shift_verbose</b></td>
+ <td>If set, the <a href=https://www.computerhope.com/unix/bash/shift.htm><b>shift</b></a> builtin prints an error message when the shift count exceeds the number of positional parameters.</td>
+ </tr>
+ <tr class=tcw>
+ <td><b>sourcepath</b></td>
+ <td>If set, the <a href=https://www.computerhope.com/unix/bash/source.htm><b>source</b></a> builtin uses the value of the shell variable <b>PATH</b> to find the directory containing the file supplied as an argument. This option is enabled by default.</td>
+ </tr>
+ </table>
+ <h2 id=examples>Examples</h2>
+ <pre class="tcy tab">shopt</pre>
+ <p class=tab>Print a list of all available options and their values.</p>
+ <pre class="tcy tab">shopt -p</pre>
+ <p class=tab>Same as above; print a list of all available options and their values.</p>
+ <pre class="tcy tab">shopt -s</pre>
+ <p class=tab>Print a list of all options that are currently set.</p>
+ <pre class="tcy tab">shopt -s globstar</pre>
+ <p class=tab>Set the <b>globstar</b> option.</p>
+ <pre class="tcy tab">shopt -u cmdhist histappend</pre>
+ <p class=tab>Unset the <b>cmdhist</b> and <b>histappend</b> options.</p>
+ <pre class="tcy tab">shopt -q globstar; echo $?</pre>
+ <p class=tab>Check if the <b>globstar</b> option is set, and return an exit status instead of printing the result. In this case, the <b>globstar</b> option is unset, so the exit status is TRUE (zero). This value is stored in the <b>?</b> shell variable, which is then printed to the terminal using <a href=https://www.computerhope.com/unix/uecho.htm><b>echo</b></a>. Output:</p>
+ <pre class=dtab>0</pre>
+ <pre class="tcy tab">shopt -q globstar cmdhist histappend; echo $?</pre>
+ <p class=tab>Return FALSE (a non-zero value) if any of <b>globstar</b>, <b>cmdhist</b>, or <b>histappend</b> options are not currently set. Output:</p>
+ <pre class=dtab>1</pre>
+ 
+ 
+</article>
+ 
+ 
+</div>
+</div>

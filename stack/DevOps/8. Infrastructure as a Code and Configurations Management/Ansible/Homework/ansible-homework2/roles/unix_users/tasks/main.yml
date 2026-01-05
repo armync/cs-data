@@ -1,0 +1,58 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/unix_users
+
+- name: Ensure groups exist (distinct set from all users)
+  group:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ unix_users_list | map(attribute='groups') | list | flatten | unique }}"
+  when: unix_users_list | length > 0
+
+- name: Manage UNIX users
+  user:
+    name: "{{ item.name }}"
+    uid: "{{ item.uid | default(omit) }}"
+    state: "{{ item.state | default('present') }}"
+    groups: "{{ (item.groups | default([])) | join(',') if (item.state | default('present')) == 'present' else omit }}"
+    append: true
+    create_home: true
+    shell: /bin/bash
+  loop: "{{ unix_users_list }}"
+
+- name: Configure sudo (passwordless) for flagged users
+  copy:
+    dest: "/etc/sudoers.d/{{ item.name }}"
+    content: "{{ item.name }} ALL=(ALL) NOPASSWD:ALL\n"
+    owner: root
+    group: root
+    mode: '0440'
+  loop: "{{ unix_users_list | selectattr('sudo','defined') | selectattr('sudo') | list }}"
+  when: (item.state | default('present')) == 'present'
+
+- name: Remove sudo file for users no longer privileged or absent
+  file:
+    path: "/etc/sudoers.d/{{ item.name }}"
+    state: absent
+  loop: "{{ unix_users_list }}"
+  when: (item.state | default('present')) != 'present' or not (item.sudo | default(false))
+
+- name: Ensure .ssh directory
+  file:
+    path: "/home/{{ item.name }}/.ssh"
+    state: directory
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+    mode: '0700'
+  loop: "{{ unix_users_list }}"
+  when: (item.state | default('present')) == 'present'
+
+
+- name: Add authorized keys (vaulted strings supported)
+  authorized_key:
+    user: "{{ item.0.name }}"
+    state: present
+    key: "{{ item.1 }}"
+  loop: "{{ unix_users_list | subelements('ssh_public_keys', skip_missing=True) }}"
+  when: (item.0.state | default('present')) == 'present'
+

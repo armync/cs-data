@@ -1,0 +1,37 @@
+name: test_lint_workflow
+
+on: [push]
+
+jobs:
+    lint-test:
+
+        runs-on: ubuntu-latest
+
+        steps:
+
+            - name: Get code
+              uses: actions/checkout@v3
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: lint
+              run: npm run lint
+
+            - name: test code
+              run: npm run test
+
+    build-job:
+
+        runs-on: ubuntu-latest
+
+        steps:
+
+            - name: Get code
+              uses: actions/checkout@v3
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: buildddd
+              run: npm run build

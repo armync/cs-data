@@ -1,0 +1,15 @@
+AZ-900 Learning:
+
+https://www.udemy.com/course/az-900-azure-certification-exam-prep/ (theory, presentation - easy to read)
+or
+https://www.youtube.com/playlist?list=PLlVtbbG169nED0_vMEniWBQjSoxTsBYS3 (theory, references - dense and blackboard written)
+or
+https://www.udemy.com/course/azure-certification-az-900-azure-fundamentals/ (exercices, presentation)
+
+CLF-C02:
+
+https://www.udemy.com/course/aws-certified-cloud-practitioner-training-course/
+(straight idea)
+or
+https://skillbuilder.aws/learn/94T2BEN85A/aws-cloud-practitioner-essentials/
+(talkative demo presentation)

@@ -1,0 +1,36 @@
+---
+- name: Configure web nodes
+  hosts: web
+  become: true
+
+  vars:
+    page_title: "Ansible Deployed Page"
+    heading: "Welcome from Ansible"
+
+  roles:
+    - role: unix_users
+
+    - role: geerlingguy.apache
+      vars:
+        apache_remove_default_vhost: true
+        apache_vhosts:
+          - servername: "localhost"
+            documentroot: "/var/www/html"
+        apache_user: "{{ apache_run_user | default('www-data') }}"
+        apache_group: "{{ apache_run_user | default('www-data') }}"
+
+  tasks:
+    - name: Deploy index.html
+      template:
+        src: "templates/index.html.j2"
+        dest: "/var/www/html/index.html"
+        owner: "{{ apache_run_user | default('www-data') }}"
+        group: "{{ apache_run_user | default('www-data') }}"
+        mode: '0644'
+
+    - name: Ensure Apache is started and enabled
+      service:
+        name: "{{ 'apache2' if ansible_os_family == 'Debian' else 'httpd' }}"
+        state: started
+        enabled: true
+

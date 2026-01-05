@@ -1,0 +1,46 @@
+# Vagrantfile for Jenkins master + node on a single host-only subnet
+HOSTS = {
+  jenkinsmain: { hostname: 'jenkinsmain.local', ip: '192.168.56.10', memory: '1536', cpu: '2', autostart: true },
+  jenkinsnode1: { hostname: 'node1.local',       ip: '192.168.56.11', memory: '512',  cpu: '1', autostart: true }
+}
+
+# Install only needed plugins
+required_plugins = %w(vagrant-vbguest vagrant-hosts)
+required_plugins.each do |plugin|
+  system "vagrant plugin install #{plugin}" unless Vagrant.has_plugin?(plugin)
+end
+
+Vagrant.configure('2') do |config|
+  # Use a modern Ubuntu box
+  # For 24.04:
+  config.vm.box = 'ubuntu/noble64'
+  # Or, if you prefer LTS 22.04:
+  # config.vm.box = 'ubuntu/jammy64'
+
+  config.vm.box_check_update = true
+  config.vm.synced_folder '.', '/vagrant', disabled: false
+
+  # vbguest: keep guest additions updated from host; no remote ISO download
+  config.vbguest.auto_update = true
+  config.vbguest.no_remote = true
+
+  # vagrant-hosts: write hostnames into /etc/hosts (guest and host)
+  config.vm.provision :hosts, sync_hosts: true
+
+  HOSTS.each do |name, host|
+    config.vm.define name, autostart: host[:autostart] do |d|
+      d.vm.hostname = host[:hostname]
+      d.vm.network 'private_network', ip: host[:ip]
+
+      d.vm.provider 'virtualbox' do |v|
+        v.gui = false
+        v.name = host[:hostname]
+        v.memory = host[:memory]
+        v.cpus = host[:cpu]
+        # Keep NAT DNS helpers on for initial apt traffic via adapter 1
+        v.customize ['modifyvm', :id, '--natdnshostresolver1', 'on']
+        v.customize ['modifyvm', :id, '--natdnsproxy1', 'on']
+      end
+    end
+  end
+end

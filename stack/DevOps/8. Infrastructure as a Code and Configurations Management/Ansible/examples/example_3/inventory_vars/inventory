@@ -1,0 +1,20 @@
+[webapp]
+web1 ansible_host=ip-address host_var1=value
+web2 nsible_host=ip-address host_var2=value
+
+[database]
+db1
+
+[frontend:children]
+webapp
+switch
+
+[all:vars]
+group=ansible
+
+[webapp:vars]
+httpd_version=2.4.37
+
+[database:vars]
+mysql_url_rpm=https://dev.mysql.com/get/mysql80-community-release-el8-3.noarch.rpm
+mysql_package_name=mysql-server

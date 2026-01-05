@@ -1,0 +1,13 @@
+[webapp]
+54.234.147.229
+54.158.56.143
+
+[lb]
+54.158.56.143
+
+[database]
+3.217.255.85
+
+[frontend:children]
+nginx
+lb

@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: wooferius
+  namespace: default
+  labels:
+    app.kubernetes.io/name: wooferius
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - controlplane-87f3c67cf22715bcb96c
+  containers:
+    - name: demo
+      image: wooferius/demo:gin-server@sha256:2707e57d12003510720f1c6fada9575a3606a6f3e486bc6b84e5d33e2ed6d563
+      ports:
+        - name: gin-port 
+          containerPort: 8080
+      env:
+      - name: GIN_MODE
+        value: debug
+      livenessProbe:
+        httpGet: 
+          path: /management/liveness
+          port: 8080
+      readinessProbe:
+        initialDelaySeconds: 5
+        httpGet: 
+          path: /management/readiness
+          port: 8080
+  tolerations:
+  - effect: NoSchedule
+    operator: Exists
+    key: node-role.kubernetes.io/master
+
+# https://github.com/bogdan-matei/gopher/blob/master/tutorials/web-service-gin/main.go

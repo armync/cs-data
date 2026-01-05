@@ -1,0 +1,37 @@
+HOSTS = {
+  :jenkinsmain => { :hostname => 'jenkinsmain.local', :ip => '192.168.10.10', :memory => '1536', :cpu => "2", :autostart => true },
+  :jenkinsnode1 => { :hostname => 'node1.local',      :ip => '192.168.20.20', :memory => '512',  :cpu => "1", :autostart => true }
+}
+
+# Install VMware + hosts plugins
+required_plugins = %w( vagrant-vmware-desktop vagrant-hosts )
+required_plugins.each do |plugin|
+  system "vagrant plugin install #{plugin}" unless Vagrant.has_plugin?(plugin)
+end
+
+Vagrant.configure(2) do |config|
+  # Ubuntu 24.04 LTS (Noble) box with VMware provider
+  config.vm.box = "ubuntu/noble64"
+  config.vm.box_check_update = true
+
+  # basic sync
+  config.vm.synced_folder ".", "/vagrant"
+
+  HOSTS.each do |name, host|
+    config.vm.define name, autostart: host[:autostart] do |d|
+      d.vm.network "private_network", ip: host[:ip]
+      d.vm.provision :hosts, :sync_host => true
+      d.vm.hostname = host[:hostname]
+
+      d.vm.provider "vmware_desktop" do |v|
+        v.gui = false
+        v.name = host[:hostname]
+        # VMware-specific VMX settings
+        v.vmx["memsize"]   = host[:memory].to_s
+        v.vmx["numvcpus"]  = host[:cpu].to_s
+        # Optional: speed up NAT DNS inside VMware
+        v.vmx["ethernet0.connectionType"] = "nat"
+      end
+    end
+  end
+end

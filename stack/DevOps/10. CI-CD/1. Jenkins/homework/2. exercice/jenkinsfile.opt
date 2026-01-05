@@ -1,0 +1,63 @@
+pipeline {
+  agent { label 'jenkinsnode1' }
+  options { skipDefaultCheckout(true) }
+
+  parameters {
+    string(name: 'optional', defaultValue: 'skip',
+           description: 'Set to "execute" to run Sequential Stage2')
+  }
+
+  stages {
+    stage('Sequential Stage1') {
+      steps { echo 'Stage1 work...' }
+    }
+
+    stage('Parallel Stage1') {
+      parallel {
+        stage('Branch A') {
+          steps { echo 'A work...' }
+        }
+        stage('Branch B') {
+          steps { echo 'B work...' }
+        }
+        // a branch that itself has nested parallel stages
+        stage('Branch ...') {
+          stages {
+            stage('Nested 1') { steps { echo 'Nested 1 work...' } }
+            stage('Nested 2') { steps { echo 'Nested 2 work...' } }
+          }
+        }
+      }
+    }
+
+    stage('Sequential Stage2') {
+      when { expression { params.optional == 'execute' } }
+      steps { echo 'Stage2 work (only when optional == "execute")' }
+    }
+
+    stage('Sequential Stage3') {
+      steps {
+        // Fail this stage but keep the pipeline going,
+        // and downgrade overall build to UNSTABLE.
+        catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
+          echo 'Intentionally failing Stage3...'
+          error('Boom')   // forces this stage to fail
+        }
+      }
+    }
+
+    stage('Parallel Stage2') {
+      parallel {
+        stage('Branch D') { steps { echo 'D work...' } }
+        stage('Branch E') { steps { echo 'E work...' } }
+        stage('Branch F') { steps { echo 'F work...' } }
+      }
+    }
+  }
+
+  post {
+    // Ensure the entire pipeline ends as UNSTABLE per requirement,
+    // even if Stage3 didn’t run.
+    always { script { currentBuild.result = 'UNSTABLE' } }
+  }
+}

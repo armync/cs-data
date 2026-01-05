@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Git Essentials — Cleaned & Completed from Your Notes</title>
+
+<!-- PrismJS Dark theme (One Dark-inspired) -->
+<style>
+:root{
+  --bg:#0f1115; --panel:#141a24; --panel2:#161d2a;
+  --text:#e6e9ef; --muted:#aab0bf; --accent:#7aa2f7; --border:#2a3144;
+}
+@media (prefers-color-scheme: light){
+  :root{ --bg:#f7f9fc; --panel:#ffffff; --panel2:#f2f5fb; --text:#111827; --muted:#4b5563; --accent:#1d4ed8; --border:#e5e7eb; }
+}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font:16px/1.6 Inter,system-ui,-apple-system,"Segoe UI",Helvetica,Arial;}
+.wrap{max-width:980px;margin:40px auto;padding:0 18px;}
+header{background:linear-gradient(135deg,rgba(122,162,247,.18),rgba(30,41,59,.18));border:1px solid var(--border);border-radius:18px;padding:28px;margin-bottom:28px;}
+h1{margin:0 0 6px 0;font-size:30px}
+p.lead{margin:0;color:var(--muted)}
+h2{font-size:22px;margin:26px 0 12px 0;color:var(--accent)}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:18px;margin:16px 0;}
+.toc{columns:2;gap:24px;margin:8px 0}
+.toc a{display:block;color:var(--text);text-decoration:none;padding:4px 0;border-left:2px solid transparent}
+.toc a:hover{color:var(--accent);border-left-color:var(--accent)}
+
+/* Code blocks */
+pre[class*="language-"], code[class*="language-"]{
+  color:#abb2bf; background:var(--panel2);
+  text-shadow:none; font-family:Consolas,Menlo,Monaco,ui-monospace,"SFMono-Regular","Liberation Mono","Courier New",monospace;
+  font-variant-ligatures:none; font-size:14px; line-height:1.55;
+  tab-size:4; -moz-tab-size:4; -o-tab-size:4;
+}
+pre[class*="language-"]{padding:14px 16px;border:1px solid var(--border);border-radius:12px;overflow:auto;}
+
+/* Prism colors */
+.token.comment,.token.prolog,.token.doctype,.token.cdata{color:#7f848e}
+.token.punctuation{color:#abb2bf}
+.token.selector,.token.tag{color:#e06c75}
+.token.property,.token.boolean,.token.number,.token.constant{color:#d19a66}
+.token.attr-name,.token.string,.token.char,.token.builtin{color:#98c379}
+.token.operator,.token.entity,.token.url{color:#56b6c2}
+.token.atrule,.token.attr-value,.token.keyword{color:#c678dd}
+.token.function,.token.class-name{color:#61afef}
+.token.regex,.token.important,.token.variable{color:#e5c07b}
+.token.deleted{color:#e06c75}
+.token.inserted{color:#98c379}
+
+.hint{color:var(--muted);margin:8px 0 0 0}
+ul{margin:0 0 10px 20px} li{margin:4px 0}
+
+/* Print */
+@media print{
+  body{background:#fff;color:#111}
+  header,.card{border-color:#d1d5db;background:#fff}
+  pre[class*="language-"]{background:#fafafa;border-color:#e5e7eb;color:#111}
+}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Git Essentials — Cleaned &amp; Completed from Your Notes</h1>
+    <p class="lead">Refined from your handwriting: corrected, clarified, and expanded with modern commands and recovery guidance.</p>
+  </header>
+
+  <div class="card">
+    <h2 id="toc">Table of contents</h2>
+    <div class="toc">
+      <a href="#model">1) Mental Model</a>
+      <a href="#create">2) Creating a Repository</a>
+      <a href="#inspect">3) Inspect &amp; Observe</a>
+      <a href="#changes">4) Making Changes</a>
+      <a href="#branches">5) Working with Branches</a>
+      <a href="#remotes">6) Synchronizing with Remotes</a>
+      <a href="#workflows">7) Workflows &amp; Recipes</a>
+      <a href="#pitfalls">8) Common Pitfalls &amp; Recovery</a>
+      <a href="#glossary">9) Glossary</a>
+    </div>
+  </div>
+
+  <section id="model">
+    <h2>1) Mental Model</h2>
+    <pre class="language-none"><code>Working Directory  --(git add)-->  Staging Area (Index)  --(git commit)-->  Local Repo (history)
+       ^                         ^                                      ^
+       |                         |                                      |
+ (git restore)           (git restore --staged)                 (git reset --soft)
+       |                         |                                      |
+       └-------------------------(git reset &lt;file&gt;)----------------------┘
+
+Local Repo  --(git push)-->  Remote Repo (origin)
+Remote Repo --(git fetch)--> Local Repo (updates only)
+Remote Repo --(git pull)-->  Local Repo (fetch + merge or rebase)</code></pre>
+    <div class="hint">
+      <ul>
+        <li><strong>HEAD</strong>: the commit your working directory currently reflects.</li>
+        <li><strong>Upstream/Tracking branch</strong>: remote branch linked to your local branch.</li>
+        <li><strong>Modern</strong>: prefer <code>git switch</code> and <code>git restore</code> over legacy <code>git checkout</code>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="create">
+    <h2>2) Creating a Repository</h2>
+    <pre class="language-bash"><code>git init [project-name]        # initialize from scratch
+git clone &lt;url&gt;                 # clone an existing remote repository</code></pre>
+    <p class="hint">Tip: after <code>git init</code>, make at least one commit before pushing to a remote.</p>
+  </section>
+
+  <section id="inspect">
+    <h2>3) Inspect and Observe Changes</h2>
+    <pre class="language-bash"><code>git status                      # show modified/staged/untracked files
+git diff                        # show unstaged changes
+git diff --staged               # staged (Index vs HEAD)
+git diff HEAD                   # everything since last commit
+git show &lt;commit&gt;[:file]         # commit details (optional single file)
+git blame &lt;file&gt;                 # last modifier per line
+git log                         # detailed history
+git log -p [file|dir]            # history with diffs
+git log --oneline --graph --decorate --all</code></pre>
+    <p class="hint">Use <code>git log --graph --oneline</code> to visualize branch flow clearly.</p>
+  </section>
+
+  <section id="changes">
+    <h2>4) Making Changes</h2>
+    <pre class="language-bash"><code># Stage and commit
+git add &lt;file&gt;                   # stage specific files
+git add .                        # stage all changes (tracked + untracked)
+git commit -m "message"          # commit staged files
+git commit -am "message"         # tracked files only (skips new files)
+
+# Unstage or undo
+git restore --staged &lt;file&gt;      # unstage (keep edits) — modern
+git reset &lt;file&gt;                 # unstage — older
+git restore &lt;file&gt;               # discard local edits (careful) — modern
+git checkout -- &lt;file&gt;           # discard — older
+
+# Resetting
+git reset --soft  &lt;commit&gt;       # keep changes staged
+git reset --mixed &lt;commit&gt;       # keep changes in working directory
+git reset --hard  &lt;commit&gt;       # discard everything local</code></pre>
+    <p class="hint">When in doubt, stash or branch before destructive actions.</p>
+  </section>
+
+  <section id="branches">
+    <h2>5) Working with Branches</h2>
+    <pre class="language-bash"><code>git branch                      # local branches
+git branch -av                  # local + remote-tracking
+
+# Create and switch
+git switch -c &lt;new-branch&gt;      # modern (recommended)
+git checkout -b &lt;new-branch&gt;    # older
+
+# Switch branches
+git switch &lt;branch&gt;             # modern
+git checkout &lt;branch&gt;           # older
+
+# Delete branches
+git branch -d &lt;branch&gt;          # delete if merged
+git branch -D &lt;branch&gt;          # force delete (unmerged)
+
+# Merge and rebase
+git merge &lt;branch&gt;              # merge target into current
+git rebase &lt;branch&gt;             # replay current onto target
+
+# Tagging
+git tag v1.0.0
+git tag -a v1.0.0 -m "Release 1.0.0"
+git push origin v1.0.0
+git push --tags</code></pre>
+    <p class="hint">Merge preserves the real history; rebase keeps it linear (best before pushing).</p>
+  </section>
+
+  <section id="remotes">
+    <h2>6) Synchronizing with Remotes</h2>
+    <pre class="language-bash"><code>git remote add origin &lt;url&gt;     # link local repo to remote
+
+# Fetch and pull
+git fetch                        # safe: update tracking refs only
+git pull                         # fetch + merge (classic)
+git pull --rebase                # fetch + rebase (modern)
+
+# Push
+git push                         # if upstream set
+git push -u origin &lt;branch&gt;      # first push, sets upstream</code></pre>
+    <p class="hint">Prefer <code>git pull --rebase</code> for your feature branches.</p>
+  </section>
+
+  <section id="workflows">
+    <h2>7) Common Workflows &amp; Useful Recipes</h2>
+    <pre class="language-bash"><code>git add -p &lt;file&gt;                # interactively stage chunks
+git commit --amend               # modify last commit (message or content)
+git revert &lt;commit&gt;              # safely undo (new commit)
+git stash                        # stash tracked changes
+git stash -u                     # include untracked files
+git stash pop                    # reapply top stash
+git fetch --prune                # delete remote-tracking refs that vanished
+
+# Daily example flow
+git fetch
+git switch main
+git pull --rebase
+
+git switch -c feature/my-feature
+git add -p
+git commit -m "Add feature part 1"
+
+git fetch
+git rebase origin/main
+
+git push -u origin feature/my-feature
+
+git switch main
+git pull --rebase
+git branch -d feature/my-feature</code></pre>
+  </section>
+
+  <section id="pitfalls">
+    <h2>8) Common Pitfalls and Recovery Tips</h2>
+    <div class="card">
+      <h3>8.1 Local Changes Mistakes</h3>
+      <pre class="language-bash"><code># Accidentally committed wrong files (not pushed)
+git reset --soft HEAD~1          # undo last commit, keep changes staged
+
+# Discard edits in a file (careful)
+git restore &lt;file&gt;               # replace with HEAD version</code></pre>
+      <p class="hint">If you’ve already pushed the bad commit, use <code>git revert &lt;commit&gt;</code> to create a new commit that undoes it instead of rewriting shared history.</p>
+    </div>
+
+    <div class="card">
+      <h3>8.2 Branch &amp; Merge Issues</h3>
+      <pre class="language-bash"><code># Merge conflicts
+git status                       # see conflicted files
+git add &lt;file&gt;                   # after manual conflict resolution
+git merge --continue             # finish the merge
+# or abort entirely
+git merge --abort
+
+# Committed on the wrong branch
+git switch correct-branch
+git cherry-pick &lt;commit&gt;         # copy commit onto the right branch
+git switch wrong-branch
+git reset --hard HEAD~n          # remove those commits from the wrong branch</code></pre>
+      <p class="hint">Cherry-pick copies commits; the originals remain until you reset or revert them.</p>
+    </div>
+
+    <div class="card">
+      <h3>8.3 Remote &amp; History Problems</h3>
+      <pre class="language-bash"><code># Force push mistake: restore previous ref
+git reflog                        # find the good commit
+git reset --hard &lt;hash&gt;
+git push --force-with-lease       # restore without clobbering others
+
+# Sync local with remote deletions
+git fetch --prune</code></pre>
+      <p class="hint"><code>--force-with-lease</code> refuses to overwrite changes if someone has updated the remote.</p>
+    </div>
+
+    <div class="card">
+      <h3>8.4 Recovery Tools</h3>
+      <pre class="language-bash"><code>git stash push -m "backup"       # quick safety net
+git branch backup-$(date +%s)     # save current HEAD to a branch
+git restore --source=&lt;commit&gt; &lt;path&gt;   # restore a file from any commit
+git log --oneline --graph --decorate --all   # visualize and locate commits</code></pre>
+      <p class="hint">When unsure, branch or stash first—then experiment safely.</p>
+    </div>
+  </section>
+
+  <section id="glossary">
+    <h2>9) Glossary</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Working Directory (WD)</strong>: your actual files.</li>
+        <li><strong>Staging Area (Index)</strong>: snapshot ready for the next commit.</li>
+        <li><strong>HEAD</strong>: pointer to the current commit.</li>
+        <li><strong>Branch</strong>: movable pointer to a line of commits.</li>
+        <li><strong>Remote</strong>: external repository (e.g., GitHub).</li>
+        <li><strong>Rebase</strong>: reapply commits on another base.</li>
+        <li><strong>Merge Commit</strong>: commit combining two histories.</li>
+        <li><strong>Fast-forward</strong>: pointer move without a merge commit.</li>
+        <li><strong>Detached HEAD</strong>: state when not on a branch.</li>
+      </ul>
+    </div>
+  </section>
+</div>
+
+<!-- PrismJS (embedded) -->
+<script>
+/* PrismJS 1.29.0 simplified build: core + markup + bash */
+!function(e){var t=/(?:^|[^\\])(?:\/\*[\s\S]*?\*\/|\/\/.*)/g;function n(e){e.languages.insertBefore("javascript","comment",{"doc-comment":{pattern:/\/\*\*[\s\S]*?\*\//,greedy:!0,alias:"comment",inside:{"doc-tag":{pattern:/(^|[^\\])@[a-zA-Z]+/g,lookbehind:!0,alias:"keyword"}}}})}var a=Prism={manual:e.Prism&&e.Prism.manual,disableWorkerMessageHandler:e.Prism&&e.Prism.disableWorkerMessageHandler,util:{encode:function e(t){return t instanceof r?t:new r("string"==typeof t?t:String(t))},type:function(e){return Object.prototype.toString.call(e).slice(8,-1)},objId:function(e){return e.__id||Object.defineProperty(e,"__id",{value:++i}),e.__id},clone:function e(t,n){var r,i;switch(n=n||{},a.util.type(t)){case"Object":if(i=a.util.objId(t),n[i])return n[i];var l={};n[i]=l;for(var o in t)t.hasOwnProperty(o)&&(l[o]=e(t[o],n));return l;case"Array":return r=[],n[a.util.objId(t)]=r,t.forEach(function(t,i){r[i]=e(t,n)}),r}return t}},languages:{extend:function(e,t){var n=a.util.clone(a.languages[e]);for(var r in t)n[r]=t[r];return n},insertBefore:function(e,t,n,r){r=r||a.languages[e];var i=r[t],l={};for(var o in r)r.hasOwnProperty(o)&&(o==t&&Object.keys(n).forEach(function(e){l[e]=n[e]}),l[o]=r[o]);var s=r[e];return r[e]=l,s},DFS:function e(t,n,r,i){i=i||{};var l=a.util.objId;for(var o in t)if(t.hasOwnProperty(o)){n.call(t,o,t[o],r||o);var s=t[o],u=a.util.type(s);"Object"!==u||i[l(s)]?"Array"!==u||i[l(s)]||(i[l(s)]=!0,e(s,n,o,i)):(i[l(s)]=!0,e(s,n,o,i))}}},plugins:{},highlightAll:function(e,t){a.highlightAllUnder(document,e,t)},highlightAllUnder:function(e,t,n){var r={callback:n,selector:'code[class*="language-"], [class*="language-"] code, code[class*="lang-"], [class*="lang-"] code'};a.hooks.run("before-highlightall",r);for(var i,l=r.elements||e.querySelectorAll(r.selector),o=0;i=l[o++];)a.highlightElement(i,t===!0,r.callback)},highlightElement:function(t,n,r){var i=a.util.getLanguage(t),l=a.languages[i];t.className=t.className.replace(/language-(?!\S)/gi,"").replace(/lang-(?!\S)/gi,""),t.classList.add("language-"+i),n=n||"none";var o=t.textContent,s={element:t,language:i,grammar:l,code:o};function u(e){s.highlightedCode=e,a.hooks.run("before-insert",s),s.element.innerHTML=s.highlightedCode,a.hooks.run("after-highlight",s),r&&r.call(s.element)}if(a.hooks.run("before-sanity-check",s),!s.code)return a.hooks.run("complete",s),void 0;if(!s.grammar)return u(a.util.encode(s.code)),void 0;u(a.highlight(s.code,s.grammar,s.language))},highlight:function(e,t,n){var i=a.tokenize(e,t);return r.stringify(a.util.encode(i),n)},tokenize:function(e,t){var n=t.rest;if(n){for(var r in n)t[r]=n[r];delete t.rest}var i=new s;return u(i,i.head,e),o(e,i,t,i.head,0),function(e){for(var t=[],n=e.head.next;n!==e.tail;)t.push(n.value),n=n.next;return t}(i)},hooks:{all:{},add:function(e,t){var n=a.hooks.all;n[e]=n[e]||[],n[e].push(t)},run:function(e,t){var n=a.hooks.all[e];if(n&&n.length)for(var r,i=0;r=n[i++];)r(t)}}},r=a.Token=function(e,t){this.type=e,this.content=t};function i(){return 0}function l(e,t,n){e.lastIndex=t;var r=e.exec(n);return r&&r.index===t}function o(e,t,n,r,i,g){for(var c in n)if(n.hasOwnProperty(c)&&n[c]){var d=n[c];d=Array.isArray(d)?d:[d];for(var h=0;h<d.length;++h){if(g&&g.cause==c+","+h)return;var f=d[h],p=f.inside,m=!!f.lookbehind,b=!!f.greedy,y=f.alias;if(b&&!f.pattern.global){var v=f.pattern.toString().match(/[imsuy]*$/)[0];f.pattern=RegExp(f.pattern.source,v+"g")}for(var k=f.pattern||f,w=r.next,A=i;w!==t.tail&&!(g&&A>=g.reach);A+=w.value.length,w=w.next){var x=w.value;if(t.length>e.length)return;if(!(x instanceof r)){var C=1;if(b){if(!(C=function(e,t,n,r,i){var o=r.value.slice(i),s=o.match(t);if(!s)return-1;var u=s.index;if(n&&s[1]){var a=s[1].length;u+=a}return u}(0,k,m,w,A)))break;var E=C,I=s(k.lastIndex+E);k.lastIndex=A+E;var S=k.exec(e)}else{S=l(k,A,m?e.slice(0):e);E=S&&S.index}if(S){m&&(E+=S[1]?S[1].length:0);var P=S[0],L=A+P.length;P=new r(c,y?a.util.encode(P):P),w=split(w,E,P),A=L;continue}}}}}}function s(){this.head={value:null,prev:null,next:null},this.tail={value:null,prev:this.head,next:null},this.head.next=this.tail,this.length=0}function u(e,t,n){var a=t.next,r={value:n,prev:t,next:a};return t.next=r,a.prev=r,e.length++,r}function split(e,t,n){var a=e.value.substring(0,t),r=e.value.substring(t+n.content.length);return e.value=a,u(e.parent||{head:e,tail:e},e,n),e.value=r,e}r.stringify=function e(t,n){if("string"==typeof t)return t;if(Array.isArray(t))return t.map(function(t){return e(t,n)}).join("");var r={type:t.type,content:e(t.content,n),tag:"span",classes:["token",t.type],attributes:{},language:n};return a.hooks.run("wrap",r),"<"+r.tag+' class="'+r.classes.join(" ")+'">'+r.content+"</"+r.tag+">"};var g={};a.languages.markup={comment:/<!--[\s\S]*?-->/,prolog:/<\?[\s\S]+?\?>/,doctype:/<!DOCTYPE[\s\S]+?>/i,cdata:/<!\[CDATA\[[\s\S]*?]]>/i,tag:{pattern:/<\/?(?!\d)[^\s>\/=$<%]+(?:\s(?:\s*[^\s>\/=]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s'">=]+))?)?)*\s*\/?>/i,greedy:!0,inside:{tag:{pattern:/^<\/?[^\s>\/]+/i,inside:{punctuation:/^<\/?/,namespace:/^[^\s>\/:]+:/}},attr:{pattern:/[^\s>\/]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s'">=]+))?/,inside:{punctuation:/=/,attr-value:{pattern:/=[\s\S]+/,inside:{punctuation:[/^=/,{pattern:/^(\s*)["']|["']$/,lookbehind:!0}]}}},punctuation:/\/?>/,inside:{"attr-name":/[\s\S]+/}}},entity:/&#?[\da-z]{1,8};/i},a.languages.bash={comment:{pattern:/(^|[^"{\\])#.*/,lookbehind:!0},"function-name":[{pattern:/(^|[\s;|&]|[<>]\()\w+(?=\s*\()/,lookbehind:!0,alias:"function"}],variable:[{pattern:/\$?\(\([\s\S]+?\)\)/,greedy:!0,inside:{}}],string:{pattern:/(["'])(?:\\[\s\S]|\$\([^)]+\)|`[^`]+`|(?!\1)[^\\])*\1/,greedy:!0},operator:/\d?<>|<<-?|[=~*^]*\|[=~*^]*|&?[&;]|!=?|==?|<<|>>|<=?|>=?|\+\+?|--?|\*\*?|\/\/?|%%?|~|\^|\?|:/,punctuation:/\$?\(\(?|\)\)?|\.\.|[{}[\];,]/,number:{pattern:/(?:\b\d+(?:\.\d+)?|\B\.\d+)(?:[eE][+-]?\d+)?\b/},boolean:/\b(?:true|false)\b/,keyword:/\b(?:if|then|else|elif|fi|for|while|in|case|esac|function|select|do|done|until|echo|printf|return|exit|break|continue|declare|typeset|local|readonly|export|alias|unalias|set|unset|mapfile|readarray|read|shift)\b/,builtin:/\b(?:printf|echo|cd|pwd|pushd|popd|dirs|let|eval|set|unset|export|alias|unalias|type|hash|bind|help|sudo|true|false)\b/};</script>
+<script>
+// Run Prism on load
+document.addEventListener('DOMContentLoaded', function(){ 
+  if (window.Prism) Prism.highlightAll();
+});
+</script>
+</body>
+</html>

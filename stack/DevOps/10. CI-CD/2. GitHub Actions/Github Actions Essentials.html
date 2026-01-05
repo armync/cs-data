@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Essential Guide to GitHub Actions</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 20px;
+  }
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    overflow: hidden;
+  }
+  .content { padding: 40px; }
+  section { margin-bottom: 48px; scroll-margin-top: 90px; }
+  h1 {
+    color: #1e3c72;
+    font-size: 2.2rem;
+    margin: 24px 0 24px;
+    text-align: center;
+  }
+  h2 {
+    color: #1e3c72;
+    font-size: 1.9rem;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 3px solid #667eea;
+  }
+  h3 { color: #2a5298; font-size: 1.3rem; margin: 18px 0 10px; }
+  h4 { color: #444; font-size: 1.1rem; margin: 10px 0 6px; }
+  p { margin-bottom: 10px; text-align: left; }
+  ul, ol { margin-left: 24px; margin-bottom: 10px; }
+  li { margin-bottom: 5px; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin: 16px 0;
+  }
+  .card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.12);
+    transition: transform 0.25s;
+  }
+  .card:hover { transform: translateY(-4px); }
+  .highlight-box {
+    background: #f0f4ff;
+    border-left: 4px solid #667eea;
+    padding: 14px;
+    margin: 14px 0;
+    border-radius: 8px;
+    text-align: left;
+  }
+  .warning {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 12px;
+    margin: 14px 0;
+    border-radius: 8px;
+  }
+  .success {
+    background: #d4edda;
+    border-left: 4px solid #28a745;
+    padding: 12px;
+    margin: 14px 0;
+    border-radius: 8px;
+  }
+  .info {
+    background: #d1ecf1;
+    border-left: 4px solid #17a2b8;
+    padding: 12px;
+    margin: 14px 0;
+    border-radius: 8px;
+  }
+  code {
+    background: #f4f4f4;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    color: #e83e8c;
+  }
+  pre {
+    background: #282c34;
+    color: #c7cbd1;
+    padding: 14px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 14px 0;
+    border-left: 4px solid #667eea;
+  }
+  pre code { background: none; color: #c7cbd1; padding: 0; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Essential Guide to GitHub Actions</h1>
+
+  <div class="content">
+
+    <!-- 1. CI/CD & context -->
+    <section id="intro">
+      <h2>1. CI/CD & Where GitHub Actions Fits</h2>
+      <p><strong>Continuous Integration (CI)</strong> is the practice of automatically building and testing the application whenever code is pushed. <strong>Continuous Delivery/Deployment (CD)</strong> is the practice of automatically getting that tested code ready for—or actually into—production.</p>
+      <p><strong>GitHub Actions</strong> is GitHub’s built-in CI/CD and automation engine. You describe automation in YAML files stored in your repository. GitHub reads those files and runs your commands on virtual machines whenever certain events happen (push, pull request, schedule, etc.).</p>
+
+      <div class="grid">
+        <div class="card">
+          <h4>Core idea</h4>
+          <p>“When X happens in this repo, automatically run these steps on a machine that GitHub provides, using this code.”</p>
+        </div>
+        <div class="card">
+          <h4>Benefits</h4>
+          <p>No separate CI server, close to the code, first-class integration with pull requests, releases, issues, and GitHub Packages.</p>
+        </div>
+        <div class="card">
+          <h4>What you automate</h4>
+          <p>Builds, tests, deployments, code quality checks, security scans, scheduled jobs, and any scriptable DevOps task.</p>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <strong>Top-level mental model:</strong> GitHub Actions = <em>event → workflow → jobs → steps → actions</em> running on <em>runners</em> using data from <em>contexts</em>, with safe access to <em>secrets</em>.
+      </div>
+    </section>
+
+    <!-- 2. Fundamentals in depth -->
+    <section id="fundamentals">
+      <h2>2. Fundamentals of GitHub Actions (In Depth)</h2>
+
+      <p>
+        In this chapter you’ll see <strong>how a workflow actually runs</strong> inside GitHub.  
+        We focus on three core building blocks:
+      </p>
+      <ul>
+        <li><strong>Execution model</strong> – how events trigger workflows, jobs and steps.</li>
+        <li><strong>Runners</strong> – the machines that execute your jobs (GitHub-hosted vs self-hosted).</li>
+        <li><strong>Actions, contexts &amp; expressions</strong> – reusable steps and the “variables” you can use in YAML.</li>
+      </ul>
+
+      <h3>2.1 Execution Model</h3>
+      <p>
+        The <strong>execution model</strong> describes the lifecycle of a workflow run: from the moment an event happens in the repo
+        (for example a push) to the moment all jobs finish. Understanding this helps you reason about parallelism, dependencies
+        and where to put specific logic.
+      </p>
+      <ol>
+        <li>An <strong>event</strong> occurs in your repository (for example, a push or a pull request).</li>
+        <li>GitHub scans all workflow files in <code>.github/workflows/</code> and finds those whose <code>on:</code> block matches the event.</li>
+        <li>For each matching workflow:
+          <ul>
+            <li>GitHub creates a <strong>workflow run</strong> (one execution of that workflow).</li>
+            <li>Each <strong>job</strong> in the workflow is scheduled onto an available <strong>runner</strong>.</li>
+            <li>Within a job, <strong>steps</strong> run sequentially and execute shell commands or <strong>actions</strong>.</li>
+          </ul>
+        </li>
+        <li>Jobs without dependencies run in parallel; those with <code>needs:</code> wait for others.</li>
+        <li>The workflow result (success/failure) is based on the jobs’ results.</li>
+      </ol>
+
+      <h3>2.2 Runners</h3>
+      <p>
+        A <strong>runner</strong> is the actual machine that executes your job.  
+        There are two main “types” you will use:
+      </p>
+      <ul>
+        <li><strong>GitHub-hosted runners</strong> – ephemeral VMs that GitHub creates and destroys per job. Come with common tools preinstalled.</li>
+        <li><strong>Self-hosted runners</strong> – machines you manage (on-prem, cloud, container). Good when you need special tools, GPUs or private network access.</li>
+      </ul>
+
+      <p><em>Example: basic workflow that shows the difference between GitHub-hosted and self-hosted runners:</em></p>
+      <pre><code># .github/workflows/runners-example.yml
+name: Runners Fundamentals
+
+on: [push]
+
+jobs:
+  github-hosted:
+    runs-on: ubuntu-latest             # Use GitHub-provided Ubuntu VM
+
+    steps:
+      - uses: actions/checkout@v4      # 1) Fetch the repo on the runner
+      - run: |
+          echo "Running on GitHub-hosted runner"
+          lsb_release -a               # 2) Show OS info from that runner
+
+  self-hosted:
+    runs-on: self-hosted              # Target any self-hosted runner
+
+    steps:
+      - run: echo "Running on self-hosted runner with custom setup"
+</code></pre>
+
+      <h3>2.3 Actions</h3>
+      <p>
+        An <strong>action</strong> is a reusable unit of work that you can plug into your workflows.  
+        Types of actions you’ll commonly see:
+      </p>
+      <ul>
+        <li><strong>Official GitHub actions</strong> (e.g. <code>actions/checkout</code>, <code>actions/setup-node</code>).</li>
+        <li><strong>Community actions</strong> from the Marketplace.</li>
+        <li><strong>Custom actions</strong> that you or your org build (see chapter 9).</li>
+      </ul>
+      <p>Actions are combined with your own shell commands to form full workflows.</p>
+
+      <p><em>Example: workflow that combines multiple actions with your own script:</em></p>
+      <pre><code># .github/workflows/actions-fundamentals.yml
+name: Actions Fundamentals
+
+on: [push]
+
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4          # Official GitHub Action → gets your code
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4        # Official action → installs Node
+        with:
+          node-version: 18                 # Input: which version
+
+      - name: Run custom script
+        run: node ./scripts/say-hello.js   # Your code, using the tools above
+</code></pre>
+
+      <h3>2.4 Contexts & Expressions</h3>
+      <p>
+        <strong>Contexts</strong> are read-only objects that expose metadata about the current run (for example <code>github</code>, <code>env</code>, <code>runner</code>).  
+        You access them in YAML using <code>${{ }}</code> expressions. These let you:
+      </p>
+      <ul>
+        <li>Change behaviour based on event type or branch.</li>
+        <li>Inject dynamic values into environment variables, names, messages, etc.</li>
+        <li>Write conditions for jobs/steps using <code>if:</code>.</li>
+      </ul>
+
+      <p><em>Example: using contexts to inspect the event and run conditional logic:</em></p>
+      <pre><code># .github/workflows/contexts-example.yml
+name: Contexts &amp; Expressions
+
+on: [push, pull_request]
+
+jobs:
+  show-contexts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show GitHub context
+        run: |
+          echo "Event:  ${{ github.event_name }}"  # e.g. push or pull_request
+          echo "Ref:    ${{ github.ref }}"         # e.g. refs/heads/main
+          echo "Actor:  ${{ github.actor }}"       # user who triggered the run
+
+      - name: Run only for feature branches
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/heads/feature/')
+        run: echo "This step runs only for pushes to feature/* branches"
+</code></pre>
+    </section>
+
+    <!-- 3. Basic Building Blocks -->
+    <section id="basic-building-blocks">
+      <h2>3. Basic Building Blocks & Components (Full CI Example)</h2>
+
+      <p>
+        This chapter puts together the pieces from the fundamentals into a <strong>realistic CI pipeline</strong>.  
+        You’ll see how a typical Node.js project defines:
+      </p>
+      <ul>
+        <li>What <strong>events</strong> trigger the pipeline.</li>
+        <li>How a <strong>CI job</strong> is structured (env vars, steps).</li>
+        <li>How a <strong>security job</strong> depends on a build job.</li>
+      </ul>
+
+      <p><em>Example: classic CI workflow with build, tests and a follow-up security scan:</em></p>
+      <pre><code># .github/workflows/ci.yml
+name: CI Pipeline                            # Name in Actions UI
+
+on:
+  push:                                      # When code is pushed
+    branches: [ main, develop ]             # Only for these branches
+  pull_request:                             # And on PRs targeting main
+    branches: [ main ]
+
+jobs:
+  build-and-test:                           # Job 1: build & test
+    runs-on: ubuntu-latest                  # Use GitHub Linux runner
+
+    env:
+      NODE_ENV: test                        # Example job-level env vars
+      API_BASE_URL: https://api.example.com
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4           # Fetch repo
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4        # Install Node
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci                         # Deterministic install
+
+      - name: Run tests
+        run: npm test
+
+      - name: Show some context
+        run: |
+          echo "Event:  ${{ github.event_name }}"
+          echo "Branch: ${{ github.ref }}"
+          echo "Run ID: ${{ github.run_id }}"
+
+  security-scan:                            # Job 2: security scan
+    needs: build-and-test                   # Only if CI passed
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read                        # Only minimal permissions
+      security-events: write                # Can upload scan results
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run security scanner
+        run: ./scripts/security-scan.sh
+</code></pre>
+    </section>
+
+    <!-- 4. Workflows & Events -->
+    <section id="workflows-events">
+      <h2>4. Workflows & Events – Deep Dive</h2>
+
+      <p>
+        Every workflow has an <strong><code>on:</code> (triggers)</strong> section that defines <em>what kinds of events</em> should start it.  
+        There are several “types” of triggers you’ll use:
+      </p>
+      <ul>
+        <li><strong>Code-based events</strong> – <code>push</code>, <code>pull_request</code>, <code>release</code>, etc.</li>
+        <li><strong>Time-based events</strong> – <code>schedule</code> with CRON expressions.</li>
+        <li><strong>Manual events</strong> – <code>workflow_dispatch</code>, triggered from the UI or API.</li>
+      </ul>
+
+      <p><em>Example: workflow that mixes push, PR, scheduled and manual triggers:</em></p>
+      <pre><code># .github/workflows/triggers-example.yml
+name: Workflow &amp; Events Demo
+
+on:
+  push:
+    branches:
+      - main                                # Only for main
+      - 'release/*'                         # or any release branch
+    paths:
+      - 'src/**'                            # Ignore doc-only changes
+  pull_request:
+    types: [opened, synchronize, reopened]  # Different PR event types
+  schedule:
+    - cron: '0 3 * * *'                     # Nightly at 03:00 UTC (CRON)
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Env to run against'
+        required: true
+        default: 'staging'                  # UI has dropdown/text-input
+</code></pre>
+    </section>
+
+    <!-- 5. Artifacts & Outputs -->
+    <section id="artifacts-outputs">
+      <h2>5. Job Artifacts & Outputs</h2>
+
+      <p>
+        When jobs run, they often produce <strong>outputs</strong> (values) and <strong>artifacts</strong> (files) that you want to reuse later:
+      </p>
+      <ul>
+        <li><strong>Job steps outputs</strong> – small pieces of data (version numbers, flags) that other jobs can read.</li>
+        <li><strong>Artifacts</strong> – built assets (binaries, bundles, test reports) that are uploaded and then downloaded by other jobs.</li>
+      </ul>
+      <p>
+        This is essential for multi-stage pipelines: build once, reuse the same artifacts for tests or deploys.
+      </p>
+
+      <p><em>Example: build job sets an output version and uploads a web bundle; deploy job downloads and uses it:</em></p>
+      <pre><code># .github/workflows/artifacts-and-outputs.yml
+name: Artifacts &amp; Outputs
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      app_version: ${{ steps.version.outputs.version }}   # Expose version outside job
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compute app version
+        id: version                                      # Step ID for outputs
+        run: echo "version=1.0.${GITHUB_RUN_NUMBER}" &gt;&gt; $GITHUB_OUTPUT
+        # ↑ Write "version=..." to $GITHUB_OUTPUT → creates step output "version"
+
+      - name: Build project
+        run: npm ci &amp;&amp; npm run build
+
+      - name: Upload web build
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-build                                # Artifact logical name
+          path: dist/                                    # Folder to store
+
+  deploy:
+    needs: build                                         # Wait for build job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: web-build                                # Same artifact name
+
+      - name: Deploy specific version
+        run: echo "Deploying version ${{ needs.build.outputs.app_version }}"
+</code></pre>
+    </section>
+
+    <!-- 6. Env vars & secrets -->
+    <section id="env-secrets">
+      <h2>6. Environment Variables & Secrets</h2>
+
+      <p>
+        Workflows often need configuration values and secrets. GitHub Actions gives you:
+      </p>
+      <ul>
+        <li><strong>Environment variables</strong> – non-sensitive values that control behaviour (for example <code>NODE_ENV</code>).</li>
+        <li><strong>Secrets</strong> – sensitive values like passwords, API tokens and keys, stored encrypted by GitHub.</li>
+      </ul>
+      <p>
+        The key idea: <strong>env vars</strong> can be defined at workflow, job or step scope; <strong>secrets</strong> live in GitHub and are accessed via <code>secrets.NAME</code>.
+      </p>
+
+      <p><em>Example: combining workflow-level, job-level and step-level env vars while safely using secrets:</em></p>
+      <pre><code># .github/workflows/env-and-secrets.yml
+name: Env &amp; Secrets Fundamentals
+
+on: [push]
+
+env:                                           # Workflow-wide env vars
+  GLOBAL_ENV: production                       # Visible in all jobs
+
+jobs:
+  example:
+    runs-on: ubuntu-latest
+    env:
+      JOB_ENV: example-job                     # Visible only inside this job
+
+    steps:
+      - name: Print env values
+        run: |
+          echo "Global env: $GLOBAL_ENV"       # from workflow-level env
+          echo "Job env:    $JOB_ENV"          # from job-level env
+          echo "Step env:   $STEP_ENV"         # from step-level env
+        env:
+          STEP_ENV: only-this-step             # Visible only to this step
+
+      - name: Use secrets safely
+        run: |
+          echo "Logging into registry..."
+          echo "${{ secrets.REGISTRY_PASSWORD }}" | \
+            docker login registry.example.com \
+              -u "${{ secrets.REGISTRY_USER }}" --password-stdin
+        # REGISTRY_USER / REGISTRY_PASSWORD defined in repo/org secrets
+</code></pre>
+    </section>
+
+    <!-- 7. Controlling execution -->
+    <section id="control-execution">
+      <h2>7. Controlling Workflow & Job Execution</h2>
+
+      <p>
+        As workflows grow, you need control over <strong>when</strong> they run, <strong>how many can run in parallel</strong>,
+        and <strong>what happens on failures</strong>. GitHub Actions provides:
+      </p>
+      <ul>
+        <li><strong>Concurrency</strong> – group runs to avoid overlapping work on the same branch.</li>
+        <li><strong>Timeouts</strong> – hard limits for job duration.</li>
+        <li><strong>Conditions</strong> – <code>if:</code> expressions for jobs and steps.</li>
+        <li><strong>continue-on-error</strong> – let the workflow continue even if a step fails.</li>
+      </ul>
+
+      <p><em>Example: workflow that enforces one CI run per branch and only deploys from main:</em></p>
+      <pre><code># .github/workflows/control-execution.yml
+name: Control Execution
+
+on: [push, pull_request]
+
+concurrency:
+  group: ci-${{ github.ref }}        # Only one run per branch at a time
+  cancel-in-progress: true           # Cancel older runs when new ones start
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20              # Hard limit on job run time
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci
+      - run: npm test
+
+  deploy:
+    needs: tests
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    # ↑ Deploy only when it's a push on main (never for PRs)
+    steps:
+      - run: echo "Deploying main branch build..."
+
+  optional-step-example:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Step that may fail
+        run: ./flaky-script.sh
+        continue-on-error: true      # Workflow continues even if this step fails
+
+      - name: React to failure
+        if: failure()                # Runs if any previous step in this job failed
+        run: echo "Handling failure (e.g., send Slack notification)"
+</code></pre>
+    </section>
+
+    <!-- 8. Jobs & Docker containers -->
+    <section id="jobs-docker">
+      <h2>8. Jobs & Docker Containers</h2>
+
+      <p>
+        Sometimes you want your job to run inside a <strong>specific Docker image</strong> or to have <strong>services</strong> (like Postgres) available.
+        GitHub Actions supports two main container-related “types”:
+      </p>
+      <ul>
+        <li><strong>Job container</strong> – the whole job runs inside a given Docker image.</li>
+        <li><strong>Service containers</strong> – sidecar containers (databases, queues) that your job can connect to.</li>
+      </ul>
+
+      <h3>8.1 Running the whole job in a container</h3>
+      <p>
+        Use this when you want a fully controlled environment (specific Node, Python, system libs) independent of GitHub’s base image.
+      </p>
+      <pre><code># .github/workflows/container-job.yml
+name: Container Job
+
+on: [push]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest                 # Underlying VM
+    container:
+      image: node:18-alpine                # But job's steps run in this container
+      options: --cpus 2                    # Example Docker run option
+
+    steps:
+      - uses: actions/checkout@v4          # Code available inside container FS
+      - run: node -v                       # Node from image
+      - run: npm ci
+      - run: npm test
+</code></pre>
+
+      <h3>8.2 Service containers (e.g. Postgres for integration tests)</h3>
+      <p>
+        Service containers are perfect when your tests need external dependencies such as databases, message brokers or caches.
+        Each service gets a logical name and is reachable over the network from your main job.
+      </p>
+      <pre><code># .github/workflows/service-containers.yml
+name: Service Containers
+
+on: [push]
+
+jobs:
+  integration-tests:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:                            # Logical name for this service
+        image: postgres:15                 # Docker image
+        env:
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: test
+          POSTGRES_DB: app_db
+        ports:
+          - 5432:5432                      # Map container port to job network
+        options: &gt;-
+          --health-cmd="pg_isready"        # Healthcheck to wait until DB is ready
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci
+      - run: npm run test:integration      # Tests connect to postgres:5432
+</code></pre>
+    </section>
+
+    <!-- 9. Custom actions – now deeper -->
+    <section id="custom-actions">
+      <h2>9. Building & Using Custom Actions (In Depth)</h2>
+      <p>
+        So far we’ve used existing actions. In this chapter, you learn how to <strong>create your own actions</strong>, so your
+        organisation can reuse common logic. The main “types” are:
+      </p>
+      <ul>
+        <li><strong>Composite actions</strong> – YAML only, just a reusable bundle of steps.</li>
+        <li><strong>JavaScript actions</strong> – Node.js code packaged as an action.</li>
+        <li><strong>Docker actions</strong> – run inside a custom container (for more advanced needs).</li>
+      </ul>
+
+      <h3>9.1 Composite action (YAML-only, easiest to start)</h3>
+      <p>
+        Composite actions are great for <strong>DRY-ing up repeated workflows</strong>.  
+        You keep the logic in one place and reuse it via <code>uses: ./path/to/action</code>.
+      </p>
+      <pre><code># .github/actions/setup-node-deps/action.yml
+name: 'Setup Node &amp; Install Deps'             # Display name
+description: 'Reusable setup for Node projects'
+inputs:
+  node-version:                                # Action input
+    description: 'Node version to use'
+    required: true
+
+runs:
+  using: "composite"                           # Composite: a set of steps
+  steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}  # Use input value
+
+    - name: Install dependencies
+      run: npm ci
+      shell: bash
+</code></pre>
+
+      <h3>9.2 Using the composite action in a workflow</h3>
+      <p>
+        Once defined, your composite action behaves like any other action.  
+        You reference it by a <strong>relative path</strong> in the same repo or by <strong>owner/repo@version</strong> when it’s published.
+      </p>
+      <pre><code># .github/workflows/use-custom-action.yml
+name: Use Custom Action
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup via custom action
+        uses: ./.github/actions/setup-node-deps   # Path to local action
+        with:
+          node-version: 18                        # Provide required input
+
+      - run: npm test
+</code></pre>
+
+      <h3>9.3 JavaScript action (high-level idea)</h3>
+      <p>
+        JavaScript actions let you write more complex logic using Node.js.  
+        They’re ideal when you need:
+      </p>
+      <ul>
+        <li>Rich input/output handling.</li>
+        <li>HTTP calls, filesystem access, etc.</li>
+        <li>To distribute the action separately (for example via Marketplace).</li>
+      </ul>
+      <pre><code># action.yml in my-org/hello-js-action
+name: 'Hello JS Action'
+description: 'Example JavaScript action'
+inputs:
+  name:
+    description: 'Name to greet'
+    required: true
+runs:
+  using: 'node16'
+  main: 'dist/index.js'                 # Compiled JS entrypoint (for example from src/index.ts)
+</code></pre>
+
+      <p>Inside <code>dist/index.js</code> you would use the <code>@actions/core</code> package to read inputs, log output, and mark the action success/failure.</p>
+
+      <pre><code>// dist/index.js (simplified example)
+const core = require('@actions/core');
+
+async function run() {
+  try {
+    const name = core.getInput('name');        // Read input defined in action.yml
+    core.info(`Hello ${name} from JavaScript action!`);  // Log info
+  } catch (error) {
+    core.setFailed(error.message);             // Mark action failed
+  }
+}
+
+run();
+</code></pre>
+
+      <div class="highlight-box">
+        <strong>Conceptual difference:</strong> Composite actions = YAML wrapper around multiple steps. JavaScript / Docker actions = executable code packaged as an action, ideal for complex logic or distribution via Marketplace.
+      </div>
+    </section>
+
+    <!-- 10. Security & permissions – deeper -->
+    <section id="security-permissions">
+      <h2>10. Security & Permissions (In Depth)</h2>
+
+      <p>
+        GitHub Actions is powerful, but that also means it can <strong>modify your repo, environments and infrastructure</strong>.  
+        This chapter covers the key security concepts:
+      </p>
+      <ul>
+        <li><strong>GITHUB_TOKEN permissions</strong> – what the automatic token can do by default.</li>
+        <li><strong>Protected environments</strong> – manual approvals and env-specific secrets.</li>
+        <li><strong>Best practices</strong> – how to minimise risk when writing workflows.</li>
+      </ul>
+
+      <h3>10.1 GITHUB_TOKEN permissions</h3>
+      <p>
+        Each workflow run gets a special token called <code>GITHUB_TOKEN</code>.  
+        You can control its “type” of access (read/write) using the <code>permissions:</code> block at workflow or job level.
+      </p>
+      <pre><code># .github/workflows/permissions.yml
+name: Permissions Fundamentals
+
+on: [push]
+
+permissions:                               # Default token permissions for all jobs
+  contents: read                           # e.g. clone repo, read files
+  pull-requests: write                     # e.g. comment on PRs
+  deployments: write                       # e.g. create deployment records
+
+jobs:
+  secure-job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "Running with least-privilege GITHUB_TOKEN"
+</code></pre>
+
+      <h3>10.2 Protected environments (manual approvals + env-specific secrets)</h3>
+      <p>
+        <strong>Environments</strong> in GitHub (staging, production, etc.) can require approvals before jobs using them run.
+        They also allow you to attach env-specific secrets (for example <code>PROD_DB_PASSWORD</code>).
+      </p>
+      <pre><code># .github/workflows/protected-environment.yml
+name: Protected Environment
+
+on:
+  push:
+    branches: [ main ]                     # Only from main
+
+jobs:
+  deploy-prod:
+    runs-on: ubuntu-latest
+    environment:
+      name: production                     # Env configured in repo settings
+      url: https://app.example.com
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy to production
+        run: ./deploy-prod.sh              # Executes only after required reviewers approve
+        # Environment-level secrets (e.g. PROD_DB_PASSWORD) available as secrets.*
+</code></pre>
+
+      <h3>10.3 Security best-practice checklist</h3>
+      <ul>
+        <li>Use <code>permissions:</code> to minimize what <code>GITHUB_TOKEN</code> can do.</li>
+        <li>Keep all secrets in GitHub Secrets (repo/org/env) and never in code.</li>
+        <li>Pin all third-party actions to tags or SHAs (avoid <code>@main</code>).</li>
+        <li>Use OIDC for short-lived cloud credentials instead of long-lived keys.</li>
+        <li>Enable built-in security features (code scanning, Dependabot, secret scanning).</li>
+      </ul>
+    </section>
+
+    <!-- 11. Debugging & Interview -->
+    <section id="debugging-interview">
+      <h2>11. Debugging Patterns & Interview Phrases</h2>
+
+      <p>
+        Workflows will break. This chapter focuses on <strong>debugging techniques</strong> and some phrases that help you
+        explain GitHub Actions clearly in interviews or design reviews.
+      </p>
+      <ul>
+        <li>How to <strong>inspect contexts</strong> to see exactly what event data looks like.</li>
+        <li>How to add <strong>extra logging</strong> to flaky steps.</li>
+        <li>How to <strong>talk about</strong> GitHub Actions at a high level.</li>
+      </ul>
+
+      <p><em>Example: workflow you can run manually to dump context and log flaky behaviour:</em></p>
+      <pre><code># .github/workflows/debugging.yml
+name: Debugging Patterns
+
+on: [workflow_dispatch]                        # Run manually from the UI
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print full GitHub context
+        run: echo '${{ toJson(github) }}'      # See event payload, refs, etc.
+
+      - name: Extra logging around flaky script
+        run: |
+          echo "Starting script at $(date)"
+          ./flaky-script.sh || echo "Script exited with code $?"
+          echo "Finished at $(date)"
+</code></pre>
+
+      <div class="highlight-box">
+        <strong>Interview soundbites:</strong>
+        <ul>
+          <li>“GitHub Actions executes workflows on runners in response to events. Workflows are composed of jobs, which contain steps that run actions or shell commands.”</li>
+          <li>“We use contexts &amp; expressions to make workflows dynamic (branch-based behavior, conditional deploys, path filters).”</li>
+          <li>“We treat CI/CD as code: workflows and custom actions live in the repo, are reviewed, versioned, and shared across projects.”</li>
+        </ul>
+      </div>
+    </section>
+
+  </div>
+</div>
+</body>
+</html>

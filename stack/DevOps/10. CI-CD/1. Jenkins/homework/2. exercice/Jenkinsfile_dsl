@@ -1,0 +1,40 @@
+pipeline {
+  agent any
+  stages {
+    stage('Job DSL') {
+      steps {
+        jobDsl scriptText: '''
+          def jobName = "java-maven-app-freestyle-from-dsl"
+          def repoUrl = "https://gitlab.endava.com/endava-university/regional-school-of-devops/ci-cd-with-jenkins.git"
+
+          job(jobName) {
+            description("Job DSL for java-maven-app")
+            label("jenkinsnode1")
+
+            scm {
+              git {
+                remote { url(repoUrl); 
+                credentials("gitlab-pat") 
+                }
+                branches("*/main")
+              }
+            }
+
+            steps {
+              maven {
+                mavenInstallation("maven-3.9")
+                rootPOM("pom.xml")
+                goals("clean test")
+              }
+            }
+
+            publishers {
+              archiveJunit("target/surefire-reports/*.xml") {
+              }
+            }
+          }
+        '''
+      }
+    }
+  }
+}

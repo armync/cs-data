@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Networking Essentials</title>
+<style>
+  :root { --bg:#0b0f14; --panel:#121821; --soft:#1a2230; --text:#e6edf3; --muted:#9fb1c6; --accent:#4dabf7; --accent-2:#94f7d0; --border:#263041; --code-bg:#0e141b; --good:#2fd27a; --warn:#ffd43b; --bad:#ff6b6b; }
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;overflow-x:hidden}
+  header{background:var(--panel);border-bottom:1px solid var(--border);text-align:center;padding:24px 16px}
+  h1{font-size:clamp(28px,3.6vw,44px);margin:0 0 6px}
+  .subtitle{color:var(--muted);max-width:1000px;margin:0 auto}
+  main{max-width:1100px;margin:0 auto;padding:26px 16px;box-sizing:border-box}
+  section{background:var(--panel);border:1px solid var(--border);border-radius:18px;margin:18px 0;padding:20px}
+  h2{color:var(--accent);margin:0 0 6px}
+  h3{margin:14px 0 6px}
+  .lead{color:var(--muted);margin:0 0 12px}
+  .callout{border-left:4px solid var(--accent);background:color-mix(in oklab,var(--accent) 8%, var(--panel));padding:12px;border-radius:10px;margin:14px 0}
+  .warn{border-left-color:var(--warn);background:color-mix(in oklab,var(--warn) 14%, var(--panel))}
+  .good{border-left-color:var(--good);background:color-mix(in oklab,var(--good) 12%, var(--panel))}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media (max-width: 900px){.grid{grid-template-columns:1fr}}
+  pre{background:var(--code-bg);border:1px solid var(--border);border-radius:12px;padding:12px;overflow:auto;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13.5px}
+  code{white-space:pre}
+  table{width:100%;border-collapse:collapse;margin:10px 0;border:1px solid var(--border)}
+  th,td{padding:10px;border:1px solid var(--border);text-align:left}
+  th{background:var(--soft)}
+  details{border:1px dashed var(--border);border-radius:12px;padding:10px 12px;margin:10px 0}
+  details>summary{cursor:pointer;color:var(--accent)}
+  .pill{display:inline-block;border:1px solid var(--border);border-radius:999px;padding:2px 10px;margin:2px 4px;background:var(--soft);color:var(--muted);font-size:12px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Networking Essentials - Complete Basics</h1>
+  <div class="subtitle">A modern networking reference and learning guide — from fundamentals to advanced topics. Each section builds on the previous: it explains concepts clearly, shows practical commands, highlights real-world behaviors, and warns about common pitfalls.</div>
+</header>
+<main>
+
+  <section id="fundamentals">
+    <h2>Networking Fundamentals (Ground Zero)</h2>
+    <p class="lead">Start here if you want the shortest path to being productive. Keep these fundamentals in mind while you read the rest.</p>
+    <div class="grid">
+      <div>
+        <h3>What is a network?</h3>
+        <ul>
+          <li><strong>Nodes</strong> (hosts, routers, switches) exchange data over <strong>links</strong> (copper, fiber, radio).</li>
+          <li>Each link has limits: <span class="pill">bandwidth</span> (capacity), <span class="pill">latency</span> (one‑way delay), <span class="pill">jitter</span> (latency variance), <span class="pill">loss</span> (drops).</li>
+          <li><strong>Throughput</strong> is what you actually transfer; it is bounded by the slowest segment and by protocol behavior (e.g., TCP ramp‑up).</li>
+        </ul>
+        <h3>Traffic patterns</h3>
+        <ul>
+          <li><strong>Unicast</strong>: one‑to‑one (most traffic).</li>
+          <li><strong>Broadcast</strong>: one‑to‑all on a LAN (IPv4 ARP, DHCP discover).</li>
+          <li><strong>Multicast</strong>: one‑to‑many (streaming, routing protocols).</li>
+          <li><strong>Anycast</strong>: same IP announced by many nodes; client reaches the “closest” one (e.g., public DNS resolvers).</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Links & topologies</h3>
+        <ul>
+          <li><strong>Duplex</strong>: full‑duplex avoids collisions; duplex mismatch causes severe loss/latency.</li>
+          <li><strong>Topologies</strong>: star (common for access), leaf‑spine (DC), ring/mesh (resiliency).</li>
+          <li><strong>Media</strong>: UTP (Cat5e/6/6A), fiber (SMF/MMF), Wi‑Fi (802.11). Each has its own MTU and error profile.</li>
+        </ul>
+        <h3>Fast troubleshooting (host)</h3>
+        <pre><code># Addresses & links
+ip -br a
+ip -br link
+
+# Routes (longest‑prefix match decides)
+ip -br r
+ip route get 8.8.8.8
+
+# Reachability & path insights
+ping 1.1.1.1
+tracepath example.com
+
+# Sockets & states
+ss -tuna | head
+</code></pre>
+        <div class="callout good"><strong>Golden rule:</strong> troubleshoot layer‑by‑layer. Verify link (L1/2) → addressing & routes (L3) → ports/state (L4) → app behavior (L7).</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="osi">
+  <h2>OSI vs TCP/IP</h2>
+  <p class="lead">The <strong>OSI (Open Systems Interconnection)</strong> model breaks down networking into seven conceptual layers. Each layer provides services to the one above it and relies on the one below it. Understanding them helps pinpoint where network problems or optimizations occur.</p>
+
+  <table>
+    <thead>
+      <tr><th>Layer</th><th>Name</th><th>Primary Role</th><th>Common Protocols / Examples</th><th>Real-World Usage</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>7</td><td><b>Application</b></td><td>Interface between user apps and the network</td><td>HTTP/S, DNS, SMTP, SSH, FTP, SNMP</td><td>Web browsers, email clients, APIs, remote access — user-facing protocols.</td></tr>
+      <tr><td>6</td><td><b>Presentation</b></td><td>Formats and secures data for the application</td><td>TLS/SSL, JPEG, MPEG, ASCII, encryption libraries</td><td>Encryption, compression, and encoding ensure data compatibility and privacy.</td></tr>
+      <tr><td>5</td><td><b>Session</b></td><td>Manages dialogs between endpoints</td><td>TLS session resumption, NetBIOS, RPC, QUIC sessions</td><td>Keeps communication alive and synchronized between hosts.</td></tr>
+      <tr><td>4</td><td><b>Transport</b></td><td>Provides end-to-end data delivery</td><td>TCP, UDP, QUIC, SCTP</td><td>Ensures reliable or fast transmission. TCP handles order/retransmission; UDP focuses on speed (e.g., VoIP, games).</td></tr>
+      <tr><td>3</td><td><b>Network</b></td><td>Determines best path through the network</td><td>IP (IPv4/6), ICMP, OSPF, BGP</td><td>Routers operate here; handles addressing, routing, and fragmentation.</td></tr>
+      <tr><td>2</td><td><b>Data Link</b></td><td>Moves frames within a local network</td><td>Ethernet, Wi-Fi (802.11), VLAN, PPP</td><td>Switches use this layer for MAC addressing, frame delivery, and local error checking.</td></tr>
+      <tr><td>1</td><td><b>Physical</b></td><td>Transmits raw bits over media</td><td>Copper, Fiber, Radio, DSL</td><td>Cables, connectors, signal strength, and hardware properties are defined here.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>How to Think in Layers (Modern Troubleshooting)</h3>
+  <ul>
+    <li><b>L1 – Physical:</b> Check cables, link lights, and Wi‑Fi signal. <code>ethtool</code> or NIC LEDs verify physical link status.</li>
+    <li><b>L2 – Data Link:</b> Frames and MACs. Detect VLAN mismatches or STP loops. Use <code>ip link</code> or switch port counters.</li>
+    <li><b>L3 – Network:</b> IP addressing and routing. Validate gateways, subnets, and routes using <code>ip route</code>, <code>ping</code>, <code>traceroute</code>.</li>
+    <li><b>L4 – Transport:</b> Ports and sessions. Identify blocked ports or handshake failures. Check with <code>ss</code>, <code>nc</code>, <code>tcpdump</code>.</li>
+    <li><b>L5–L7 – Upper Layers:</b> Application-level behavior. Debug TLS, HTTP, or DNS using <code>curl -v</code> or <code>dig</code>.</li>
+  </ul>
+
+  <h3>OSI vs TCP/IP Mapping</h3>
+  <table>
+    <thead><tr><th>OSI Layers</th><th>TCP/IP Layers</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>7–5</td><td><b>Application</b></td><td>User-facing protocols such as HTTP, DNS, SSH, and TLS.</td></tr>
+      <tr><td>4</td><td><b>Transport</b></td><td>Responsible for end-to-end communication (TCP/UDP/QUIC).</td></tr>
+      <tr><td>3</td><td><b>Internet</b></td><td>Handles logical addressing and routing (IP, ICMP).</td></tr>
+      <tr><td>2–1</td><td><b>Network Access / Link</b></td><td>Physical media and framing (Ethernet, Wi-Fi).</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Practical Use Cases by Layer</h3>
+  <ul>
+    <li><b>L1–L2:</b> Diagnosing Wi-Fi interference or duplex mismatch.</li>
+    <li><b>L3:</b> Fixing routing or VPN connectivity.</li>
+    <li><b>L4:</b> Troubleshooting firewalls and port filtering.</li>
+    <li><b>L7:</b> Debugging API or TLS issues.</li>
+  </ul>
+</section>
+
+
+  <section id="ethernet-arp">
+    <h2>Ethernet, MAC, and ARP/ND</h2>
+    <p class="lead"><strong>Ethernet</strong> moves frames inside a local network (LAN). Delivery is based on <strong>MAC addresses</strong>. IP needs a MAC destination to put a packet on the wire, which is resolved via <strong>ARP</strong> (IPv4) or <strong>NDP</strong> (IPv6).</p>
+    <h3>Definitions</h3>
+    <ul>
+      <li><strong>MAC address</strong>: a 48‑bit identifier written as 6 hex bytes (e.g., <code>00:1C:42:2E:60:4A</code>). The least‑significant bit of the first byte signals unicast (0) vs multicast (1). <em>ff:ff:ff:ff:ff:ff</em> is broadcast.</li>
+      <li><strong>ARP</strong> (Address Resolution Protocol, IPv4): asks “Who has IP X.Y.Z.W? Tell me your MAC.” Replies are cached in the ARP table. Supports <em>gratuitous ARP</em> (announce your own mapping) and can be abused by ARP spoofing if L2 isn’t protected.</li>
+      <li><strong>NDP</strong> (Neighbor Discovery Protocol, IPv6): a set of ICMPv6 messages — Neighbor Solicitation/Advertisement (IPv6’s ARP), Router Solicitation/Advertisement (gateway + prefix info), and Duplicate Address Detection (DAD).</li>
+      <li><strong>OUI</strong>: the first 24 bits of a MAC point to the vendor; useful to spot device types or anomalies.</li>
+    </ul>
+<pre><code># Show neighbor cache (ARP or NDP)
+ip neigh                    # list IP→MAC entries
+
+# Clear cache and force rediscovery
+sudo ip neigh flush all
+
+# Sniff ARP/NDP on an interface (verify resolution on the wire)
+sudo tcpdump -n -e -i eth0 '(arp or icmp6)'
+</code></pre>
+    <div class="callout warn"><strong>Broadcast containment:</strong> ARP/NDP and unknown‑unicast floods grow with L2 size. Use VLANs to limit blast radius.</div>
+  </section>
+
+  <section id="ip-addressing">
+    <h2>IP Addressing (IPv4 & IPv6)</h2>
+    <p class="lead"><strong>IP</strong> assigns logical addresses and enables routing between networks. A <strong>subnet</strong> is a group of addresses that share a network prefix. A <strong>default gateway</strong> is the router a host uses to reach non‑local subnets.</p>
+    <div class="grid">
+      <div>
+        <h3>IPv4</h3>
+        <ul>
+          <li>32‑bit dotted decimal (e.g., <code>192.0.2.10</code>).</li>
+          <li>Important ranges: loopback <code>127.0.0.0/8</code>, link‑local <code>169.254.0.0/16</code>, private <code>10/8</code>, <code>172.16/12</code>, <code>192.168/16</code>.</li>
+          <li><strong>TTL</strong> (time to live): decremented at each router to prevent loops; when it hits 0 the packet is dropped and an ICMP error may be sent back.</li>
+          <li>Fragmentation can happen on routers if DF is not set; MSS influences TCP payload size.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>IPv6</h3>
+        <ul>
+          <li>128‑bit hexadecimal, zero‑compression allowed (e.g., <code>2001:db8::1</code>).</li>
+          <li>Address scopes: Global Unicast (<code>2000::/3</code>), Unique Local (<code>fd00::/8</code> typical), Link‑Local (<code>fe80::/10</code>).</li>
+          <li><strong>Hop Limit</strong>: IPv6’s TTL equivalent.</li>
+          <li><strong>SLAAC</strong>: hosts self‑assign from Router Advertisements; DHCPv6 is used for options and/or addresses when required.</li>
+          <li>No router‑side fragmentation; oversized packets trigger ICMPv6 <em>Packet Too Big</em> to the sender.</li>
+        </ul>
+      </div>
+    </div>
+<pre><code># Inspect interfaces and addresses
+ip -br a                     # brief view of IPs per interface
+
+# View routes (longest‑prefix‑match decides which is used)
+ip -br r
+
+# See the chosen egress and next hop for a destination
+ip route get 8.8.8.8
+
+# IPv6 example
+ip -6 route get 2001:4860:4860::8888
+</code></pre>
+  </section>
+
+  <section id="subnets-vlsm">
+    <h2>Subnets, CIDR, and VLSM</h2>
+    <p class="lead"><strong>CIDR</strong> notation (<code>/n</code>) states how many bits are network. <strong>VLSM</strong> lets you carve a prefix into various sizes to fit host counts and reduce waste.</p>
+    <table>
+      <thead><tr><th>CIDR</th><th>IPv4 Mask</th><th>Usable Hosts*</th><th>Common Use</th></tr></thead>
+      <tbody>
+        <tr><td>/8</td><td>255.0.0.0</td><td>16,777,214</td><td>Large private blocks</td></tr>
+        <tr><td>/16</td><td>255.255.0.0</td><td>65,534</td><td>Campuses / regions</td></tr>
+        <tr><td>/24</td><td>255.255.255.0</td><td>254</td><td>Typical VLAN</td></tr>
+        <tr><td>/26</td><td>255.255.255.192</td><td>62</td><td>Servers / access layers</td></tr>
+        <tr><td>/28</td><td>255.255.255.240</td><td>14</td><td>Management / IPMI</td></tr>
+        <tr><td>/30</td><td>255.255.255.252</td><td>2</td><td>Point‑to‑point</td></tr>
+        <tr><td>/32</td><td>255.255.255.255</td><td>1</td><td>Loopback/host route</td></tr>
+      </tbody>
+    </table>
+    <p class="lead" style="margin-top:8px">*Usable counts exclude network/broadcast for /30 and larger. For dedicated PtP links, /31 is also valid (two host addresses, no broadcast), but many environments still standardize on /30.</p>
+<pre><code># Calculate subnet details
+ipcalc 10.0.0.0/24
+
+# Split a /24 into 4 × /26 blocks
+ipcalc 10.0.0.0/24 split 4
+
+# IPv6 planning tip: /64 per LAN (required by SLAAC). Larger delegations like /56 or /48 are carved into /64s for segments.
+</code></pre>
+  </section>
+
+  <section id="icmp-mtu">
+    <h2>ICMP, MTU, MSS, PMTUD</h2>
+    <p class="lead"><strong>ICMP</strong> (Internet Control Message Protocol) carries network diagnostics and error reporting — it’s how the network tells the sender what went wrong.</p>
+
+    <!-- NEW: Short definitions & comparison table -->
+    <div class="grid">
+      <div>
+        <h3>Quick definitions</h3>
+        <ul>
+          <li><strong>MTU (Maximum Transmission Unit)</strong>: the largest payload a link‑layer frame can carry on a single hop. Common Ethernet MTU = <code>1500</code>; tunnels/VPNs often reduce this (e.g., <code>1420–1450</code>).</li>
+          <li><strong>MSS (Maximum Segment Size)</strong>: the maximum TCP <em>payload</em> per segment. Rough rule on Ethernet: <code>MSS ≈ MTU − 20 (IP) − 20 (TCP) = 1460</code>. Options (e.g., TCP timestamps) lower it slightly.</li>
+          <li><strong>PMTUD (Path MTU Discovery)</strong>: the sender learns the smallest MTU along the path and adjusts packet/TCP sizes. In IPv4 it relies on ICMP “fragmentation needed” (DF set). In IPv6, routers never fragment; they return <em>ICMPv6 Packet Too Big</em> with the usable MTU.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>MTU ↔ MSS examples</h3>
+        <table>
+          <thead><tr><th>Link MTU</th><th>IP hdr</th><th>TCP hdr</th><th>Typical MSS</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>1500</td><td>20</td><td>20</td><td>1460</td><td>Classic Ethernet</td></tr>
+            <tr><td>1492</td><td>20</td><td>20</td><td>1452</td><td>PPPoE overhead</td></tr>
+            <tr><td>1450</td><td>20</td><td>20</td><td>1410</td><td>Typical VPN/tunnel</td></tr>
+            <tr><td>9000</td><td>20</td><td>20</td><td>8960</td><td>Jumbo frames (L2/L3 must match)</td></tr>
+          </tbody>
+        </table>
+        <div class="callout warn">If ICMP is filtered, PMTUD fails → symptoms: TLS stalls, partial loads, API timeouts. On edges, consider <em>MSS clamping</em> so TCP never exceeds the true path size.</div>
+      </div>
+    </div>
+
+    <h3>Key ICMPv4 Types</h3>
+    <ul>
+      <li><strong>Echo Request/Reply (8/0)</strong> — reachability test (<code>ping</code>).</li>
+      <li><strong>Destination Unreachable (3)</strong> — codes include <em>network unreachable</em>, <em>host unreachable</em>, <em>protocol/port unreachable</em>, <em>fragmentation needed</em>.</li>
+      <li><strong>Time Exceeded (11)</strong> — TTL expired in transit (used by traceroute/tracepath).</li>
+      <li><strong>Redirect (5)</strong> — router advises a better next hop (often disabled).</li>
+      <li><strong>Parameter Problem (12)</strong> — header issue detected.</li>
+    </ul>
+    <h3>Key ICMPv6 (incl. NDP)</h3>
+    <ul>
+      <li><strong>Echo Request/Reply (128/129)</strong> — reachability test.</li>
+      <li><strong>Packet Too Big (2)</strong> — informs sender of MTU for Path MTU Discovery.</li>
+      <li><strong>Time Exceeded (3)</strong> — hop limit expired.</li>
+      <li><strong>Parameter Problem (4)</strong> — header field error.</li>
+      <li><strong>Neighbor Solicitation/Advertisement</strong> — address resolution (like ARP) and DAD.</li>
+      <li><strong>Router Solicitation/Advertisement</strong> — prefixes, default gateway, and flags for SLAAC/DHCPv6.</li>
+    </ul>
+<pre><code># Reachability & PMTUD checks (IPv4)
+ping 8.8.8.8
+ping -M do -s 1472 8.8.8.8     # 1472 (payload) + 28 (IP+ICMP) ≈ 1500 MTU with DF
+
+# Path & MTU hints
+tracepath example.com
+
+# IPv6 size test; if oversize, expect ICMPv6 Packet Too Big
+ping -6 -s 1452 2001:4860:4860::8888
+
+# Adjust interface MTU when the path requires it
+sudo ip link set eth0 mtu 1400
+</code></pre>
+  </section>
+
+  <section id="tcp-udp">
+    <h2>TCP vs UDP</h2>
+    <p class="lead"><strong>Transport layer</strong> protocols move application data between sockets (IP + port). TCP prioritizes reliability and ordering; UDP prioritizes low overhead and timeliness.</p>
+    <h3>TCP — What it is and how it flows</h3>
+    <ul>
+      <li><strong>Connection setup</strong>: 3‑way handshake (SYN → SYN‑ACK → ACK).</li>
+      <li><strong>Reliability</strong>: sequence numbers, ACKs, retransmissions, selective ACK (SACK).</li>
+      <li><strong>Flow control</strong>: the receiver window advertises how much data it can buffer; window scaling allows high‑bandwidth links.</li>
+      <li><strong>Congestion control</strong>: sender adapts to loss/latency to avoid overloading the path.</li>
+      <li><strong>Close</strong>: FIN/ACK graceful teardown or RST for abrupt close.</li>
+      <li><strong>Examples</strong>: HTTP(S), SSH, databases.</li>
+    </ul>
+<pre><code># Watch the handshake and flags on the wire
+sudo tcpdump -n -i eth0 'tcp[tcpflags] & (tcp-syn|tcp-ack|tcp-fin|tcp-rst) != 0'
+
+# List established TCP sessions
+ss -t state established | head
+
+# Test TCP port reachability
+nc -vz example.com 443
+</code></pre>
+    <h3>UDP — Simple and fast</h3>
+    <ul>
+      <li>No handshake, no retransmission or ordering by default.</li>
+      <li>Application handles loss if it matters.</li>
+      <li><strong>Examples</strong>: DNS, VoIP, game traffic, streaming; QUIC (used by HTTP/3) builds reliability and encryption over UDP.</li>
+    </ul>
+<pre><code># Test UDP port reachability
+nc -vzu example.com 53
+</code></pre>
+  </section>
+
+  <section id="vlans">
+    <h2>VLANs, Trunks & Spanning Tree</h2>
+    <p class="lead"><strong>VLAN</strong>: a logical Layer‑2 segment. <strong>Trunk</strong>: a link carrying multiple VLANs via 802.1Q tags. <strong>Spanning Tree</strong>: prevents loops by blocking redundant paths.</p>
+    <h3>Concepts</h3>
+    <ul>
+      <li><strong>Access port</strong>: sends/receives untagged frames for a single VLAN.</li>
+      <li><strong>Trunk port</strong>: carries tagged frames for many VLANs; avoid permissive native VLANs.</li>
+      <li><strong>STP/RSTP/MST</strong>: elects a root bridge; ports take roles (root, designated, alternate) to avoid loops.</li>
+      <li><strong>LACP (802.3ad)</strong>: bundles links into one logical interface for throughput and redundancy.</li>
+    </ul>
+<pre><code># Create VLAN 20 sub‑interface on a host
+sudo ip link add link eth0 name eth0.20 type vlan id 20
+
+# Assign an IP inside the VLAN
+sudo ip addr add 192.168.20.1/24 dev eth0.20
+
+# Enable the interface
+sudo ip link set eth0.20 up
+</code></pre>
+    <div class="callout">Tip: keep VLAN allow‑lists symmetric on trunks across switches to prevent orphan VLANs and blackholes.</div>
+  </section>
+
+  <section id="dhcp">
+    <h2>DHCP (DORA)</h2>
+    <p class="lead"><strong>DHCP</strong> automatically assigns IP configuration. A <strong>lease</strong> includes address, mask/prefix, default gateway, DNS, and more. <strong>Reservations</strong> tie a MAC to a fixed address. <strong>Relay</strong> forwards requests across subnets.</p>
+    <ul>
+      <li><strong>Discover</strong> — client broadcasts to find a server. Source IP <code>0.0.0.0</code>, dest <code>255.255.255.255</code> (or via relay).</li>
+      <li><strong>Offer</strong> — server proposes a lease (IP + options) and holds it temporarily.</li>
+      <li><strong>Request</strong> — client asks to use the offered address (can include server identifier).</li>
+      <li><strong>Acknowledge</strong> — server confirms; client configures address and starts the lease timers (T1/T2).</li>
+    </ul>
+    <div class="callout">Renewal is unicast <em>Request/ACK</em> to the original server at <strong>T1</strong>; at <strong>T2</strong>, the client retries with broadcast if needed. Declines happen if Duplicate Address Detection fails.</div>
+<pre><code># Release and request a lease on interface eth0
+sudo dhclient -r eth0
+
+sudo dhclient eth0
+
+# Inspect logs for DORA messages
+journalctl -b | grep -i dhcp
+</code></pre>
+    <details><summary>Common options (numbers)</summary>
+      <p>3 = router (gateway), 6 = DNS servers, 15 = DNS domain, 42 = NTP, 119 = domain search list.</p>
+    </details>
+  </section>
+
+  <section id="routing">
+    <h2>Routing (Static & Dynamic)</h2>
+    <p class="lead"><strong>Routing</strong> chooses the next hop using <em>longest‑prefix match</em>. The forwarding table (FIB) is programmed from routing decisions (RIB). Policies can steer traffic based on source/interface.</p>
+    <div class="grid">
+      <div>
+        <h3>Static & Policy</h3>
+<pre><code># Show routes
+ip route show
+
+# Default route (send non‑local traffic to the gateway)
+sudo ip route add default via 192.168.1.1
+
+# Specific subnet via another router
+sudo ip route add 10.20.0.0/16 via 192.168.1.254
+
+# Policy routing: use a separate table for traffic from a source IP
+printf "200 app\n" | sudo tee -a /etc/iproute2/rt_tables
+
+sudo ip rule add from 10.0.0.10/32 table app
+
+sudo ip route add default via 10.0.0.1 dev eth1 table app
+</code></pre>
+      </div>
+      <div>
+        <h3>Dynamic (overview)</h3>
+        <ul>
+          <li><strong>OSPF</strong>: link‑state, areas for scale, cost metric, fast convergence.</li>
+          <li><strong>BGP</strong>: policy‑driven between autonomous systems; attributes like local‑pref, MED, AS‑path influence selection; supports ECMP.</li>
+        </ul>
+        <div class="callout">For labs, routing daemons (e.g., FRRouting or Bird) expose CLIs (vtysh, birdc) to inspect neighbors and routes.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="nat">
+  <h2>NAT (Types & Uses)</h2>
+  <p><strong>NAT</strong> (Network Address Translation) modifies IPs and/or ports as packets cross network boundaries.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Changes</th>
+        <th>Direction</th>
+        <th>Typical Use</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><b>SNAT</b></td><td>Source IP</td><td>Outbound</td><td>Private → public with static IP</td></tr>
+      <tr><td><b>Masquerade</b></td><td>Source IP (dynamic)</td><td>Outbound</td><td>WAN IP assigned dynamically</td></tr>
+      <tr><td><b>PAT</b></td><td>Source IP + Port</td><td>Outbound</td><td>Many hosts share one public IP</td></tr>
+      <tr><td><b>DNAT</b></td><td>Destination IP</td><td>Inbound</td><td>Forward traffic to internal host</td></tr>
+      <tr><td><b>Hairpin</b></td><td>DNAT + SNAT</td><td>Internal</td><td>Access internal service via public IP</td></tr>
+      <tr><td><b>1:1 Static</b></td><td>Fixed internal ↔ public</td><td>Both</td><td>DMZ / servers needing stable public IP</td></tr>
+    </tbody>
+  </table>
+
+  <pre><code># Enable IP forwarding
+sudo sysctl -w net.ipv4.ip_forward=1
+
+# SNAT (static IP)
+sudo nft add rule ip nat postrouting oif "eth0" snat to 203.0.113.10
+
+# Masquerade (dynamic)
+sudo nft add rule ip nat postrouting oif "eth0" masquerade
+
+# DNAT (port-forward)
+sudo nft add rule ip nat prerouting iif "eth0" tcp dport 8080 dnat to 192.168.1.10:80
+
+# 1:1 Static NAT
+sudo nft add rule ip nat prerouting  ip daddr 203.0.113.50 dnat to 192.168.1.50
+sudo nft add rule ip nat postrouting ip saddr 192.168.1.50 snat to 203.0.113.50
+</code></pre>
+</section>
+
+  <section id="dns">
+    <h2>DNS (Records, Recursion, Caching)</h2>
+    <p class="lead"><strong>DNS</strong> translates names to data (addresses, mail servers, service records). A <strong>recursive resolver</strong> walks the hierarchy on behalf of clients and caches responses per <strong>TTL</strong>. <strong>Authoritative</strong> servers answer for zones they host.</p>
+    <div class="grid">
+      <div>
+        <table>
+          <thead><tr><th>Type</th><th>Purpose</th><th>Example</th></tr></thead>
+          <tbody>
+            <tr><td>A / AAAA</td><td>IPv4 / IPv6 address</td><td>www → 203.0.113.5 / 2001:db8::5</td></tr>
+            <tr><td>CNAME</td><td>Alias</td><td>app → ghs.googlehosted.com</td></tr>
+            <tr><td>NS</td><td>Delegation</td><td>authoritative servers</td></tr>
+            <tr><td>MX</td><td>Mail exchange</td><td>prio 10 mail.example.com</td></tr>
+            <tr><td>TXT</td><td>Text / SPF</td><td>v=spf1 include:_spf.example.net ~all</td></tr>
+            <tr><td>SRV</td><td>Service discovery</td><td>_sip._tcp.example.com</td></tr>
+            <tr><td>PTR</td><td>Reverse mapping</td><td>5.113.0.203.in-addr.arpa</td></tr>
+            <tr><td>CAA</td><td>CA authorization</td><td>issue "letsencrypt.org"</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+<pre><code># Common lookups
+ dig +short A example.com          # IPv4
+
+ dig +short AAAA example.com       # IPv6
+
+ dig MX example.com                # mail exchangers
+
+ dig +trace example.com            # walk the hierarchy
+
+# Check system resolver
+cat /etc/resolv.conf
+</code></pre>
+        <div class="callout">Split‑horizon DNS: internal and external clients receive different answers by design. Also consider negative caching (NXDOMAIN) which is controlled by TTLs too.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="security">
+    <h2>Security: ACLs, Stateful Firewalls, Security Groups, Zero‑Trust</h2>
+    <p class="lead"><strong>ACLs</strong> match on IPs/ports and permit or deny. <strong>Stateful</strong> engines track connection state to allow return traffic automatically. <strong>Security Groups</strong> apply per interface in clouds. <strong>Zero‑Trust</strong> focuses on identity of user/device and least‑privilege network access.</p>
+<pre><code># Baseline host firewall policy
+sudo nft add table inet filter
+
+sudo nft 'add chain inet filter input { type filter hook input priority 0; policy drop; }'
+
+# Allow established/related
+sudo nft add rule inet filter input ct state established,related accept
+
+# Allow SSH only from an admin subnet
+sudo nft add rule inet filter input tcp dport 22 ip saddr 203.0.113.0/24 accept
+</code></pre>
+  </section>
+
+  <section id="vpn">
+    <h2>VPN (IPsec, TLS, WireGuard)</h2>
+    <p class="lead"><strong>VPNs</strong> create encrypted tunnels across untrusted networks. IPsec (IKEv2 + ESP) integrates with many devices; TLS‑based VPNs are flexible; WireGuard is minimal and fast.</p>
+<pre><code># WireGuard client (example)
+[Interface]
+Address = 10.6.0.2/32
+PrivateKey = &lt;client-priv&gt;
+DNS = 1.1.1.1
+
+[Peer]
+PublicKey = &lt;server-pub&gt;
+AllowedIPs = 0.0.0.0/0, ::/0
+Endpoint = vpn.example.com:51820
+PersistentKeepalive = 25
+</code></pre>
+    <div class="callout warn">Behind NAT? Permit/forward UDP/51820 (WireGuard) or UDP/500,4500 (IKEv2). If MTU is smaller on the path, clamp TCP MSS on the edge to avoid PMTUD issues.</div>
+  </section>
+
+  <section id="wireshark">
+    <h2>Wireshark & tcpdump</h2>
+    <p class="lead">Packet capture proves or disproves hypotheses. <em>Capture filters</em> limit what you record; <em>display filters</em> narrow what you view.</p>
+    <div class="grid">
+      <div>
+<pre><code># Capture to a file for later analysis
+sudo tcpdump -i eth0 -n -w trace.pcapng 'port 80 or port 443'
+
+# Open in Wireshark (GUI)
+wireshark trace.pcapng &
+</code></pre>
+      </div>
+      <div>
+<pre><code># Display filters (Wireshark)
+http &amp;&amp; tcp.flags.syn == 1
+
+(dns.flags.response == 1) &amp;&amp; dns.qry.name == "example.com"
+
+tcp.analysis.retransmission || tcp.analysis.lost_segment
+
+ssl || tls || quic
+</code></pre>
+        <div class="callout">Workflow: reproduce → capture with timestamps → apply filters → validate → write down what changed and why.</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+</body>
+</html>

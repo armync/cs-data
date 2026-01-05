@@ -1,0 +1,107 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Lambda environment variable and API gateway'
+
+Parameters:
+  YourName:
+    Type: String
+    Default: 'Armin'
+    Description: Env variable name
+
+Resources:
+  # Lambda Function
+  NameFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: NameDisplayFunction
+      Runtime: python3.12
+      Handler: index.lambda_handler
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Environment:
+        Variables:
+          YOUR_NAME: !Ref YourName
+      Code:
+        ZipFile: |
+          import os
+          
+          name = os.environ.get('YOUR_NAME')
+          
+          def lambda_handler(event, context):
+              print("In lambda handler")
+              
+              resp = {
+                  "statusCode": 200,
+                  "headers": {
+                      "Access-Control-Allow-Origin": "*",
+                  },
+                  "body": name
+              }
+              
+              return resp
+
+  # IAM role for lambda
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+
+  # API gateway REST API
+  MyApiGateway:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: NameDisplayAPI
+      Description: API to display name from Lambda
+
+  # API gateway Resource (path)
+  ApiResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      RestApiId: !Ref MyApiGateway
+      ParentId: !GetAtt MyApiGateway.RootResourceId
+      PathPart: getname
+
+  # API gateway method (GET)
+  ApiMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref MyApiGateway
+      ResourceId: !Ref ApiResource
+      HttpMethod: GET
+      AuthorizationType: NONE
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${NameFunction.Arn}/invocations
+
+  # API gateway deployment
+  ApiDeployment:
+    Type: AWS::ApiGateway::Deployment
+    DependsOn: ApiMethod
+    Properties:
+      RestApiId: !Ref MyApiGateway
+      StageName: prod
+
+  # Permission for API gateway to invoke Lambda
+  LambdaApiPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref NameFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${MyApiGateway}/*/*
+
+Outputs:
+  ApiUrl:
+    Description: URL API
+    Value: !Sub https://${MyApiGateway}.execute-api.${AWS::Region}.amazonaws.com/prod/getname
+  
+  LambdaFunctionName:
+    Description: Lambda function
+    Value: !Ref NameFunction

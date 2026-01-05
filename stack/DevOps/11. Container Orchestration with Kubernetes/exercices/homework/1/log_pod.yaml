@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: log-check
+  namespace: playground
+spec:
+  serviceAccountName: sa-logs
+  containers:
+    - name: kubectl-client-bitnami
+      image: bitnami/kubectl:latest
+      command: ['sleep', 'infinity']

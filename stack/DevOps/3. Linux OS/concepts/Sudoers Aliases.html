@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"> <html style><!--
+ Page saved with SingleFile 
+ url: https://help.ubuntu.com/community/Sudoers 
+ saved date: Fri Sep 26 2025 10:27:35 GMT+0300 (Eastern European Summer Time)
+--><meta charset=utf-8>
+<meta name=robots content=index,nofollow>
+<title>Sudoers - Community Help Wiki</title>
+<style>hr{height:1pt;background-color:#C1B496;border:0}.u{text-decoration:underline}</style>
+<style media=screen>html,body,div,span,h1,h2,p,pre,a,em,strong,tt,li,ol,ul,table,tbody,tr,td{margin:0;padding:0;border:0;font-weight:inherit;font-style:inherit;font-size:100%;line-height:1;font-family:inherit;text-align:left;vertical-align:baseline}table{border-collapse:collapse;border-spacing:0}ol,ul{list-style:none}body{font-family:"Ubuntu","Ubuntu Beta","Bitstream Vera Sans",DejaVu Sans,Tahoma,sans-serif;color:#333;background:white url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABhJREFUeNpieP/2zX8YYARiBhjAzQEIMADtTxS6xnLn9wAAAABJRU5ErkJggg==);font-size:13px;line-height:1.5;margin:0px;padding:0px}#container{background:#f7f6f5;margin:0px auto 20px;padding:0px;width:976px}#container-inner{background-color:#fff}#container-inner{-moz-border-radius:0px 0px 5px 5px;-webkit-border-bottom-left-radius:5px;-webkit-border-bottom-right-radius:5px;-moz-box-shadow:#bbb 0px 0px 5px;-webkit-box-shadow:#bbb 0px 0px 5px}#cwt-content{width:850px;margin:0 63px 0 63px;background-color:#ffffff;-moz-border-radius:4px;-webkit-border-radius:4px}h1,h2{padding:0;margin:0;font-weight:normal;margin-top:1em}h1{font-size:28px;line-height:32px;margin-top:0em}h2{font-size:24px;line-height:28px;margin-bottom:8px}p{font-size:13px;line-height:1.5;margin-bottom:8px}pre{background-color:#F3F3F3;border:1px dashed #C1B496;font-family:UbuntuMono,courier,monospace;padding:4pt;white-space:pre-wrap;word-wrap:break-word}strong{font-weight:bold}a{color:#DD4814;text-decoration:none}a:hover{text-decoration:underline}ul li{margin-bottom:8px}ul li:last-child{margin-bottom:0px}.clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden}.clearfix{display:inline-block}@media screen and (-webkit-min-device-pixel-ratio:0){}body{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAMAAACeL25MAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAZQTFRF////zsrFFOhhzwAAAA9JREFUeNpiYGTAAAABBgAAJwAC/BnsgQAAAABJRU5ErkJggg==)}#cwt-content table li{line-height:18px}#cwt-content table ol{list-style-type:decimal}#cwt-content pre{line-height:16px;margin-bottom:8px}#cwt-content h1{margin-bottom:8px}#cwt-content td{margin:1px;padding:4px}#cwt-content td{border:1px solid #E9E9E9}#cwt-content ol,#cwt-content ul{margin-bottom:8px;list-style-type:decimal}#cwt-content li{line-height:1.5}#cwt-content ol li,#cwt-content ul li{margin-left:2.4em}#cwt-content tt{font-family:monospace}</style>
+<!--[if lt IE 8]>
+   <link rel="stylesheet" type="text/css" charset="utf-8" media="all" href="/moin_static198/light/css/msie.css">
+<![endif]-->
+<link rel=alternate title="Community Help Wiki: Sudoers" href="https://help.ubuntu.com/community/Sudoers?diffs=1&amp;show_att=1&amp;action=rss_rc&amp;unique=0&amp;page=Sudoers&amp;ddiffs=1" type=application/rss+xml>
+<link rel=Start href=https://help.ubuntu.com/community/CommunityHelpWiki>
+<link rel=Alternate title="Wiki Markup" href="https://help.ubuntu.com/community/Sudoers?action=raw">
+<link rel=Alternate media=print title="Print View" href="https://help.ubuntu.com/community/Sudoers?action=print">
+<link rel=Search href=https://help.ubuntu.com/community/FindPage>
+<link rel=Index href=https://help.ubuntu.com/community/TitleIndex>
+<link rel=Glossary href=https://help.ubuntu.com/community/WordIndex>
+<link rel=Help href=https://help.ubuntu.com/community/HelpOnFormatting>
+<meta name=referrer content=no-referrer><link type=image/x-icon rel="shortcut icon" href="data:image/vnd.microsoft.icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAD///8A////AP///wD///8AyNj2NWaT6ZkiZODdAEzc/wBM3P8iZODdZpPpmc7c9zD///8A////AP///wD///8A////AP///wD2+PwHYI/onwBM3P8ATNz/AEzc/wBM3P8ATNz/AEzc/wBM3P8ATNz/ZpPpmfb4/Af///8A////AP///wD2+PwHOHTjxwBM3P8ATNz/AEzc/wBM3P8ATNz/AEzc/wBM3P/M2Pj/x9T3/QBM3P86dePF+Pn9Bv///wD///8AYI/onwBM3P8ATNz/AEzc/wBM3P9vkuv/n7fx/5+38f82auL/x9T3/8fU9/8ATNz/AEzc/2aT6Zn///8AyNj2NQBM3P8ATNz/AEzc/1uE6P9mjOn/rcHz////////////0t35/1SA5/8pY+D/AEzc/wBM3P8CTtz90t/4K1yM6KMATNz/AEzc/w9V3v/M2Pj/x9T3/xlY3v8fXN//BlDd/1iC5//d5fr/5ez7/yNe4P8ATNz/AEzc/2iU6ZccYN/jAEzc/wBM3P99ne3//////0985v8ATNz/AEzc/wBM3P8ATNz/QHHj//////+ft/H/AEzc/wBM3P8oaOHXBE/c+n2d7f/x9P3/QHHj/+Lp+/8GUN3/AEzc/wBM3P8ATNz/AEzc/wBM3P89b+P/MGfh/wBM3P8ATNz/ClPd9QBM3P+Ipu7/9Pb9/0985v/X4fn/D1Xe/wBM3P8ATNz/AEzc/wBM3P8KUt3/n7fx/5Su8P8ATNz/AEzc/wRP3PoiZODdAEzc/wBM3P+Coe3//////3WX6/8ATNz/AEzc/wBM3P8ATNz/Zozp//////+yxfT/AEzc/wBM3P8oaOHXZpPpmQBM3P8ATNz/FFbe/8nW9//V3/n/GVje/ydh4P8bWt//bJDq//H0/f/r8Pz/LWXh/wBM3P8ATNz/eKDsh87c9zACTtz9AEzc/wBM3P85bOL/W4To/7nJ9f///////////9fh+f9Rfuf/I17g/wBM3P8ATNz/Ak7c/dTg+Cr///8AYpDpnABM3P8ATNz/AEzc/wFO3P9skOr/pbvy/6e98/9Rfuf/0t35/93l+v8BTtz/AEzc/3Kb643///8A////APj5/QZEfOW7AEzc/wBM3P8ATNz/AEzc/wBM3P8ATNz/AEzc/9fh+f/c5Pr6Ak7c/UZ95bn4+f0G////AP///wD///8A////AIyu7nEGUdz4AEzc/wBM3P8ATNz/AEzc/wBM3P8ATNz/BlHc+Iyu7nH///8A////AP///wD///8A////AP///wD///8A2OP4JnKb640yb+LNAk3c/QJN3P0yb+LNcpvrjdjj+Cb///8A////AP///wD///8A+B8AAOAHAADAAwAAgAEAAIABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAQAAgAEAAMADAADwDwAA+B8AAA=="><link rel=canonical href=https://help.ubuntu.com/community/Sudoers><meta http-equiv=content-security-policy content="default-src 'none'; font-src 'self' data:; img-src 'self' data:; style-src 'unsafe-inline'; media-src 'self' data:; script-src 'unsafe-inline' data:; object-src 'self' data:; frame-src 'self' data:;"></head>
+<body lang=en dir=ltr>
+ <div id=leftbanner style=display:none!important>
+ </div>
+ <div id=rightbanner style=display:none!important>
+ </div>
+ <div id=container>
+ <div id=container-inner>
+ <div id=mothership style=display:none!important>
+ 
+ </div>
+ <div id=header style=display:none!important>
+ 
+ 
+ </div>
+ <div id=menu-search style=display:none!important>
+ 
+ 
+ </div>
+ <div id=title style=display:none!important>
+ </div>
+ <div id=cwt-nav3 style=display:none!important>
+ 
+ </div>
+ <div id=cwt-content class="clearfix content-area">
+<div id=page lang=en dir=ltr>
+<div dir=ltr id=content lang=en><span class=anchor id=top></span>
+<span class=anchor id=line-1></span><div><table style=&amp;quot;><tbody><tr> <td style=&amp;quot;><p class=line891><div class=table-of-contents><p class=table-of-contents-heading>Contents<ol><li>
+<a href=#Introduction>Introduction</a><li>
+<a href=#Editing_the_sudoers_file>Editing the sudoers file</a><li>
+<a href=#Aliases>Aliases</a><ol><li>
+<a href=#User_Aliases>User Aliases</a><li>
+<a href=#Runas_Aliases>Runas Aliases</a><li>
+<a href=#Host_Aliases>Host Aliases</a><li>
+<a href=#Command_Aliases>Command Aliases</a></ol><li>
+<a href=#User_Specifications>User Specifications</a><li>
+<a href=#The_Default_Ubuntu_Sudoers_File>The Default Ubuntu Sudoers File</a><li>
+<a href=#Common_Tasks>Common Tasks</a><ol><li>
+<a href=#Shutting_Down_From_The_Console_Without_A_Password>Shutting Down From The Console Without A Password</a><li>
+<a href=#Multiple_tags_on_a_line>Multiple tags on a line</a><li>
+<a href=#Enabling_Visual_Feedback_when_Typing_Passwords>Enabling Visual Feedback when Typing Passwords</a></ol><li>
+<a href=#Troubleshooting>Troubleshooting</a></ol></div></td>
+</tr>
+</table></div><span class=anchor id=line-2></span><span class=anchor id=line-3></span><p class=line867>
+<h1 id=Introduction>Introduction</h1>
+<span class=anchor id=line-4></span><p class=line862>The <tt>/etc/sudoers</tt> file controls who can run what commands as what users on what machines and can also control special things such as whether you need a password for particular commands. The file is composed of aliases (basically variables) and user specifications (which control who can run what). <span class=anchor id=line-5></span><span class=anchor id=line-6></span><p class=line867>
+<h1 id=Editing_the_sudoers_file>Editing the sudoers file</h1>
+<span class=anchor id=line-7></span><p class=line867><span class=u>For Ubuntu 8.04</span>: The default editor for visudo has changed to <strong>vi</strong>, which may cause confusion to those who are not familiar to its command bindings. To change this behavior, open your <tt>~/.bashrc</tt> file, and append the line to the bottom of the file: <span class=anchor id=line-8></span><span class=anchor id=line-9></span><span class=anchor id=line-10></span><pre><span class=anchor id=line-1></span>export EDITOR="nano"</pre><span class=anchor id=line-11></span><p class=line862>If you wish to use another text editor, replace "nano" with any text editor of your choice. Run <tt>source&nbsp;~/.bashrc</tt> to ensure the changes you made have taken effect. <span class=anchor id=line-12></span><span class=anchor id=line-13></span><p class=line862>Now launch visudo with <tt>sudo&nbsp;-E&nbsp;visudo</tt> in the terminal, and put in <tt>Defaults&nbsp;editor=/usr/bin/nano</tt> in the file. <span class=anchor id=line-14></span><span class=anchor id=line-15></span><p class=line874>So the top of the file should now look like this: <span class=anchor id=line-16></span><span class=anchor id=line-17></span><span class=anchor id=line-18></span><span class=anchor id=line-19></span><pre><span class=anchor id=line-1-1></span>Defaults    editor=/usr/bin/nano
+<span class=anchor id=line-2></span>Defaults    env_reset</pre><span class=anchor id=line-20></span><span class=anchor id=line-21></span><p class=line874>Again, if you wish to use another text editor, replace "nano" with the full path to the text editor of your choice. <span class=anchor id=line-22></span>Save, and from now on launching visudo with <tt>gksu&nbsp;visudo</tt> for Ubuntu; <tt>kdesu&nbsp;visudo</tt> for Kubuntu or <tt>sudo&nbsp;visudo</tt> in the terminal will now open with your chosen editor. <span class=anchor id=line-23></span><span class=anchor id=line-24></span><p class=line867><hr><p class=line874> <span class=anchor id=line-25></span><span class=anchor id=line-26></span><p class=line867><span class=u>For Ubuntu 8.10</span>: The default editor for visudo has changed to <strong>sensible-editor</strong>. sensible-editor defaults to nano now, and <strong>select-editor</strong> (which will run by default the first time) allows you to select another one. <span class=anchor id=line-27></span><span class=anchor id=line-28></span><p class=line874>To setup the default editor for visudo. <span class=anchor id=line-29></span><span class=anchor id=line-30></span><span class=anchor id=line-31></span><pre><span class=anchor id=line-1-2></span>sudo select-editor</pre><span class=anchor id=line-32></span><p class=line874>You will get a prompt to choose which editor you want. <span class=anchor id=line-33></span><span class=anchor id=line-34></span><span class=anchor id=line-35></span><span class=anchor id=line-36></span><span class=anchor id=line-37></span><span class=anchor id=line-38></span><span class=anchor id=line-39></span><span class=anchor id=line-40></span><span class=anchor id=line-41></span><pre><span class=anchor id=line-1-3></span>Select an editor.  To change later, run 'select-editor'.
+<span class=anchor id=line-2-1></span>  1. /usr/bin/vim.tiny                  
+<span class=anchor id=line-3></span>  2. /bin/ed                  
+<span class=anchor id=line-4></span>  3. /bin/nano        &lt;---- easiest
+<span class=anchor id=line-5></span>  4. /usr/bin/vim.basic    
+<span class=anchor id=line-6></span>
+<span class=anchor id=line-7></span>Choose 1-4 [3]: </pre><span class=anchor id=line-42></span><p class=line874>If you don't consider yourself competent in any of the enlisted terminal-based editors, it is recommended that you choose option 3, nano. <span class=anchor id=line-43></span><span class=anchor id=line-44></span><p class=line867><hr><p class=line874> <span class=anchor id=line-45></span><span class=anchor id=line-46></span><p class=line862>Because sudo is such a powerful program you must take care not to put anything formatted incorrectly in the file. To prevent any incorrect formatting getting into the file you should edit it using the command <tt>visudo</tt> run as root or by using sudo. <span class=anchor id=line-47></span><span class=anchor id=line-48></span><span class=anchor id=line-49></span><pre><span class=anchor id=line-1-4></span>sudo visudo</pre><span class=anchor id=line-50></span><span class=anchor id=line-51></span><p class=line874>The sudoers file is read in one pass so when multiple entries match for a user, they are applied in order. Where there are conflicting values, the last match is used (which is not necessarily the most specific match). Also you must set an alias before you can use it. Normally you will set the aliases at the beginning of the file and then set the user specifications after all the aliases are laid out. <span class=anchor id=line-52></span><span class=anchor id=line-53></span><p class=line874>You can insert comments by prefixing them with a # but this is also used to specify a uid in certain parts of the file when it is followed by a number. <span class=anchor id=line-54></span><span class=anchor id=line-55></span><p class=line867>
+<h1 id=Aliases>Aliases</h1>
+<span class=anchor id=line-56></span><p class=line874>There are four kinds of aliases: User_Alias, Runas_Alias, Host_Alias and Cmnd_Alias. Each alias definition is of the form: <span class=anchor id=line-57></span><ul><li style=list-style-type:none>Alias_Type NAME = item1, item2, ... <span class=anchor id=line-58></span></ul><p class=line874>Where Alias_Type is one of User_Alias, Runas_Alias, Host_Alias or Cmnd_Alias. A name is a string of uppercase letters, numbers and underscores starting with an uppercase letter. You can put several aliases of the same type on one line by separating them with colons (:) as so: <span class=anchor id=line-59></span><ul><li style=list-style-type:none>Alias_Type NAME1 = item1, item2 : NAME2 = item3 <span class=anchor id=line-60></span><span class=anchor id=line-61></span></ul><p class=line874>You can include other aliases in an alias specification provided they would normally fit there. For example you can use a user alias wherever you would normally expect to see a list of users (for example in a user or runas alias). <span class=anchor id=line-62></span><span class=anchor id=line-63></span><p class=line874>There are also built in aliases called ALL which match everything where they are used. If you used ALL in place of a user list it matches all users for example. If you try and set an alias of ALL it will be overridden by this built in alias so don't even try. <span class=anchor id=line-64></span><span class=anchor id=line-65></span><p class=line867>
+<h2 id=User_Aliases>User Aliases</h2>
+<span class=anchor id=line-66></span><p class=line874>User aliases are used to specify groups of users. You can specify usernames, system groups (prefixed by a %) and netgroups (prefixed by a +) as follows: <span class=anchor id=line-67></span><span class=anchor id=line-68></span><span class=anchor id=line-69></span><span class=anchor id=line-70></span><span class=anchor id=line-71></span><span class=anchor id=line-72></span><span class=anchor id=line-73></span><span class=anchor id=line-74></span><span class=anchor id=line-75></span><span class=anchor id=line-76></span><span class=anchor id=line-77></span><pre><span class=anchor id=line-1-5></span> # Everybody in the system group "admin" is covered by the alias ADMINS
+<span class=anchor id=line-2-2></span> User_Alias ADMINS = %admin
+<span class=anchor id=line-3-1></span> # The users "tom", "dick", and "harry" are covered by the USERS alias
+<span class=anchor id=line-4-1></span> User_Alias USERS = tom, dick, harry
+<span class=anchor id=line-5-1></span> # The users "tom" and "mary" are in the WEBMASTERS alias
+<span class=anchor id=line-6-1></span> User_Alias WEBMASTERS = tom, mary
+<span class=anchor id=line-7-1></span> # You can also use ! to exclude users from an alias
+<span class=anchor id=line-8></span> # This matches anybody in the USERS alias who isn't in WEBMASTERS or ADMINS aliases
+<span class=anchor id=line-9></span> User_Alias LIMITED_USERS = USERS, !WEBMASTERS, !ADMINS</pre><span class=anchor id=line-78></span><span class=anchor id=line-79></span><p class=line867>
+<h2 id=Runas_Aliases>Runas Aliases</h2>
+<span class=anchor id=line-80></span><p class=line874>Runas Aliases are almost the same as user aliases but you are allowed to specify users by uid's. This is helpful as usernames and groups are matched as strings so two users with the same uid but different usernames will not be matched by entering a single username but can be matched with a uid. For example: <span class=anchor id=line-81></span><span class=anchor id=line-82></span><span class=anchor id=line-83></span><span class=anchor id=line-84></span><span class=anchor id=line-85></span><span class=anchor id=line-86></span><span class=anchor id=line-87></span><span class=anchor id=line-88></span><pre><span class=anchor id=line-1-6></span> # UID 0 is normally used for root
+<span class=anchor id=line-2-3></span> # Note the hash (#) on the following line indicates a uid, not a comment.
+<span class=anchor id=line-3-2></span> Runas_Alias ROOT = #0
+<span class=anchor id=line-4-2></span> # This is for all the admin users similar to the User_Alias of ADMINS set earlier 
+<span class=anchor id=line-5-2></span> # with the addition of "root"
+<span class=anchor id=line-6-2></span> Runas_Alias ADMINS = %admin, root</pre><span class=anchor id=line-89></span><span class=anchor id=line-90></span><p class=line867>
+<h2 id=Host_Aliases>Host Aliases</h2>
+<span class=anchor id=line-91></span><p class=line874>A host alias is a list of hostname, ip addresses, networks and netgroups (prefixed with a +). If you do not specify a netmask with a network the netmask of the hosts ethernet interface(s) will be used when matching. <span class=anchor id=line-92></span><span class=anchor id=line-93></span><span class=anchor id=line-94></span><span class=anchor id=line-95></span><span class=anchor id=line-96></span><span class=anchor id=line-97></span><span class=anchor id=line-98></span><span class=anchor id=line-99></span><span class=anchor id=line-100></span><span class=anchor id=line-101></span><span class=anchor id=line-102></span><pre><span class=anchor id=line-1-7></span> # This is all the servers
+<span class=anchor id=line-2-4></span> Host_Alias SERVERS = 192.168.0.1, 192.168.0.2, server1
+<span class=anchor id=line-3-3></span> # This is the whole network
+<span class=anchor id=line-4-3></span> Host_Alias NETWORK = 192.168.0.0/255.255.255.0
+<span class=anchor id=line-5-3></span> # And this is every machine in the network that is not a server
+<span class=anchor id=line-6-3></span> Host_Alias WORKSTATIONS = NETWORK, !SERVER
+<span class=anchor id=line-7-2></span> # This could have been done in one step with 
+<span class=anchor id=line-8-1></span> # Host_Alias WORKSTATIONS = 192.168.0.0/255.255.255.0, !SERVERS
+<span class=anchor id=line-9-1></span> # but I think this method is clearer.</pre><span class=anchor id=line-103></span><span class=anchor id=line-104></span><p class=line867>
+<h2 id=Command_Aliases>Command Aliases</h2>
+<span class=anchor id=line-105></span><span class=anchor id=line-106></span><p class=line874>Command aliases are lists of commands and directories. You can use this to specify a group of commands. If you specify a directory it will include any file within that directory but not in any subdirectories. <span class=anchor id=line-107></span><span class=anchor id=line-108></span><p class=line862>The special command '"sudoedit"' allows users to run sudo with the <tt>-e</tt> flag or as the command <tt>sudoedit</tt>. If you include command line arguments in a command in an alias these must exactly match what the user enters on the command line. If you include any of the following they will need to be escaped with a backslash (\): ",", "\", ":", "=". <span class=anchor id=line-109></span><span class=anchor id=line-110></span><p class=line874>Examples: <span class=anchor id=line-111></span><span class=anchor id=line-112></span><span class=anchor id=line-113></span><span class=anchor id=line-114></span><span class=anchor id=line-115></span><span class=anchor id=line-116></span><span class=anchor id=line-117></span><span class=anchor id=line-118></span><span class=anchor id=line-119></span><span class=anchor id=line-120></span><pre><span class=anchor id=line-1-8></span> # All the shutdown commands
+<span class=anchor id=line-2-5></span> Cmnd_Alias SHUTDOWN_CMDS = /sbin/poweroff, /sbin/reboot, /sbin/halt
+<span class=anchor id=line-3-4></span> # Printing commands
+<span class=anchor id=line-4-4></span> Cmnd_Alias PRINTING_CMDS = /usr/sbin/lpc, /usr/sbin/lprm
+<span class=anchor id=line-5-4></span> # Admin commands
+<span class=anchor id=line-6-4></span> Cmnd_Alias ADMIN_CMDS = /usr/sbin/passwd, /usr/sbin/useradd, /usr/sbin/userdel, /usr/sbin/usermod, /usr/sbin/visudo
+<span class=anchor id=line-7-3></span> # Web commands
+<span class=anchor id=line-8-2></span> Cmnd_Alias WEB_CMDS = /etc/init.d/apache2</pre><span class=anchor id=line-121></span><span class=anchor id=line-122></span><p class=line867>
+<h1 id=User_Specifications>User Specifications</h1>
+<span class=anchor id=line-123></span><p class=line874>User Specifications are where the sudoers file sets who can run what as who. It is the key part of the file and all the aliases have just been set up for this very point. If this was a film this part is where all the key threads of the story come together in the glorious unveiling before the final climatic ending. Basically it is important and without this you ain't going anywhere. <span class=anchor id=line-124></span><span class=anchor id=line-125></span><p class=line874>A user specification is in the format <span class=anchor id=line-126></span><span class=anchor id=line-127></span><span class=anchor id=line-128></span><pre><span class=anchor id=line-1-9></span>&lt;user list&gt; &lt;host list&gt; = &lt;operator list&gt; &lt;tag list&gt; &lt;command list&gt;</pre><span class=anchor id=line-129></span><span class=anchor id=line-130></span><p class=line874>The user list is a list of users or a user alias that has already been set, the host list is a list of hosts or a host alias, the operator list is a list of users they must be running as or a runas alias and the command list is a list of commands or a cmnd alias. <span class=anchor id=line-131></span><span class=anchor id=line-132></span><p class=line874>The tag list has not been covered yet and allows you set special things for each command. You can use PASSWD and NOPASSWD to specify whether the user has to enter a password or not and you can also use NOEXEC to prevent any programs launching shells themselves (as once a program is running with sudo it has full root privileges so could launch a root shell to circumvent any restrictions in the sudoers file. <span class=anchor id=line-133></span><span class=anchor id=line-134></span><p class=line874>For example (using the aliases and users from earlier) <span class=anchor id=line-135></span><span class=anchor id=line-136></span><span class=anchor id=line-137></span><span class=anchor id=line-138></span><span class=anchor id=line-139></span><span class=anchor id=line-140></span><span class=anchor id=line-141></span><span class=anchor id=line-142></span><span class=anchor id=line-143></span><span class=anchor id=line-144></span><span class=anchor id=line-145></span><span class=anchor id=line-146></span><span class=anchor id=line-147></span><span class=anchor id=line-148></span><pre><span class=anchor id=line-1-10></span> # This lets the webmasters run all the web commands on the machine 
+<span class=anchor id=line-2-6></span> # "webserver" provided they give a password
+<span class=anchor id=line-3-5></span> WEBMASTERS webserver= WEB_CMDS
+<span class=anchor id=line-4-5></span> # This lets the admins run all the admin commands on the servers
+<span class=anchor id=line-5-5></span> ADMINS SERVERS= ADMIN_CMDS
+<span class=anchor id=line-6-5></span> # This lets all the USERS run admin commands on the workstations provided 
+<span class=anchor id=line-7-4></span> # they give the root password or and admin password (using "sudo -u &lt;username&gt;")
+<span class=anchor id=line-8-3></span> USERS WORKSTATIONS=(ADMINS) ADMIN_CMDS
+<span class=anchor id=line-9-2></span> # This lets "harry" shutdown his own machine without a password
+<span class=anchor id=line-10></span> harry harrys-machine= NOPASSWD: SHUTDOWN_CMDS
+<span class=anchor id=line-11></span> # And this lets everybody print without requiring a password
+<span class=anchor id=line-12></span> ALL ALL=(ALL) NOPASSWD: PRINTING_CMDS</pre><span class=anchor id=line-149></span><span class=anchor id=line-150></span><span class=anchor id=line-151></span><p class=line867>
+<h1 id=The_Default_Ubuntu_Sudoers_File>The Default Ubuntu Sudoers File</h1>
+<span class=anchor id=line-152></span><p class=line874>The sudoers file that ships with Ubuntu 8.04 by default is included here so if you break everything you can restore it if needed and also to highlight some key things. <span class=anchor id=line-153></span><span class=anchor id=line-154></span><span class=anchor id=line-155></span><span class=anchor id=line-156></span><span class=anchor id=line-157></span><span class=anchor id=line-158></span><span class=anchor id=line-159></span><span class=anchor id=line-160></span><span class=anchor id=line-161></span><span class=anchor id=line-162></span><span class=anchor id=line-163></span><span class=anchor id=line-164></span><span class=anchor id=line-165></span><span class=anchor id=line-166></span><span class=anchor id=line-167></span><span class=anchor id=line-168></span><span class=anchor id=line-169></span><span class=anchor id=line-170></span><span class=anchor id=line-171></span><span class=anchor id=line-172></span><span class=anchor id=line-173></span><span class=anchor id=line-174></span><span class=anchor id=line-175></span><span class=anchor id=line-176></span><span class=anchor id=line-177></span><pre><span class=anchor id=line-1-11></span># /etc/sudoers
+<span class=anchor id=line-2-7></span>#
+<span class=anchor id=line-3-6></span># This file MUST be edited with the 'visudo' command as root.
+<span class=anchor id=line-4-6></span>#
+<span class=anchor id=line-5-6></span># See the man page for details on how to write a sudoers file.
+<span class=anchor id=line-6-6></span>#
+<span class=anchor id=line-7-5></span>
+<span class=anchor id=line-8-4></span>Defaults    env_reset
+<span class=anchor id=line-9-3></span>
+<span class=anchor id=line-10-1></span># Uncomment to allow members of group sudo to not need a password
+<span class=anchor id=line-11-1></span># %sudo ALL=NOPASSWD: ALL
+<span class=anchor id=line-12-1></span>
+<span class=anchor id=line-13></span># Host alias specification
+<span class=anchor id=line-14></span>
+<span class=anchor id=line-15></span># User alias specification
+<span class=anchor id=line-16></span>
+<span class=anchor id=line-17></span># Cmnd alias specification
+<span class=anchor id=line-18></span>
+<span class=anchor id=line-19></span># User privilege specification
+<span class=anchor id=line-20></span>root    ALL=(ALL) ALL
+<span class=anchor id=line-21></span>
+<span class=anchor id=line-22></span># Members of the admin group may gain root privileges
+<span class=anchor id=line-23></span>%admin ALL=(ALL) ALL</pre><span class=anchor id=line-178></span><span class=anchor id=line-179></span><p class=line862>This is pretty much empty and only has three rules in it. The first (<tt>Defaults&nbsp;env_reset</tt>) resets the terminal environment after switching to root. So, ie: all user set variables are removed. The second (<tt>root&nbsp;ALL=(ALL)&nbsp;ALL</tt>) just lets root do everything on any machine as any user. And the third (<tt>%admin&nbsp;ALL=(ALL)&nbsp;ALL</tt>) lets anybody in the admin group run anything as any user. Note that they will still require a password (thus giving you the normal behaviour you are so used to). <span class=anchor id=line-180></span><span class=anchor id=line-181></span><p class=line874>If you want to add your own specifications and you are a member of the admin group then you will need to add them after this line. Otherwise all your changes will be overridden by this line saying you (as part of the admin group) can do anything on any machine as any user provided you give a password. <span class=anchor id=line-182></span><span class=anchor id=line-183></span><p class=line867>
+<h1 id=Common_Tasks>Common Tasks</h1>
+<span class=anchor id=line-184></span><p class=line874>This section includes some common tasks and how to accomplish them using the sudoers file. <span class=anchor id=line-185></span><span class=anchor id=line-186></span><p class=line867>
+<h2 id=Shutting_Down_From_The_Console_Without_A_Password>Shutting Down From The Console Without A Password</h2>
+<span class=anchor id=line-187></span><p class=line874>Often people want to be able to shut their computers down without requiring a password to do so. This is particularly useful in media PCs where you want to be able to use the shutdown command in the media centre to shutdown the whole computer. <span class=anchor id=line-188></span><span class=anchor id=line-189></span><p class=line874>To do this you need to add some cmnd aliases as follows: <span class=anchor id=line-190></span><span class=anchor id=line-191></span><span class=anchor id=line-192></span><pre><span class=anchor id=line-1-12></span>Cmnd_Alias SHUTDOWN_CMDS = /sbin/poweroff, /sbin/halt, /sbin/reboot</pre><span class=anchor id=line-193></span><p class=line862>You also need to add a user specification (at the end of the file after the "<tt>%admin&nbsp;ALL&nbsp;=&nbsp;(ALL)&nbsp;ALL</tt>" line so it takes effect - see above for details): <span class=anchor id=line-194></span><span class=anchor id=line-195></span><span class=anchor id=line-196></span><pre><span class=anchor id=line-1-13></span>&lt;your username&gt; ALL=(ALL) NOPASSWD: SHUTDOWN_CMDS</pre><span class=anchor id=line-197></span><p class=line862>Obviously you need to replace "&lt;your username&gt;" with the username of the user who needs to be able to shutdown the pc without a password. You can use a user alias here as normal. <span class=anchor id=line-198></span><span class=anchor id=line-199></span><p class=line867>
+<h2 id=Multiple_tags_on_a_line>Multiple tags on a line</h2>
+<span class=anchor id=line-200></span><p class=line874>There are times where you need to have both NOPASSWD and NOEXEC or other tags on the same configuration line. The man page for sudoers is less than clear, so here is an example of how this is done: <span class=anchor id=line-201></span><span class=anchor id=line-202></span><span class=anchor id=line-203></span><pre><span class=anchor id=line-1-14></span>myuser ALL = (root) NOPASSWD:NOEXEC: /usr/bin/vim</pre><span class=anchor id=line-204></span><p class=line874>This example lets the user "myuser" run as root the "vim" binary without a password, and without letting vim shell out (the :shell command). <span class=anchor id=line-205></span><span class=anchor id=line-206></span><p class=line867>
+<h2 id=Enabling_Visual_Feedback_when_Typing_Passwords>Enabling Visual Feedback when Typing Passwords</h2>
+<span class=anchor id=line-207></span><span class=anchor id=line-208></span><p class=line874>As of Ubuntu 10.04 (Lucid), you can enable visual feedback when you are typing a password at a sudo prompt. <span class=anchor id=line-209></span><span class=anchor id=line-210></span><p class=line862>Simply edit <tt>/etc/sudoers</tt> and change the <em>Defaults</em> line to read: <span class=anchor id=line-211></span><span class=anchor id=line-212></span><span class=anchor id=line-213></span><pre><span class=anchor id=line-1-15></span>Defaults        env_reset,pwfeedback</pre><span class=anchor id=line-214></span><span class=anchor id=line-215></span><p class=line867>
+<h1 id=Troubleshooting>Troubleshooting</h1>
+<span class=anchor id=line-216></span><p class=line874>If your changes don't seem to have had any effect, check that they are not trying to use aliases that are not defined yet and that no other user specifications later in the file are overriding what you are trying to accomplish. <span class=anchor id=line-217></span><span class=anchor id=line-218></span><p class=line867><hr><p class=line874> <span class=anchor id=line-219></span><a href=https://help.ubuntu.com/community/CategorySecurity>CategorySecurity</a> <span class=anchor id=line-220></span><span class=anchor id=bottom></span></p></div><div id=pagebottom></div>
+</div>
+ </div>
+</div>
+ 
+ 
+ </div>

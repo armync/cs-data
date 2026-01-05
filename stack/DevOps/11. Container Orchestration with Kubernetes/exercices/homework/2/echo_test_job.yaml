@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: echo-networkpolicy-test
+  namespace: playground
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: test
+          image: curlimages/curl:latest
+          command:
+            - /bin/sh
+            - -c
+            - |
+              if curl -s --max-time 10 http://echo-service-nodeport:8080; then
+                echo "Network Policy failed! I shouldn't be allowed!"
+              else
+                echo "Network Policy works! Echo is safe <3"
+              fi

@@ -1,0 +1,62 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: "Lambda event scheduler cron per Month at 6 AM"
+
+Resources:
+  # Lambda Function
+  HelloWorldFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: ScheduledHelloWorld
+      Runtime: python3.12
+      Handler: index.schedule
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Code:
+        ZipFile: |
+          def schedule(event, context):
+              print("hello world")
+              print(event)
+              return "success"
+
+  # IAM Role for Lambda
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+
+  # EventBridge Rule (first day of the month at 6 AM)
+  MonthlyScheduleRule:
+    Type: AWS::Events::Rule
+    Properties:
+      Name: MonthlyLambdaSchedule
+      Description: lambda trigger on day+hour
+      ScheduleExpression: 'cron(0 6 1 * ? *)'
+      State: ENABLED
+      Targets:
+        - Arn: !GetAtt HelloWorldFunction.Arn
+          Id: ScheduledLambdaTarget
+
+  # Permission for EventBridge to invoke Lambda
+  LambdaInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref HelloWorldFunction
+      Action: lambda:InvokeFunction
+      Principal: events.amazonaws.com
+      SourceArn: !GetAtt MonthlyScheduleRule.Arn
+
+Outputs:
+  LambdaFunctionArn:
+    Description: ARN Lambda function
+    Value: !GetAtt HelloWorldFunction.Arn
+  
+  ScheduleRuleName:
+    Description: EventBridge rule
+    Value: !Ref MonthlyScheduleRule

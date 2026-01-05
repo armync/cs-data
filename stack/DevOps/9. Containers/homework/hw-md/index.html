@@ -1,0 +1,13 @@
+<!doctype html><meta charset="utf-8">
+<title>Markdown Wiki</title>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<style>body{font-family:system-ui,Segoe UI,Arial;margin:2rem auto;max-width:860px}nav a{display:block;margin:.25rem 0}</style>
+<h1>Markdown Wiki</h1>
+<nav id="list"></nav>
+<article id="view"></article>
+<script>
+const files=["README.md","page1.md"];
+const params=new URLSearchParams(location.search), f=params.get("file");
+list.innerHTML=files.map(x=>`<a href="?file=${encodeURIComponent(x)}">${x}</a>`).join("");
+if(f) fetch("wiki/"+f).then(r=>r.text()).then(md=>view.innerHTML=marked.parse(md));
+</script>

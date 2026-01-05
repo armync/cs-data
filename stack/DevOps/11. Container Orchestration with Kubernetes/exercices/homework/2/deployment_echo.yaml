@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-echo
+  namespace: playground
+spec:
+  replicas: 3
+  template:
+    metadata:
+      name: echo-pod
+      labels:
+        app: echo-pod
+    spec:
+      containers:
+        - name: echo-server
+          image: ealen/echo-server:latest
+          ports:
+            - containerPort: 80
+  selector:
+    matchLabels:
+      app: echo-pod
