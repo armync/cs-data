@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: PersistentVolumeClaim # claim storage
+metadata:
+  name: registry-pvc # PVC name (how POD references)
+  namespace: registry # PVC lives in the given namespace
+spec:
+  accessModes:
+    - ReadWriteOnce # the storage can be attached and can R/W to only one machine (node) at a time
+  resources:
+    requests:
+      storage: 10Gi # how much persistent storage

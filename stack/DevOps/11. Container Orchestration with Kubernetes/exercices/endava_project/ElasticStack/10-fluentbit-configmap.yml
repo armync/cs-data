@@ -1,0 +1,79 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fluentbit-config
+  namespace: logging
+data:
+  fluent-bit.conf: |
+    [SERVICE]
+      Flush 1
+      Log_Level info
+      Parsers_File parsers.conf
+
+    [INPUT]
+      Name tail
+      Path /var/log/containers/*.log
+      Tag kube.*
+      Parser cri
+      Mem_Buf_Limit 10MB
+      Skip_Long_Lines On
+
+    [FILTER]
+      Name kubernetes
+      Match kube.*
+      Merge_Log On
+      Keep_Log Off
+
+    [OUTPUT]
+      Name es
+      Match kube.*
+      Host elasticsearch.logging.svc
+      Port 9200
+      HTTP_User ${ES_USER}
+      HTTP_Passwd ${ES_PASS}
+      Logstash_Format On
+      Logstash_Prefix petclinic
+      Suppress_Type_Name On
+
+  parsers.conf: |
+    [PARSER]
+      Name cri
+      Format regex
+      Regex ^(?<time>[^ ]+) (?<stream>stdout|stderr) (?<logtag>[^ ]*) (?<log>.*)$
+      Time_Key time
+      Time_Format %Y-%m-%dT%H:%M:%S.%L%z
+
+# template at https://oneuptime.com/blog/post/2026-02-02-fluent-bit-kubernetes/view
+
+# push logs through the pipeline every 1 second
+# logging verbosity
+# where to find the custom parsing rules (how to read and structure raw texts of logs)
+
+# read data from text files like 'tail -f'
+# standard path for kubernetes container logs
+# assign a tag to these logs for filtering later
+
+# use the 'cri' parser defined read the lines
+# pause reading if memory hits 10mb to prevent oom crashes
+# ignore lines over the buffer limit instead of crashing
+
+# use the k8s filter to attach metadata (pod, namespace, etc.)
+# only apply the filter to logs tagged 'kube.*'
+# flatten json app logs into the root record for easy querying
+# discard the original raw json string to save storage space
+
+# send logs to elasticsearch
+# only output logs tagged 'kube.*'
+# internal k8s service address for elasticsearch
+# elasticsearch port
+# basic auth user injected via environment variable
+# basic auth password injected via environment variable
+# create daily rolling indices (e.g., petclinic-2026.03.03)
+# base name for the daily indices
+
+# parser name (matches what the input block asks for)
+# use regular expressions to parse the text
+# e.g. 2026-03-03T10:15:30.123Z stdout F Log message!
+# extract time, stream, tags, and log message
+# look at the extracted 'time' field for the timestamp
+# how to interpret the timestamp so elasticsearch understands it

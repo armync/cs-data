@@ -1,0 +1,25 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+    name: helm-networkpolicy-access
+    namespace: petclinic # apply only in this ns
+rules:
+    - apiGroups: ["networking.k8s.io"] # networkpolicy group package
+      resources: ["networkpolicies"] # resource of group package
+      verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+    name: helm-networkpolicy-access-binding
+    namespace: petclinic
+subjects: # who gets it
+    - kind: ServiceAccount
+      name: petclinic # ServiceAccount Name
+      namespace: petclinic
+roleRef: # what gets
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: helm-networkpolicy-access
+
+

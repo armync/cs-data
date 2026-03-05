@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kibana-config
+  namespace: logging
+  labels:
+    app: kibana
+data:
+  kibana.yml: |
+    server.host: "0.0.0.0"
+    elasticsearch.hosts: ${ELASTICSEARCH_HOSTS}
+  # elasticsearch.ssl.certificateAuthorities: ["/usr/share/kibana/config/certs/http_ca.crt"]
+  # elasticsearch.ssl.verificationMode: certificate
+  # elasticsearch.username: "${ELASTICSEARCH_USERNAME}"
+  # elasticsearch.password: "${ELASTICSEARCH_PASSWORD}"
+
+# https://www.elastic.co/docs/reference/kibana/configuration-reference/general-settings
+# allows other service and pods to access it
+# url of elasticsearch instantce to use for queries (what should kibana use)
+# dont enforce specific hostname on cert
+# points kibana at CA cert file to validate ES

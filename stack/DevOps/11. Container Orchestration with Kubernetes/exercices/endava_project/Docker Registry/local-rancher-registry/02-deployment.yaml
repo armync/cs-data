@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: docker-registry
+  namespace: registry
+spec:
+  replicas: 1 # no pods. multiple replicas can't mount at the same time volume
+  selector:
+    matchLabels:
+      app: docker-registry # which pod owns
+  template: # pod base creation
+    metadata:
+      labels:
+        app: docker-registry # must be as matchLabels
+    spec:
+      containers:
+        - name: registry
+          # image: registry:2 # official Docker Registry V2 image
+          image: quay.io/libpod/registry:2 # unofficial fallback server
+          ports:
+            - containerPort: 5000 # declarative, registry listens on port 5000 inside the pod (no expose outside the cluster on own)
+          resources:
+            requests:
+              cpu: "100m" # given cpu
+              memory: "128Mi" # given ram
+            limits:
+              cpu: "500m" # max cpu
+              memory: "512Mi" # max ram
+          volumeMounts:
+            - name: registry-storage # name of volume
+              mountPath: /var/lib/registry # where to mount a volume for registry storing of image layers + metadata
+      volumes:
+        - name: registry-storage
+          persistentVolumeClaim:
+            claimName: registry-pvc # bind the volume to an existing PVC

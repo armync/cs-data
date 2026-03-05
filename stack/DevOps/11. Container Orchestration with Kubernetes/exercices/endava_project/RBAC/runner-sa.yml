@@ -1,0 +1,34 @@
+apiVersion: v1 # Service Account
+kind: ServiceAccount
+metadata:
+  name: gitlab-runner-sa # treat as name...
+  namespace: petclinic
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role # definition of permissions inside namespace
+metadata:
+  name: gitlab-runner-deploy
+  namespace: petclinic
+rules:
+  # Manage deployment
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    verbs: ["get", "list", "watch", "patch", "update"] # what to do to it
+  # ReplicaSets control - rollout
+  - apiGroups: ["apps"]
+    resources: ["replicasets"]
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding # assign permissions to...; applies only in a namespace (not ClusterRoleBinding)
+metadata:
+  name: gitlab-runner-deploy # name of RoleBinding
+  namespace: petclinic
+subjects: # who gets the permissions
+  - kind: ServiceAccount # to a identity of type..
+    name: gitlab-runner-sa # what's the name
+    namespace: petclinic
+roleRef: # which permission to assign to...
+  kind: Role
+  name: gitlab-runner-deploy # permissions defined in Role ...
+  apiGroup: rbac.authorization.k8s.io # version independent...

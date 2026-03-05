@@ -1,0 +1,99 @@
+apiVersion: apps/v1
+kind: Deployment # Manages Pods declaratively; ensures desired number of replicas, handles rollings, recreates on crash
+metadata:
+  name: petclinic
+  namespace: petclinic
+  labels:
+    app: petclinic
+spec: # desired state
+  replicas: 1 # no identical running pods
+  selector:
+    matchLabels:
+      app: petclinic # manages pods with the ~given~ label
+  template: # defines how pods looks
+    metadata:
+      labels:
+        app: petclinic
+    spec:
+      imagePullSecrets: # secrets used; allows k8s to authenticate to a private GitLab registry; pull docker image
+        - name: gitlab-registry # name of k8s secret that contains credentials for pulling
+      containers: # list of containers in the pod
+        - name: petclinic # container name inside the Pod
+          image: gitlab-registry.endava.com/claudiu.sonel/petclinic-infralab:latest # docker image to run (from GitLab Registry)
+          # imagePullPolicy: IfNotPresent # pull the image only if it's not already on the node
+          imagePullPolicy: Always
+
+          ports: # exposed ports - informational
+            - name: http # name..
+              containerPort: 8080 # app listens on ~given~ port inside the container
+
+          # non sensitive configs (safe to Git)
+          envFrom: # import many envs vars at once
+            - configMapRef: # source is a ConfigMap
+                name: petclinic-config # load all keys from ~given~ ConfigMap as env var
+
+          # Sensitive values: pulled from existing Secret created by Postgres setup
+          env: # explicit list of env variables
+            - name: SPRING_DATASOURCE_USERNAME # define the db usernvame env var
+              valueFrom: # fetch from...
+                secretKeyRef: # reference secret key
+                  name: petclinic-db-credentials # secret name
+                  key: POSTGRES_USER # use the ~given~ secret field
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: petclinic-db-credentials
+                  key: POSTGRES_PASSWORD
+
+            # optional
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: petclinic-db-credentials
+                  key: POSTGRES_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: petclinic-db-credentials
+                  key: POSTGRES_PASSWORD
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: petclinic-db-credentials
+                  key: POSTGRES_DB
+
+            - name: SPRING_CONFIG_ADDITIONAL_LOCATION # tells spring boot to look for extra config files
+              value: /app/config/ # which dir path
+
+          volumeMounts: # mount volumes into the container fs
+            - name: app-config # mount volume called ~as given~
+              mountPath: /app/config # put at ~given~ path in the container
+              readOnly: true # container can read files but cannot change them
+
+          readinessProbe: # determines if the Pod is ready to receive traffic (e.g. for a Service)
+            httpGet: # check via HTTP
+              path: /actuator/health/readiness # call the ~given~ spring boot acutator readiness endpoint
+              port: 8080 # use ~given~ container port
+            initialDelaySeconds: 10 # wait ~given~ seconds before first check
+            periodSeconds: 10 # check at every ~given~ seconds
+
+          livenessProbe: # is the app alive?
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+
+      volumes: # defines volumes available to the pod
+        - name: app-config # creates the ~given~ name volume
+          configMap:
+            name: petclinic-config-files # use ConfigMap content
+            optional: true # if ConfigMap doesn't exist, the Pod still starts (empty volume)

@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: elastic-logging
+  namespace: logging
+  labels:
+    app: elastic-logging
+spec:
+  serviceName: elastic-logging
+  replicas: 1
+  selector:
+    matchLabels:
+      app: elastic-logging
+  template:
+    metadata:
+      labels:
+        app: elastic-logging
+    spec:
+      containers:
+        - name: elastic-logging
+          # image: elasticsearch:8.19.12
+          image: docker.elastic.co/elasticsearch/elasticsearch:8.19.12
+          ports:
+            - containerPort: 9200
+              name: elastic-rest # api calls over HTTP (search, aggregation)
+          env:
+            - name: discovery.type # https://www.elastic.co/docs/reference/elasticsearch/configuration-reference/discovery-cluster-formation-settings
+              value: "single-node"
+            - name: network.host # https://discuss.elastic.co/t/what-is-network-host/274426/4
+              value: "0.0.0.0"
+            - name: ES_JAVA_OPTS
+              value: "-Xms256m -Xmx256m"
+          volumeMounts:
+            - name: data # volume name to be mount (VCT)
+              mountPath: /usr/share/elasticsearch/data # here indexes and data are stored. routes them to external volume.
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+        labels:
+          app: elastic-logging
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        # storageClassName: "local-path"
+        resources:
+          requests:
+            storage: 1Gi
+# template at https://github.com/MerNat/elk-stack-kubernetes/blob/master/k8s-elasticsearch-statefulset.yaml

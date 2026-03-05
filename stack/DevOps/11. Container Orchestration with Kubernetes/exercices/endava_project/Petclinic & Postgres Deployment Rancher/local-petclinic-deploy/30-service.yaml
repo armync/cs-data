@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service # object Service, provides stable networking (IP/DNS) to access Pods
+metadata:
+  name: petclinic
+  namespace: petclinic
+  labels:
+    app: petclinic # passive label (not active as a selector)
+spec:
+  type: ClusterIP # internal only service; gets a stable internal IP. accessible only inside the cluster; not exposed externally; ... other types: NodePort - exposes on every node IP, LoadBalancer - external public IP (cloud)
+  selector: # which Pods receive traffic from this SVC
+    app: petclinic # route traffic to Pods labeled as ~given~ value
+  ports:
+    - name: http
+      port: 80
+      targetPort: http

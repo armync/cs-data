@@ -1,0 +1,18 @@
+gitlabUrl: "https://gitlab.endava.com/" # gitlab instance the runner registers to
+runnerToken: ${GITLAB_RUNNER_TOKEN} # runner registration/auth token used to register the runner with gitlab;  runnerToken is given by gitlab
+
+runners: # configures the runner behaviour (how registers + how job select it)
+  tags: # jobs can require the ~given~ tags to ensure the run
+    - k8s
+  locked: false # if enabled, the runner is locked to a specific project assigned
+  runUntagged: false # if enabled, jobs without tags can run on this runner
+  protected: false # if enabled, only protected branches/tags can use it
+
+rbac: # rbac permission config
+  create: true #  helm chart will create the needed kubernetes rbac objects (Role/rolebinding); runner can create/watch pods, read logs, manage secrets/configmaps
+
+serviceAccount:
+  create: true # create a dedicated Kubernetes SA for runner
+  name: gitlab-runner
+
+namespace: gitlab-runner

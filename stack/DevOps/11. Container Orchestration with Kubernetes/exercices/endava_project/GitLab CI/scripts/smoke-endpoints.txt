@@ -1,0 +1,2 @@
+/actuator/health/liveness
+/actuator/health/readiness

@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap # object that is a key-value store for configurations that Pods can read (env vars, files etc.)
+metadata:
+  name: petclinic-config # ConfigMap name
+  namespace: petclinic
+  labels:
+    app: petclinic #  group/identify this as part of ~given~ app
+data:
+  SPRING_PROFILES_ACTIVE: "postgres" # tells spring boot which profile to activate alongside the default config (e.g. application-postgres.yml)
+  SPRING_DATASOURCE_URL: "jdbc:postgresql://petclinic-db-postgresql:5432/petclinic" # sets JDBC URL for app datasourc -> jdbc:<database-type>://<host>:<port>/<database>
+  FLYWAY_ENABLED: "true" # Enables Flyway database; on startup Flyway connects to the DB using the datasource, looks for migrations (V1__.sql, V2...) and applies whatever wasn't launched.
+  HIBERNATE_DDL_AUTO: "validate" # hibernate checks at app start if the existing DB schema matches JPA entity mappings (what excepts); if not, fails and wont modify anything
+  SQL_INIT_MODE: "never" # disabled spring boot's built-in sql initialization feature that can run schema/data.sql on startup

@@ -1,0 +1,146 @@
+stages: # defines the pipeline stages
+  - build # run first
+  - image # run after all build stage jobs complete (unless needs.. changes behaviour)
+  - scan
+  - promote # deploy + post-deploy smoke tests (inside the deploy script)
+
+variables: # global variables ... for all jobs
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository" # tells maven to store/download dependencies into a project-local repo at ~given~ path; ~/.m2 is outside project; gitlab cache works best on project-local paths
+  MAVEN_CLI_OPTS: "-B -e -Dstyle.color=always" # in batch, cleaner logs; show full stack traces on errors; colored
+  IMAGE_FULL: "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA" # build a docker image tag; use gitlab variables
+  BASE_URL: "http://localhost:8080" # base URL used by smoke_test.sh
+
+build:
+  stage: build # job name
+  image: maven:3.9.6-eclipse-temurin-17
+  tags: # this job will only run on GitLab runner tagged k8s
+    - k8s
+  script: # build script steps
+    - echo "Java:"
+    - java -version
+    - echo "Maven:"
+    - mvn -version
+
+    - echo "Building..."
+    - cd app # go to app subdir
+    - mvn $MAVEN_CLI_OPTS clean package # clean wipes target/ (default build output folder -- compile, test, package...) and compiles code + run tests + produce final artifact (.jar)
+
+    - echo "Artifacts produced in target/:"
+    - ls -lah target || true # contents of target/; prevents job from failing if doesn't exist (dir)
+
+    - echo "Matching target/*.jar:"
+    - ls -lah target/*.jar 2>/dev/null || echo "No JARs matched target/*.jar" # list produced JAR files and avoids deep log errors (dev null)
+
+    # checks whether any .jar exists; if so, prints checksum (debugging/reproducibility)
+    - |
+      if ls target/*.jar 1>/dev/null 2>&1; then
+        echo "Artifact checksums:"
+        sha256sum target/*.jar #
+      else
+        echo "Skipping checksum (no target/*.jar found)."
+      fi
+  artifacts: # files GitLab uploads after the job
+    when: always # uploads them even if the job fails (debugging)
+    expire_in: 1 week # how much time to keep them
+    paths:
+      - "**/target/*.jar" # uploads matching jars (not entire dir)
+  cache:
+    key: "maven-${CI_PROJECT_PATH_SLUG}" # separated cache per project; safe string based on prj path
+    policy: pull-push # download cache at job start (pull) / upload updated cache at job end (push)
+    paths:
+      - .m2/repository # caches given path (matches MAVEN_OPTS)
+
+push_image: # job name (phase); downloads the JAR artifact (via needs), then uses Kaniko to build the container image and push it to the registry
+  stage: image # stage (describe exact task)
+  image: # docker image to use
+    name: gcr.io/kaniko-project/executor:debug # uses kaniko's debug executor image (no need of docker-in-docker)
+    entrypoint: [""] # overrides the container's default entrypoint, in order for gitlab to run "script:";
+  tags:
+    - k8s # only ~given~ tagged runner can run it
+  needs: # declares upstream jobs this job depends on (faster dag scheduling + artifact fetching)
+    - job: build # ~given~ job must complete first
+      artifacts: true # download artifacts produced by the ~given~ job in this job's workspace
+  rules: # conditional logic for whether the job is created/run
+    - if: $CI_COMMIT_BRANCH # run the job only when ~given~ is set (e.g. branch pipeline); in practice skips tag pipelines. --- it runs ONLY when someone pushes to a branch, no other action.
+  script: # shell commands executed in order inside the Kaniko container
+    # check if the .jar artifact is gotten from build job
+    - cd app # go to app subdir
+    - echo "Listing target/ after downloading artifacts:"
+    - ls -lah target || true
+    - ls -lah target/*.jar 2>/dev/null || echo "No JARs matched target/*.jar (ok if Dockerfile builds inside)"
+
+    # auth for GitLab Container Registry
+    # docker's config.json format credentials
+    #
+    # env variables predefined in GitLab.
+    # e.g.
+    # CI_REGISTRY - registry.gitlab.com
+    # CI_REGISTRY_USER - gitlab-ci-token
+    # CI_REGISTRY_PASSWORD - not manually defined..
+    - mkdir -p /kaniko/.docker
+    - |
+      cat > /kaniko/.docker/config.json <<EOF
+      {
+        "auths": {
+          "${CI_REGISTRY}": {
+            "username": "${CI_REGISTRY_USER}",
+            "password": "${CI_REGISTRY_PASSWORD}"
+          }
+        }
+      }
+      EOF
+
+    # build & push image tagged with commit short SHA
+    # runs kaniko's executor binary
+    # Build context is the repository checkout directory (folder of files that Docker can see when building an image)
+    # ... Push image to registry with tag (...:<sha>)
+    # ... use dockerfile for CI GITLAB (not the local build runtime for rancher)
+    # ... IMAGE_FULL --- fully Docker image name. e.g. <registry>/<namespace>/<repository>:<tag>
+    # ... log detailed level
+    - |
+      /kaniko/executor \
+        --context "${CI_PROJECT_DIR}" \
+        --dockerfile "${CI_PROJECT_DIR}/Dockerfile" \
+        --destination "${IMAGE_FULL}" \
+        --target runtime-prebuilt \
+        --verbosity=info
+
+dependency_scan:
+  stage: scan
+  image: maven:3.9.6-eclipse-temurin-17
+  tags:
+    - k8s
+  script:
+    - echo "Running OWASP Dependency Check..."
+    - mvn -B -DskipTests org.owasp:dependency-check-maven:check -DfailBuildOnCVSS=9
+  artifacts:
+    when: always
+    paths:
+      - target/dependency-check-report.*
+      - target/dependency-check-report/
+
+trivy_scan:
+  stage: scan
+  image: aquasec/trivy:latest
+  tags:
+    - k8s
+  script:
+    - echo "Scanning container image with Trivy..."
+    - trivy image --severity CRITICAL --exit-code 1 "$IMAGE_FULL"
+  artifacts:
+    when: always
+    paths:
+      - trivy-report.txt
+
+promote:
+  stage: promote
+  tags:
+    - k8s
+  needs:
+    - dependency_scan
+    - trivy_scan
+  script:
+    - echo "Deploying image with post-deploy smoke tests and rollback if needed..."
+    - export NEW_IMAGE="$IMAGE_FULL" # gets env
+    - export BASE_URL="$BASE_URL"
+    - ./scripts/deploy_with_roll.sh # the deploy script

@@ -1,0 +1,17 @@
+auth: # chart db credentials bootstrap
+  existingSecret: petclinic-db-credentials # chart read pass from already existing secret
+
+  username: petclinic
+  database: petclinic
+
+  secretKeys: # looks for specific key names inside the secret
+    userPasswordKey: POSTGRES_PASSWORD
+    adminPasswordKey: POSTGRES_PASSWORD
+    usernameKey: POSTGRES_USER
+    databaseKey: POSTGRES_DB
+  
+primary: # main postgres instance settings
+  persistence: # set PVC
+    enabled: true # PVC enabled so db data survives on pod redeploys
+    size: 8Gi # the PVC size
+    storageClass: local-path

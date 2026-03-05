@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: docker-registry
+  namespace: registry
+spec:
+  type: NodePort # exposes a service on a fixed port on every node IP. allows accessing the app from outside the cluster.
+  selector:
+   app: docker-registry # send service traffic to...
+  ports:
+    - name: http
+      port: 5000 # service internal port. can access via http://<service-name>.<namespace>.svc.cluster.local:<port>
+      targetPort: 5000 # container port inside the Pod
+      nodePort: 32000 # external port opened on each node
