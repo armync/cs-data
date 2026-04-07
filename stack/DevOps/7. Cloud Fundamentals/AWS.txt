@@ -1,0 +1,7 @@
+CLF-C02:
+
+https://www.udemy.com/course/aws-certified-cloud-practitioner-training-course/
+(straight idea)
+or
+https://skillbuilder.aws/learn/94T2BEN85A/aws-cloud-practitioner-essentials/
+(talkative demo presentation)

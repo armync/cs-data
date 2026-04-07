@@ -1,0 +1,11 @@
+AZ-900:
+
+https://app.pluralsight.com/paths/certificate/microsoft-certified-azure-fundamentals-az-900 (In-depth)
+or
+https://www.youtube.com/watch?v=8n-kWJetQRk (Exam Cram - faster)
+or
+https://www.udemy.com/course/az-900-azure-certification-exam-prep/ (theory, presentation - easy to read)
+or
+https://www.youtube.com/playlist?list=PLlVtbbG169nED0_vMEniWBQjSoxTsBYS3 (theory, references - dense and blackboard written)
+or
+https://www.udemy.com/course/azure-certification-az-900-azure-fundamentals/ (exercices, presentation)

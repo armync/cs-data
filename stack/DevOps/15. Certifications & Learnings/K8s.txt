@@ -1,0 +1,5 @@
+1. https://learn.kodekloud.com/courses/kubernetes-for-the-absolute-beginners-hands-on-tutorial
+2. https://training.linuxfoundation.org/training/introduction-to-kubernetes/
+3. https://learn.kodekloud.com/courses/kubernetes-and-cloud-native-associate-kcna
+
+~ https://learn.kodekloud.com/courses/kubernetes-for-the-absolute-beginners-hands-on-tutorial
